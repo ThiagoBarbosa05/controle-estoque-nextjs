@@ -18,7 +18,7 @@ const navLinks = [
   },
   {
     name: "Clientes",
-    href: "/clients",
+    href: "/clientes",
     icon: <Contact className="size-[18px]" />,
   },
   {
