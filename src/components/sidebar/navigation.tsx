@@ -1,0 +1,57 @@
+"use client";
+
+import { Contact, LayoutDashboard, ScanBarcode, Wine } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { twMerge } from "tailwind-merge";
+
+const navLinks = [
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: <LayoutDashboard className="size-[18px]" />,
+  },
+  {
+    name: "Cadastro de Vinhos",
+    href: "/cadastro/vinhos",
+    icon: <Wine className="size-[18px]" />,
+  },
+  {
+    name: "Clientes",
+    href: "/clients",
+    icon: <Contact className="size-[18px]" />,
+  },
+  {
+    name: "Controle de Estoque",
+    href: "/estoque",
+    icon: <ScanBarcode className="size-[18px]" />,
+  },
+];
+export function Navigation() {
+  const pathname = usePathname();
+  return (
+    <nav>
+      <ul className="flex flex-col gap-3">
+        {navLinks.map((link) => {
+          const isActive =
+            pathname === link.href || pathname.startsWith(link.href);
+
+          return (
+            <li className="" key={link.href}>
+              <Link
+                className={twMerge(
+                  "text-lg flex items-center gap-2 rounded-md hover:text-[#93173c] py-2 px-3 transition text-zinc-600",
+                  isActive && "bg-[#93173c] text-zinc-100 hover:text-zinc-100"
+                )}
+                href={link.href}
+              >
+                {link.icon}
+                {link.name}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
