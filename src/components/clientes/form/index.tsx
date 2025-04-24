@@ -7,6 +7,7 @@ import { formatPhone } from "@/lib/format-phone";
 import { useCustomerStore } from "@/store/customer-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
 const customerFormSchema = z.object({
@@ -32,7 +33,8 @@ const customerFormSchema = z.object({
 type FormData = z.infer<typeof customerFormSchema>;
 
 export function CreateNewCustomerForm() {
-  const { createCustomer } = useCustomerStore();
+  const { createCustomer, isOpenForm } = useCustomerStore();
+
   const {
     control,
     handleSubmit,
@@ -56,7 +58,10 @@ export function CreateNewCustomerForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mt-6 border border-zinc-300 p-4 rounded-md"
+      className={twMerge(
+        "mt-6 border hidden border-zinc-300 p-4 rounded-md",
+        isOpenForm && "block"
+      )}
     >
       <h3 className="text-lg sm:text-2xl">Adicionar Novo Cliente</h3>
 

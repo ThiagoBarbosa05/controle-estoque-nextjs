@@ -11,7 +11,7 @@ import { Navigation } from "./navigation";
 export function MenuMobile() {
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger className="sm:hidden">
         <Menu className="text-white" />
       </SheetTrigger>
       <SheetContent className="px-5 pt-6" side="left">

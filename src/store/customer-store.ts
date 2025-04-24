@@ -15,6 +15,9 @@ type Customer = {
 
 type CustomerState = {
   customer: Customer[]
+  isOpenForm: boolean
+  openForm: () => void
+  closeForm: () => void
   createCustomer: (customer: Customer) => void
 }
 
@@ -28,6 +31,17 @@ export const useCustomerStore = create<CustomerState>()(
       email: "cliente@email.com",
       phone: "(22) 988455-5454"
     }],
+    isOpenForm: false,
+    openForm: () => {
+      set(() => ({
+        isOpenForm: true
+      }))
+    },
+    closeForm: () => {
+      set(() => ({
+        isOpenForm: false
+      }))
+    },
     createCustomer: (customer) => {
       console.log(customer)
       set((state) => ({

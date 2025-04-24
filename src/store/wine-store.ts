@@ -15,6 +15,9 @@ type Wine = {
 
 type WineState = {
   wine: Wine[]
+  isOpenForm: boolean
+  openForm: () => void
+  closeForm: () => void
   createWine: (wine: Wine) => void
 }
 
@@ -29,6 +32,17 @@ export const useWineStore = create<WineState>()(
       country: "França",
       harvest: "2023"
     }],
+    isOpenForm: false,
+    openForm: () => {
+      set(() => ({
+        isOpenForm: true
+      }))
+    },
+    closeForm: () => {
+      set(() => ({
+        isOpenForm: false
+      }))
+    },
     createWine: (wine) => {
       set((state) => ({
         wine: [...state.wine, {...wine, price: wine.price, id: v4()}]

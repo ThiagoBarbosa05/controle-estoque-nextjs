@@ -1,5 +1,6 @@
 import { CustomerList } from "@/components/clientes/customer-list";
 import { CreateNewCustomerForm } from "@/components/clientes/form";
+import { ToggleForm } from "@/components/clientes/form/toggle-form";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function ClientesPage() {
@@ -9,9 +10,7 @@ export default function ClientesPage() {
         <h2 className="text-xl sm:text-4xl font-medium">
           Gerenciamento de Clientes
         </h2>
-        <button className="bg-[#0d6efd] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none">
-          Novo Cliente
-        </button>
+        <ToggleForm />
       </div>
 
       <CreateNewCustomerForm />

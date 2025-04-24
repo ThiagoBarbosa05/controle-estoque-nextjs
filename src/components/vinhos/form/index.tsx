@@ -5,6 +5,7 @@ import { parseCurrencyToNumber } from "@/lib/parse-currency";
 import { useWineStore } from "@/store/wine-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
 const wineFormSchema = z.object({
@@ -19,7 +20,7 @@ const wineFormSchema = z.object({
 type FormData = z.infer<typeof wineFormSchema>;
 
 export function CreateNewWineForm() {
-  const { createWine } = useWineStore();
+  const { createWine, isOpenForm } = useWineStore();
 
   const {
     register,
@@ -42,7 +43,10 @@ export function CreateNewWineForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mt-6 border border-zinc-300 p-4 rounded-md"
+      className={twMerge(
+        "mt-6 border hidden border-zinc-300 p-4 rounded-md",
+        isOpenForm && "block"
+      )}
     >
       <h3 className="text-xl sm:text-2xl">Adicionar Novo Vinho</h3>
 

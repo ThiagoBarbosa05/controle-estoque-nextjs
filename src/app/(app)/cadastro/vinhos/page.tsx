@@ -1,5 +1,6 @@
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CreateNewWineForm } from "@/components/vinhos/form";
+import { ToggleForm } from "@/components/vinhos/form/toggle-form";
 import { WinesList } from "@/components/vinhos/wines-list";
 
 export default function CadastroVinhosPage() {
@@ -7,9 +8,7 @@ export default function CadastroVinhosPage() {
     <section>
       <div className="flex w-full items-center justify-between gap-4">
         <h2 className="text-2xl sm:text-4xl font-medium">Cadastro de vinhos</h2>
-        <button className="bg-[#188754] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#03a679] text-white rounded-sm leading-none">
-          Novo Vinho
-        </button>
+        <ToggleForm />
       </div>
 
       <CreateNewWineForm />
