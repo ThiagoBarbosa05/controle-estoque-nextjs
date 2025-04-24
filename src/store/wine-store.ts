@@ -23,7 +23,8 @@ type WineState = {
 
 export const useWineStore = create<WineState>()(
   persist((set) => ({
-    wine: [{
+    wine: [
+      {
       id: v4(),
       name: "Estandon Brise Maritime Rosé 750mL",
       type: "Rosé",
@@ -31,7 +32,44 @@ export const useWineStore = create<WineState>()(
       price: 89.90,
       country: "França",
       harvest: "2023"
-    }],
+    },
+    {
+      id: v4(),
+      name: "Cobos Felino Cabernet Sauvignon 750mL",
+      type: "Tinto",
+      producer: "Viña Cobos",
+      price: 165.90,
+      country: "Argentina",
+      harvest: "2022"
+    },
+    {
+      id: v4(),
+      name: "Domaine Lafage Nicolas Côtes Catalanes IGP 750mL",
+      type: "Tinto",
+      producer: "Domaine Lafage",
+      price: 312.72,
+      country: "França",
+      harvest: "2021"
+    },
+    {
+      id: v4(),
+      name: "Xavier Vignon Rosé Côtes du Rhône AOP",
+      type: "Rosé",
+      producer: "Xavier Vignon",
+      price: 157.90,
+      country: "França",
+      harvest: "2023"
+    },
+    {
+      id: v4(),
+      name: "Espumante Victoria Geisse Extra Brut Vintage",
+      type: "Espumante",
+      producer: "Cave Geisse",
+      price: 144.90,
+      country: "Brasil",
+      harvest: "2017"
+    }
+  ],
     isOpenForm: false,
     openForm: () => {
       set(() => ({

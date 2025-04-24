@@ -13,7 +13,7 @@ export function CustomerList() {
           <TableCell>{customer.customerName}</TableCell>
           <TableCell>{customer.contact}</TableCell>
           <TableCell>{customer.email}</TableCell>
-          <TableCell>{customer.phone}</TableCell>
+          <TableCell>{customer.phone ?? customer.businessPhone}</TableCell>
           <TableCell>
             <Link
               className="border border-[#0d6efd] text-[#0d6efd] hover:bg-[#0d6efd] hover:text-white transition px-3 py-2 text-sm rounded-sm"
