@@ -11,16 +11,22 @@ import Link from "next/link";
 export default function EstoquePage() {
   return (
     <section>
-      <h2 className="text-4xl font-medium">Controle de Estoque</h2>
+      <h2 className="text-2xl sm:text-4xl font-medium">Controle de Estoque</h2>
 
       <section className="mt-6">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="font-bold text-lg">Vinho</TableHead>
-              <TableHead className="font-bold text-lg">Cliente</TableHead>
-              <TableHead className="font-bold text-lg">Quantidade</TableHead>
-              <TableHead className="font-bold text-lg">
+              <TableHead className="font-bold text-base sm:text-lg">
+                Vinho
+              </TableHead>
+              <TableHead className="font-bold text-base sm:text-lg">
+                Cliente
+              </TableHead>
+              <TableHead className="font-bold text-base sm:text-lg">
+                Quantidade
+              </TableHead>
+              <TableHead className="font-bold text-base sm:text-lg">
                 Última atualização
               </TableHead>
               <TableHead className="font-bold text-lg">Ações</TableHead>
