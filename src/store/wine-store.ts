@@ -3,7 +3,7 @@ import {create} from "zustand"
 import { persist } from "zustand/middleware"
 import {v4} from "uuid"
 
-type Wine = {
+export type Wine = {
   id?: string
   name: string
   harvest?: string

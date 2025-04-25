@@ -1,6 +1,12 @@
 "use client";
 
-import { Contact, LayoutDashboard, ScanBarcode, Wine } from "lucide-react";
+import {
+  CircleDollarSign,
+  Contact,
+  LayoutDashboard,
+  ScanBarcode,
+  Wine,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
@@ -10,6 +16,11 @@ const navLinks = [
     name: "Dashboard",
     href: "/dashboard",
     icon: <LayoutDashboard className="size-[18px]" />,
+  },
+  {
+    name: "Consignados",
+    href: "/consignados",
+    icon: <CircleDollarSign className="size-[18px]" />,
   },
   {
     name: "Cadastro de Vinhos",

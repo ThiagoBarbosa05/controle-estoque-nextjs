@@ -3,7 +3,7 @@ import {create} from "zustand"
 import { persist } from "zustand/middleware"
 import {v4} from "uuid"
 
-type Customer = {
+export type Customer = {
   id?: string
   document: string
   contact?: string
