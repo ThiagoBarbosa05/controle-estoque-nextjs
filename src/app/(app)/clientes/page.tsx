@@ -1,7 +1,7 @@
 import { CustomerList } from "@/components/clientes/customer-list";
-import { CreateNewCustomerForm } from "@/components/clientes/form";
-import { ToggleForm } from "@/components/clientes/form/toggle-form";
+
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import Link from "next/link";
 
 export default function ClientesPage() {
   return (
@@ -10,10 +10,13 @@ export default function ClientesPage() {
         <h2 className="text-xl sm:text-4xl font-medium">
           Gerenciamento de Clientes
         </h2>
-        <ToggleForm />
+        <Link
+          href="/clientes/criar"
+          className="bg-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none"
+        >
+          Criar Novo
+        </Link>
       </div>
-
-      <CreateNewCustomerForm />
 
       <section className="mt-6">
         <Table>

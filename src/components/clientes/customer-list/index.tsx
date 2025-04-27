@@ -1,14 +1,21 @@
-"use client";
-
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useCustomerStore } from "@/store/customer-store";
 import Link from "next/link";
 
-export function CustomerList() {
-  const { customer: customerList } = useCustomerStore();
+// async function listCustomers() {
+//   const response = await fetch("http://localhost:4000/api/customers");
+
+//   return response.json();
+// }
+
+export async function CustomerList() {
+  // const { customer: customerList } = useCustomerStore();
+  // const customers = await listCustomers();
+
+  // console.log(customers);
   return (
     <TableBody>
-      {customerList.map((customer) => (
+      {/* {customerList.map((customer) => (
         <TableRow key={customer.id} className="py-10 text-zinc-800">
           <TableCell>{customer.customerName}</TableCell>
           <TableCell>{customer.contact}</TableCell>
@@ -23,7 +30,7 @@ export function CustomerList() {
             </Link>
           </TableCell>
         </TableRow>
-      ))}
+      ))} */}
     </TableBody>
   );
 }

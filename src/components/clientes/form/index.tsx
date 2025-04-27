@@ -1,175 +1,251 @@
 "use client";
 
-import { zodCNPJ } from "@/lib/cnpj-validator";
+import { createCustomer } from "@/app/actions/create-customer";
+import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { formatCNPJ } from "@/lib/format-cnpj";
 import { formatLandline } from "@/lib/format-landline";
 import { formatPhone } from "@/lib/format-phone";
-import { useCustomerStore } from "@/store/customer-store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { twMerge } from "tailwind-merge";
-import { z } from "zod";
+import { TriangleAlert } from "lucide-react";
 
-const customerFormSchema = z.object({
-  customerName: z.string().min(3, { message: "Insira o nome do cliente" }),
-  contact: z.string().optional(),
-  document: zodCNPJ(),
-  email: z.string().optional(),
-  phone: z
-    .string()
-    .optional()
-    .refine((val) => !val || /^\(\d{2}\) \d{5}-\d{4}$/.test(val), {
-      message: "Número de celular inválido",
-    }),
-
-  businessPhone: z
-    .string()
-    .optional()
-    .refine((val) => !val || /^\(\d{2}\) \d{4}-\d{4}$/.test(val), {
-      message: "Telefone comercial inválido",
-    }),
-});
-
-type FormData = z.infer<typeof customerFormSchema>;
+import Link from "next/link";
+import { useActionState, useState } from "react";
 
 export function CreateNewCustomerForm() {
-  const { createCustomer, isOpenForm } = useCustomerStore();
+  const [cnpj, setCnpj] = useState("");
+  const [cellphone, setCellphone] = useState("");
+  const [businessPhone, setBusinessPhone] = useState("");
 
-  const {
-    control,
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(customerFormSchema),
-    defaultValues: {
-      document: "",
-      phone: "",
-      businessPhone: "",
-    },
-  });
-
-  function onSubmit(newCustomer: FormData) {
-    createCustomer(newCustomer);
-    reset();
-  }
+  const [formState, action, isPending] = useActionState(
+    createCustomer,
+    EMPTY_FORM_STATE
+  );
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={twMerge(
-        "mt-6 border hidden border-zinc-300 p-4 rounded-md",
-        isOpenForm && "block"
+    <form action={action}>
+      <h3 className="text-lg sm:text-2xl mb-5">Adicionar Novo Cliente</h3>
+
+      {formState.status === "ERROR" && (
+        <Alert variant="destructive">
+          <TriangleAlert />
+          <AlertTitle>Não foi possível criar novo cliente</AlertTitle>
+          <AlertDescription>{formState.message}</AlertDescription>
+        </Alert>
       )}
-    >
-      <h3 className="text-lg sm:text-2xl">Adicionar Novo Cliente</h3>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 mt-6 gap-x-5 gap-y-3">
-        <div>
-          <label className="block">Nome do Cliente*</label>
-          <input
-            className="border w-full px-3  py-1.5 border-zinc-300 rounded-sm"
-            type="text"
-            {...register("customerName")}
-          />
-          {errors.customerName && (
-            <span className="text-xs text-destructive">
-              {errors.customerName.message}
-            </span>
-          )}
-        </div>
-
-        <div>
-          <label className="block">CNPJ*</label>
-          <Controller
-            control={control}
-            name="document"
-            render={({ field }) => (
-              <input
-                className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
-                type="text"
-                {...field}
-                placeholder="00.000.000/0000-00"
-                onChange={(e) => field.onChange(formatCNPJ(e.target.value))}
-              />
+      <div className="grid grid-cols-1  my-6 gap-x-5 gap-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-3">
+          <div>
+            <label className="block">Nome do Cliente*</label>
+            <Input
+              type="text"
+              name="name"
+              defaultValue={formState.payload?.get("name")?.toString() ?? ""}
+            />
+            {formState.fieldErrors.name && (
+              <span className="text-destructive pl-1 text-xs block mt-1">
+                {formState.fieldErrors.name}
+              </span>
             )}
-          />
-          {errors.document && (
-            <span className="text-xs text-destructive">
-              {errors.document.message}
-            </span>
-          )}
+          </div>
+          <div>
+            <label className="block">Pessoa de Contato</label>
+            <Input
+              type="text"
+              name="contactPerson"
+              defaultValue={
+                formState.payload?.get("contactPerson")?.toString() ?? ""
+              }
+            />
+          </div>
         </div>
 
-        <div>
-          <label className="block">Pessoa de Contato</label>
-          <input
-            className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
-            type="text"
-            {...register("contact")}
-          />
-        </div>
-        <div>
-          <label className="block">Email</label>
-          <input
-            className="border w-full px-3  py-1.5 border-zinc-300 rounded-sm"
-            type="email"
-            {...register("email")}
-            placeholder="exemplo@email.com"
-          />
-          {errors.email && (
-            <span className="text-xs text-destructive">
-              {errors.email.message}
-            </span>
-          )}
-        </div>
-        <div>
-          <label className="block">Celular</label>
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => (
-              <input
-                {...field}
-                className="border w-full px-3  py-1.5 border-zinc-300 rounded-sm"
-                type="text"
-                onChange={(e) => field.onChange(formatPhone(e.target.value))}
-                placeholder="(00) 00000-0000"
-              />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-3">
+          <div>
+            <label className="block">CNPJ*</label>
+
+            <Input
+              type="text"
+              value={cnpj}
+              name="document"
+              placeholder="00.000.000/0000-00"
+              defaultValue={
+                formState.payload?.get("document")?.toString() ?? ""
+              }
+              onChange={(e) => setCnpj(formatCNPJ(e.target.value))}
+            />
+
+            {formState.fieldErrors.document && (
+              <span className="text-destructive pl-1 text-xs block mt-1">
+                {formState.fieldErrors.document}
+              </span>
             )}
-          />
-          {errors.phone && (
-            <span className="text-xs text-destructive">
-              {errors.phone.message}
-            </span>
-          )}
-        </div>
-        <div>
-          <label className="block">Telefone comercial</label>
-          <Controller
-            name="businessPhone"
-            control={control}
-            render={({ field }) => (
-              <input
-                {...field}
-                className="border w-full px-3  py-1.5 border-zinc-300 rounded-sm"
-                onChange={(e) => field.onChange(formatLandline(e.target.value))}
-                placeholder="(00) 0000-0000"
-              />
+          </div>
+          <div>
+            <label className="block">Inscrição Estadual*</label>
+            <Input
+              type="text"
+              name="stateRegistration"
+              defaultValue={
+                formState.payload?.get("stateRegistration")?.toString() ?? ""
+              }
+            />
+            {formState.fieldErrors.stateRegistration && (
+              <span className="text-destructive pl-1 text-xs block mt-1">
+                {formState.fieldErrors.stateRegistration}
+              </span>
             )}
-          />
-          {errors.businessPhone && (
-            <span className="text-xs text-destructive">
-              {errors.businessPhone.message}
-            </span>
-          )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-4 gap-x-3">
+          <div>
+            <label className="block">Email</label>
+            <Input
+              type="email"
+              placeholder="exemplo@email.com"
+              name="email"
+              defaultValue={formState.payload?.get("email")?.toString() ?? ""}
+            />
+            {formState.fieldErrors.email && (
+              <span className="text-destructive pl-1 text-xs block mt-1">
+                {formState.fieldErrors.email}
+              </span>
+            )}
+          </div>
+
+          <div>
+            <label className="block">Celular</label>
+
+            <Input
+              type="text"
+              value={cellphone}
+              onChange={(e) => setCellphone(formatPhone(e.target.value))}
+              defaultValue={
+                formState.payload?.get("cellphone")?.toString() ?? ""
+              }
+              placeholder="(00) 00000-0000"
+              name="cellphone"
+            />
+
+            {formState.fieldErrors.cellphone && (
+              <span className="text-destructive pl-1 text-xs block mt-1">
+                {formState.fieldErrors.cellphone}
+              </span>
+            )}
+          </div>
+
+          <div>
+            <label className="block">Telefone comercial</label>
+
+            <Input
+              value={businessPhone}
+              onChange={(e) => setBusinessPhone(formatLandline(e.target.value))}
+              placeholder="(00) 0000-0000"
+              defaultValue={
+                formState.payload?.get("businessPhone")?.toString() ?? ""
+              }
+              name="businessPhone"
+            />
+
+            {formState.fieldErrors.businessPhone && (
+              <span className="text-destructive pl-1 text-xs block mt-1">
+                {formState.fieldErrors.businessPhone}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
-      <button className="bg-[#0d6efd] w-full sm:w-[initial] mt-6 py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none">
-        Salvar
-      </button>
+      <Separator />
+
+      <div className="my-6">
+        <h3 className="text-lg sm:text-2xl">Endereço</h3>
+        <div className="grid grid-cols-1 mt-5 gap-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-4">
+            <div>
+              <label className="block">Endereço</label>
+              <Input
+                type="text"
+                name="streetAddress"
+                defaultValue={
+                  formState.payload?.get("streetAddress")?.toString() ?? ""
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block">Número</label>
+              <Input
+                type="text"
+                name="number"
+                defaultValue={
+                  formState.payload?.get("number")?.toString() ?? ""
+                }
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-3 gap-y-4">
+            <div>
+              <label className="block">CEP</label>
+              <Input
+                type="text"
+                name="zipCode"
+                defaultValue={
+                  formState.payload?.get("zipCode")?.toString() ?? ""
+                }
+              />
+              {formState.fieldErrors.address && (
+                <span className="text-destructive pl-1 text-xs block mt-1">
+                  {formState.fieldErrors.address}
+                </span>
+              )}
+            </div>
+
+            <div>
+              <label className="block">Cidade</label>
+              <Input
+                type="text"
+                name="city"
+                defaultValue={formState.payload?.get("city")?.toString() ?? ""}
+              />
+            </div>
+
+            <div>
+              <label className="block">Estado</label>
+              <Input
+                type="text"
+                name="state"
+                defaultValue={formState.payload?.get("state")?.toString() ?? ""}
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block">Bairro</label>
+            <Input
+              type="text"
+              name="neighborhood"
+              defaultValue={
+                formState.payload?.get("neighborhood")?.toString() ?? ""
+              }
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <button className="bg-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none">
+          Salvar
+        </button>
+        <Link
+          href="/clientes"
+          className="border border-[#0d6efd] text-center text-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer rounded-sm leading-none"
+        >
+          Cancelar
+        </Link>
+      </div>
     </form>
   );
 }

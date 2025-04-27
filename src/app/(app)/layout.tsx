@@ -11,7 +11,7 @@ export default function AppLayout({
       <Header />
       <div className="flex flex-1">
         <Sidebar />
-        <main className="p-5 mt-6 overflow-x-hidden flex-1">{children}</main>;
+        <main className="p-5 mt-6 overflow-x-hidden flex-1">{children}</main>
       </div>
     </div>
   );
