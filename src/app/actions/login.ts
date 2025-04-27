@@ -37,6 +37,7 @@ export async function login(formState: FormState, formData: FormData) {
 
    cookieStore.set("access_token", result.accessToken)
   } catch (error) {
+    console.log("Error Login", error)
       return ActionsResponse.onError({
         err: error, 
         status: "ERROR", 

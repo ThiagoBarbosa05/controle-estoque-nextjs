@@ -2,9 +2,11 @@
 
 import { createCustomer } from "@/app/actions/create-customer";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
+import { updateCustomer } from "@/app/actions/update-customer";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { CustomerDetails } from "@/interfaces/get-customer-details-response";
 import { formatCNPJ } from "@/lib/format-cnpj";
 import { formatLandline } from "@/lib/format-landline";
 import { formatPhone } from "@/lib/format-phone";
@@ -13,13 +15,19 @@ import { TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { useActionState, useState } from "react";
 
-export function CreateNewCustomerForm() {
-  const [cnpj, setCnpj] = useState("");
-  const [cellphone, setCellphone] = useState("");
-  const [businessPhone, setBusinessPhone] = useState("");
+interface CustomerFormProps {
+  customerToEdit?: CustomerDetails | null;
+}
+
+export function CustomerForm({ customerToEdit }: CustomerFormProps) {
+  const [cnpj, setCnpj] = useState(customerToEdit?.document ?? "");
+  const [cellphone, setCellphone] = useState(customerToEdit?.cellphone ?? "");
+  const [businessPhone, setBusinessPhone] = useState(
+    customerToEdit?.businessPhone ?? ""
+  );
 
   const [formState, action, isPending] = useActionState(
-    createCustomer,
+    customerToEdit ? updateCustomer : createCustomer,
     EMPTY_FORM_STATE
   );
 
@@ -36,13 +44,18 @@ export function CreateNewCustomerForm() {
       )}
 
       <div className="grid grid-cols-1  my-6 gap-x-5 gap-y-4">
+        <input type="hidden" name="customerId" value={customerToEdit?.id} />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-3">
           <div>
             <label className="block">Nome do Cliente*</label>
             <Input
               type="text"
               name="name"
-              defaultValue={formState.payload?.get("name")?.toString() ?? ""}
+              defaultValue={
+                formState.payload?.get("name")?.toString() ??
+                customerToEdit?.name ??
+                ""
+              }
             />
             {formState.fieldErrors.name && (
               <span className="text-destructive pl-1 text-xs block mt-1">
@@ -56,7 +69,9 @@ export function CreateNewCustomerForm() {
               type="text"
               name="contactPerson"
               defaultValue={
-                formState.payload?.get("contactPerson")?.toString() ?? ""
+                formState.payload?.get("contactPerson")?.toString() ??
+                customerToEdit?.contactPerson ??
+                ""
               }
             />
           </div>
@@ -72,7 +87,7 @@ export function CreateNewCustomerForm() {
               name="document"
               placeholder="00.000.000/0000-00"
               defaultValue={
-                formState.payload?.get("document")?.toString() ?? ""
+                formState.payload?.get("document")?.toString() ?? cnpj
               }
               onChange={(e) => setCnpj(formatCNPJ(e.target.value))}
             />
@@ -89,7 +104,9 @@ export function CreateNewCustomerForm() {
               type="text"
               name="stateRegistration"
               defaultValue={
-                formState.payload?.get("stateRegistration")?.toString() ?? ""
+                formState.payload?.get("stateRegistration")?.toString() ??
+                customerToEdit?.stateRegistration ??
+                ""
               }
             />
             {formState.fieldErrors.stateRegistration && (
@@ -107,7 +124,11 @@ export function CreateNewCustomerForm() {
               type="email"
               placeholder="exemplo@email.com"
               name="email"
-              defaultValue={formState.payload?.get("email")?.toString() ?? ""}
+              defaultValue={
+                formState.payload?.get("email")?.toString() ??
+                customerToEdit?.email ??
+                ""
+              }
             />
             {formState.fieldErrors.email && (
               <span className="text-destructive pl-1 text-xs block mt-1">
@@ -124,7 +145,7 @@ export function CreateNewCustomerForm() {
               value={cellphone}
               onChange={(e) => setCellphone(formatPhone(e.target.value))}
               defaultValue={
-                formState.payload?.get("cellphone")?.toString() ?? ""
+                formState.payload?.get("cellphone")?.toString() ?? cellphone
               }
               placeholder="(00) 00000-0000"
               name="cellphone"
@@ -145,7 +166,8 @@ export function CreateNewCustomerForm() {
               onChange={(e) => setBusinessPhone(formatLandline(e.target.value))}
               placeholder="(00) 0000-0000"
               defaultValue={
-                formState.payload?.get("businessPhone")?.toString() ?? ""
+                formState.payload?.get("businessPhone")?.toString() ??
+                businessPhone
               }
               name="businessPhone"
             />
@@ -171,7 +193,9 @@ export function CreateNewCustomerForm() {
                 type="text"
                 name="streetAddress"
                 defaultValue={
-                  formState.payload?.get("streetAddress")?.toString() ?? ""
+                  formState.payload?.get("streetAddress")?.toString() ??
+                  customerToEdit?.address.streetAddress ??
+                  ""
                 }
               />
             </div>
@@ -182,7 +206,9 @@ export function CreateNewCustomerForm() {
                 type="text"
                 name="number"
                 defaultValue={
-                  formState.payload?.get("number")?.toString() ?? ""
+                  formState.payload?.get("number")?.toString() ??
+                  customerToEdit?.address.number ??
+                  ""
                 }
               />
             </div>
@@ -194,7 +220,9 @@ export function CreateNewCustomerForm() {
                 type="text"
                 name="zipCode"
                 defaultValue={
-                  formState.payload?.get("zipCode")?.toString() ?? ""
+                  formState.payload?.get("zipCode")?.toString() ??
+                  customerToEdit?.address.zipCode ??
+                  ""
                 }
               />
               {formState.fieldErrors.address && (
@@ -209,7 +237,11 @@ export function CreateNewCustomerForm() {
               <Input
                 type="text"
                 name="city"
-                defaultValue={formState.payload?.get("city")?.toString() ?? ""}
+                defaultValue={
+                  formState.payload?.get("city")?.toString() ??
+                  customerToEdit?.address.city ??
+                  ""
+                }
               />
             </div>
 
@@ -218,7 +250,11 @@ export function CreateNewCustomerForm() {
               <Input
                 type="text"
                 name="state"
-                defaultValue={formState.payload?.get("state")?.toString() ?? ""}
+                defaultValue={
+                  formState.payload?.get("state")?.toString() ??
+                  customerToEdit?.address.state ??
+                  ""
+                }
               />
             </div>
           </div>
@@ -228,15 +264,20 @@ export function CreateNewCustomerForm() {
               type="text"
               name="neighborhood"
               defaultValue={
-                formState.payload?.get("neighborhood")?.toString() ?? ""
+                formState.payload?.get("neighborhood")?.toString() ??
+                customerToEdit?.address.neighborhood ??
+                ""
               }
             />
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
-        <button className="bg-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none">
+      <div className="flex flex-col sm:flex-row gap-4">
+        <button
+          disabled={isPending}
+          className="bg-[#0d6efd] disabled:bg-[#0d6dfdad] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none"
+        >
           Salvar
         </button>
         <Link

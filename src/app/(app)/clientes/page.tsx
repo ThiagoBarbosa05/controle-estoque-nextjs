@@ -22,21 +22,11 @@ export default function ClientesPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="font-bold text-base sm:text-lg">
-                Nome
-              </TableHead>
-              <TableHead className="font-bold text-base sm:text-lg">
-                Contato
-              </TableHead>
-              <TableHead className="font-bold text-base sm:text-lg">
-                Email
-              </TableHead>
-              <TableHead className="font-bold text-base sm:text-lg">
-                Telefone
-              </TableHead>
-              <TableHead className="font-bold text-base sm:text-lg">
-                Ações
-              </TableHead>
+              <TableHead className="font-bold text-sm">Nome</TableHead>
+              <TableHead className="font-bold text-sm">Contato</TableHead>
+              <TableHead className="font-bold text-sm">Email</TableHead>
+              <TableHead className="font-bold text-sm">Telefone</TableHead>
+              <TableHead className="font-bold text-sm">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <CustomerList />

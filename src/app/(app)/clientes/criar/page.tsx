@@ -1,5 +1,5 @@
-import { CreateNewCustomerForm } from "@/components/clientes/form";
+import { CustomerForm } from "@/components/clientes/form/customer-form";
 
 export default function CreateCustomerPage() {
-  return <CreateNewCustomerForm />;
+  return <CustomerForm />;
 }

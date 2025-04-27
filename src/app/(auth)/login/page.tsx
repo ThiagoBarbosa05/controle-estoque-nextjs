@@ -10,8 +10,9 @@ import { UserCircle } from "lucide-react";
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <Card>
+    <div className="flex relative flex-col items-center bg-[#93173c]/90  justify-center min-h-screen">
+      <span className="absolute inset-0 bg-zinc-950/70"></span>
+      <Card className="z-20">
         <CardHeader>
           <CardTitle className="text-center text-[#93173c] text-xl">
             Bem vindo ao Controle de Estoque
