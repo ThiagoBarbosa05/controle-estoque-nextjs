@@ -10,7 +10,7 @@ async function getCustomerDetails(
   const accessToken = await getToken();
 
   const response = await fetch(
-    ${process.env.API_BASE_URL}/customers/${customerId}`,
+    `${process.env.API_BASE_URL}/customers/${customerId}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
