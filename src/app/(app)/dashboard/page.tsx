@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 
 async function getDashboardMetrics(): Promise<{ count: number }> {
-  const response = await fetch("http://localhost:4000/api/metrics", {
+  const response = await fetch(`${process.env.API_BASE_URL}/metrics`, {
     cache: "force-cache",
     next: { tags: ["dashboard-metrics"] },
   });

@@ -18,7 +18,7 @@ export async function login(formState: FormState, formData: FormData) {
     password: formData.get("password")
    })
 
-   const response = await fetch("http://localhost:4000/api/authenticate", {
+   const response = await fetch(`${process.env.API_BASE_URL}/authenticate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

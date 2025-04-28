@@ -68,7 +68,7 @@ export async function updateCustomer(formState: FormState, formData: FormData) {
 
     const accessToken = await getToken()
 
-    const response = await fetch(`http://localhost:4000/api/customers/${customer.customerId}`, {
+    const response = await fetch(`${process.env.API_BASE_URL}/customers/${customer.customerId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

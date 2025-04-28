@@ -95,7 +95,7 @@ export async function createCustomer(formState: FormState, formData: FormData) {
 
 
 
-    const response = await fetch("http://localhost:4000/api/customers", {
+    const response = await fetch(`${process.env.API_BASE_URL}/customers`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

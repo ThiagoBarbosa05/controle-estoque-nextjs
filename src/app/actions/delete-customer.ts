@@ -9,7 +9,7 @@ export async function deleteCustomer(customerId: string) {
 
   const accessToken = await getToken()
 
-  const response = await fetch(`http://localhost:4000/api/customers/${customerId}`, {
+  const response = await fetch(`${process.env.API_BASE_URL}/customers/${customerId}`, {
     method: "PATCH",
     headers: {
       Authorization: `Bearer ${accessToken}`
