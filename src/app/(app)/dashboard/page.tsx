@@ -10,13 +10,24 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 
-export default function DashboardPage() {
+async function getDashboardMetrics(): Promise<{ count: number }> {
+  const response = await fetch("http://localhost:4000/api/metrics", {
+    cache: "force-cache",
+    next: { tags: ["dashboard-metrics"] },
+  });
+
+  return response.json();
+}
+
+export default async function DashboardPage() {
+  const metrics = await getDashboardMetrics();
+
   return (
     <section>
       <h2 className="text-2xl sm:text-4xl font-medium">Dashboard</h2>
       {/* Resumo Dados */}
       <div className="grid mt-5 grid-cols-1 sm:grid-cols-3 gap-5">
-        <CardCustomer />
+        <CardCustomer customersQuantity={metrics.count} />
 
         <CardWine />
 

@@ -2,12 +2,18 @@
 
 import { redirect } from "next/navigation"
 import { ActionsResponse } from "./error-handler"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
+import { getToken } from "../auth/get-token"
 
 export async function deleteCustomer(customerId: string) {
 
+  const accessToken = await getToken()
+
   const response = await fetch(`http://localhost:4000/api/customers/${customerId}`, {
-    method: "PATCH"
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
   })
 
   if(response.status !== 204) {
@@ -15,6 +21,7 @@ export async function deleteCustomer(customerId: string) {
     return ActionsResponse.onError({err: new Error(result.message), status: "ERROR"})
   }
 
+  revalidateTag("dashboard-metrics")
   revalidatePath("/clientes")
   redirect("/clientes")
 }

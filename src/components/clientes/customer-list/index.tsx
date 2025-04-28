@@ -1,11 +1,15 @@
+import { getToken } from "@/app/auth/get-token";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
 import Link from "next/link";
 
 async function listCustomers(): Promise<ListCustomerResponse> {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  const accessToken = await getToken();
   const response = await fetch("http://localhost:4000/api/customers", {
-    // cache: "force-cache",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    cache: "force-cache",
   });
 
   return response.json();
@@ -14,7 +18,6 @@ async function listCustomers(): Promise<ListCustomerResponse> {
 export async function CustomerList() {
   const { customers } = await listCustomers();
 
-  console.log(customers);
   return (
     <TableBody>
       {customers.map((customer) => (

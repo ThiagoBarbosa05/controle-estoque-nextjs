@@ -4,8 +4,9 @@ import { z } from "zod";
 import { ActionsResponse, FormState } from "./error-handler";
 import { zodCNPJ } from "@/lib/cnpj-validator";
 import { zodCepValidator } from "@/lib/cep-validator";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
+import { getToken } from "../auth/get-token";
 
 const cellphoneRegex = /^(\(?\d{2}\)?\s?)?(9\d{4})-?(\d{4})$/;
 const businessPhoneRegex = /^(\(?\d{2}\)?\s?)?(\d{4})-?(\d{4})$/;
@@ -90,10 +91,15 @@ export async function createCustomer(formState: FormState, formData: FormData) {
       stateRegistration: formData.get("stateRegistration"),
     })
 
+    const accessToken = await getToken()
+
+
+
     const response = await fetch("http://localhost:4000/api/customers", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`
       },
       body: JSON.stringify(newCustomer)
     })
@@ -108,6 +114,7 @@ export async function createCustomer(formState: FormState, formData: FormData) {
     return ActionsResponse.onError({err: error, status: "ERROR", payload: formData})
   }
 
+  revalidateTag("dashboard-metrics")
   revalidatePath("/clientes")
   redirect(`/clientes`)
 }

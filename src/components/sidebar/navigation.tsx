@@ -5,6 +5,7 @@ import {
   Contact,
   LayoutDashboard,
   ScanBarcode,
+  Users,
   Wine,
 } from "lucide-react";
 import Link from "next/link";
@@ -31,6 +32,11 @@ const navLinks = [
     name: "Clientes",
     href: "/clientes",
     icon: <Contact className="size-[18px]" />,
+  },
+  {
+    name: "Usuários",
+    href: "/usuarios",
+    icon: <Users className="size-[18px]" />,
   },
   {
     name: "Controle de Estoque",

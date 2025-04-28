@@ -1,3 +1,4 @@
+import { getToken } from "@/app/auth/get-token";
 import { DeleteCustomer } from "@/components/clientes/delete-customer";
 import { Separator } from "@/components/ui/separator";
 import { GetCustomerDetailsResponse } from "@/interfaces/get-customer-details-response";
@@ -8,12 +9,16 @@ type Params = Promise<{ customerId: string }>;
 async function getCustomerDetails(
   customerId: string
 ): Promise<GetCustomerDetailsResponse> {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  const accessToken = await getToken();
+
   const response = await fetch(
-    `http://localhost:4000/api/customers/${customerId}`
-    // {
-    //   cache: "force-cache",
-    // }
+    `http://localhost:4000/api/customers/${customerId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      cache: "force-cache",
+    }
   );
 
   if (!response.ok) {
@@ -34,7 +39,7 @@ export default async function CustomerDetailsPage({
   return (
     <>
       {!customer ? (
-        <div className="">Cliente nao encontrado!</div>
+        <div className="">Cliente nao encontrado! {customerId}</div>
       ) : (
         <section>
           <div className="pb-6">
