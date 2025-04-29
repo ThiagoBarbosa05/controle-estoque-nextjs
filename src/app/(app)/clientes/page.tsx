@@ -12,7 +12,7 @@ export default function ClientesPage() {
         </h2>
         <Link
           href="/clientes/criar"
-          className="bg-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none"
+          className="bg-[#0d6efd] whitespace-nowrap sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none"
         >
           Criar Novo
         </Link>

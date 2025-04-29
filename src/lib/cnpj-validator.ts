@@ -34,7 +34,7 @@ export function isValidCNPJ(cnpj: string): boolean {
 
 export const zodCNPJ = () => 
   z.string()
-    .min(14, {message: "CNPJ deve ter no mínimo 14 caracteres"})
+    .min(14, {message: "CNPJ deve ter no mínimo 14 caracteres."})
     .refine(isValidCNPJ, {
-      message: "CNPJ inválido",
+      message: " CNPJ inválido",
     })

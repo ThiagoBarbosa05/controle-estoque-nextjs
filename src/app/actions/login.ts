@@ -35,7 +35,11 @@ export async function login(formState: FormState, formData: FormData) {
 
    const cookieStore = await cookies()
 
-   cookieStore.set("access_token", result.accessToken)
+   cookieStore.set("access_token", result.accessToken, {
+    maxAge: 25200,
+    httpOnly: true,
+    path: "/"
+   })
   } catch (error) {
     console.log("Error Login", error)
       return ActionsResponse.onError({

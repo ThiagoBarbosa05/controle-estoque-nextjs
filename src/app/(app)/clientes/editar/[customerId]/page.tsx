@@ -10,7 +10,7 @@ async function getCustomerDetails(
   const accessToken = await getToken();
 
   const response = await fetch(
-    `http://localhost:4000/api/customers/${customerId}`,
+    `${process.env.API_BASE_URL}/customers/${customerId}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
