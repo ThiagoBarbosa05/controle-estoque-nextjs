@@ -7,6 +7,7 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import { Navigation } from "./navigation";
+import { ButtonLogout } from "./button-logout";
 
 export function MenuMobile() {
   return (
@@ -19,6 +20,7 @@ export function MenuMobile() {
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
         <Navigation />
+        <ButtonLogout />
       </SheetContent>
     </Sheet>
   );
