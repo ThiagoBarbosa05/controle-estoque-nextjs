@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache"
 export async function deleteUser(userId: string) {
   
   try {
-    const accessToken = getToken()
+    const accessToken = await getToken()
       const response = await fetch(`${process.env.API_BASE_URL}/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
