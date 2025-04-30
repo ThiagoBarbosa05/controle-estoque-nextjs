@@ -1,0 +1,32 @@
+"use server"
+
+import { redirect } from "next/navigation"
+import { getToken } from "../auth/get-token"
+import { ActionsResponse } from "./error-handler"
+import { revalidatePath } from "next/cache"
+
+export async function deleteUser(userId: string) {
+  
+  try {
+    const accessToken = getToken()
+      const response = await fetch(`${process.env.API_BASE_URL}/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        method: "DELETE"
+      })
+
+      // if(response.status !== 204) {
+      //   throw new Error("Não foi possível deletar o usuário")
+      // }
+
+      console.log(await response.json())
+  }
+  catch (error) {
+    console.log(error)
+    return ActionsResponse.onError({err: error, status: "ERROR"})
+  }
+
+  revalidatePath("/usuarios")
+  redirect("/usuarios")
+}

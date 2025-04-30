@@ -1,5 +1,12 @@
 import { getToken } from "@/app/auth/get-token";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
+import {
   Table,
   TableBody,
   TableCell,
@@ -7,8 +14,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DeleteUserButton } from "@/components/usuarios/delete-user-button";
 import { ListUsersResponse } from "@/interfaces/list-users-response";
 import { format } from "date-fns";
+import { EllipsisVertical, Pen } from "lucide-react";
 import Link from "next/link";
 
 async function listUsers(): Promise<ListUsersResponse> {
@@ -49,6 +58,7 @@ export default async function UsersPage() {
               <TableHead className="font-bold text-sm">
                 Data de Criação
               </TableHead>
+              <TableHead className="font-bold text-sm">Ações</TableHead>
             </TableRow>
           </TableHeader>
           {!usersList || usersList.users.length === 0 ? (
@@ -64,6 +74,27 @@ export default async function UsersPage() {
                     {user.customer ? user.customer.name : ""}
                   </TableCell>
                   <TableCell>{format(user.createdAt, "dd/MM/yyyy")}</TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="border  p-1 rounded-full cursor-pointer hover:bg-accent">
+                        <EllipsisVertical className="size-5" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>
+                          <Link
+                            href={`/usuarios/editar/${user.id}`}
+                            className="text-sm w-full flex items-center gap-2"
+                          >
+                            <Pen className="size-3" /> Editar
+                          </Link>
+                        </DropdownMenuItem>
+                        <Separator className="my-1" />
+                        <DropdownMenuItem>
+                          <DeleteUserButton userId={user.id} />
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -1,7 +1,7 @@
 "use client";
 
-import { createUser } from "@/app/actions/create-user";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
+import { updateUser } from "@/app/actions/update.use";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -12,23 +12,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { User } from "@/interfaces/get-user-response";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
 import { LoaderCircle, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useActionState, useState, useTransition } from "react";
+import { twMerge } from "tailwind-merge";
 import { useDebouncedCallback } from "use-debounce";
 
-interface UserFormProps {
+interface EditUserFormProps {
   roles: { id: string; name: string }[];
   customers: ListCustomerResponse;
+  user?: User;
 }
 
-export function UserForm({ roles, customers: customerList }: UserFormProps) {
-  const [roleSelected, setRoleSelected] = useState(false);
+export function EditUserForm({
+  customers: customerList,
+  roles,
+  user,
+}: EditUserFormProps) {
+  const [roleSelected, setRoleSelected] = useState(
+    user?.roles[0].name === "cliente"
+  );
   const [isPendingCustomer, startTransition] = useTransition();
   const [formState, action, isPending] = useActionState(
-    createUser,
+    updateUser,
     EMPTY_FORM_STATE
   );
 
@@ -47,7 +56,7 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
     });
-  }, 300);
+  }, 400);
 
   function handleSelectRole(roleId: string) {
     const role = roles.find((role) => role.id === roleId);
@@ -60,8 +69,6 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
     setRoleSelected(false);
   }
 
-  console.log(formState);
-
   return (
     <form action={action}>
       <h3 className="text-lg sm:text-2xl mb-5">Adicionar Novo Usuário</h3>
@@ -73,7 +80,9 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
         </Alert>
       )}
       <div className="grid grid-cols-1  my-6 gap-x-5 gap-y-4">
-        <input type="hidden" name="customerId" />
+        <input type="hidden" name="userId" value={user?.id} />
+
+        {/* <input type="hidden" name="customerId" /> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-3">
           <div>
             <label className="block">Nome*</label>
@@ -81,7 +90,9 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
               type="text"
               name="name"
               placeholder="nome do usuário"
-              defaultValue={formState.payload?.get("name")?.toString() ?? ""}
+              defaultValue={
+                formState.payload?.get("name")?.toString() ?? user?.name ?? ""
+              }
             />
             {formState.fieldErrors.name && (
               <span className="text-destructive pl-1 text-xs block mt-1">
@@ -95,7 +106,9 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
               type="text"
               name="email"
               placeholder="exemplo@email.com"
-              defaultValue={formState.payload?.get("email")?.toString() ?? ""}
+              defaultValue={
+                formState.payload?.get("email")?.toString() ?? user?.email ?? ""
+              }
             />
             {formState.fieldErrors.email && (
               <span className="text-destructive pl-1 text-xs block mt-1">
@@ -104,7 +117,7 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
             )}
           </div>
           <div>
-            <label className="block">Senha*</label>
+            <label className="block">Nova Senha*</label>
             <Input
               type="password"
               name="password"
@@ -124,6 +137,7 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
             <Select
               name="role"
               onValueChange={(value) => handleSelectRole(value)}
+              defaultValue={user?.roles[0].id}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Selecione o cargo do usuário" />
@@ -146,7 +160,7 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
       </div>
 
       {roleSelected && (
-        <div>
+        <div className={twMerge(!roleSelected && "hidden")}>
           <h4 className="mb-3 text-lg sm:text-xl">
             Associe um cliente ao usuário:
           </h4>
@@ -177,11 +191,7 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
               <RadioGroup
                 name="customer"
                 className="gap-0"
-                defaultValue={
-                  customerList.customers.length > 0
-                    ? customerList.customers[0].id
-                    : ""
-                }
+                defaultValue={user ? user.customer.id : ""}
               >
                 {customerList.customers.map((customer) => (
                   <div
