@@ -16,11 +16,9 @@ export async function deleteUser(userId: string) {
         method: "DELETE"
       })
 
-      // if(response.status !== 204) {
-      //   throw new Error("Não foi possível deletar o usuário")
-      // }
-
-      console.log(await response.json())
+      if (!response.ok) {
+        throw new Error("Erro ao deletar usuário.")
+      }
   }
   catch (error) {
     console.log(error)
