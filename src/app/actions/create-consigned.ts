@@ -4,7 +4,6 @@ import { z } from "zod";
 import { ActionsResponse, FormState } from "./error-handler";
 import { getToken } from "../auth/get-token";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 const createConsignedSchema = z.object({
   customerId: z.string({

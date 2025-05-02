@@ -2,16 +2,8 @@
 import { useCustomerStore } from "@/store/customer-store";
 import { useWineStore } from "@/store/wine-store";
 import { LoaderCircle, X } from "lucide-react";
-import {
-  startTransition,
-  useActionState,
-  useEffect,
-  useState,
-  useTransition,
-} from "react";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { useTransition } from "react";
 import { twMerge } from "tailwind-merge";
-import Select from "react-select";
 import {
   Table,
   TableBody,
@@ -20,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useConsignedStore } from "@/store/consigned-store";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { Customer } from "@/interfaces/list-customer-response";
@@ -42,7 +33,6 @@ export function CreateNewConsignedForm({
     customer: customerStore,
     deleteCustomer,
     createCustomer,
-    reset: resetCustomer,
   } = useCustomerStore();
 
   const {
@@ -52,10 +42,10 @@ export function CreateNewConsignedForm({
     reset: resetWines,
   } = useWineStore();
 
-  const [formState, action, isPending] = useActionState(
-    createConsigned,
-    EMPTY_FORM_STATE
-  );
+  // const [formState, action, isPending] = useActionState(
+  //   createConsigned,
+  //   EMPTY_FORM_STATE
+  // );
 
   const [isPendingCustomer, startTransitionCustomer] = useTransition();
   const [isPendingWine, startTransitionWine] = useTransition();

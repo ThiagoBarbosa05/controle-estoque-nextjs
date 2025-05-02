@@ -1,4 +1,3 @@
-import { Pen } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -8,11 +7,7 @@ import {
 } from "../ui/sheet";
 import { WineForm } from "./form";
 
-export default function EditWineSheet({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function EditWineSheet() {
   return (
     <Sheet>
       <SheetTrigger className="text-sm cursor-pointer w-full flex items-center gap-2"></SheetTrigger>

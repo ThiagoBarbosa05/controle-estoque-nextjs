@@ -4,7 +4,6 @@ import { Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import { startTransition } from "react";
 
 export function SearchWine() {
   const searchParams = useSearchParams();

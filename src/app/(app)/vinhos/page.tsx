@@ -1,28 +1,12 @@
 import { getToken } from "@/app/auth/get-token";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Loading } from "@/components/ui/loading";
-import { Separator } from "@/components/ui/separator";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { DeleteUserButton } from "@/components/usuarios/delete-user-button";
-import { DeleteWineButton } from "@/components/vinhos/delete-wine-button";
+
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+
 import { SearchWine } from "@/components/vinhos/search-wine";
 import { WinesList } from "@/components/vinhos/wines-list";
 
 import { ListWinesResponse } from "@/interfaces/list-wines-response";
-import { formatCurrencyInput } from "@/lib/format-currency";
-import { EllipsisVertical, Pen, Search } from "lucide-react";
+
 import Link from "next/link";
 import { Suspense } from "react";
 

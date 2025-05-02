@@ -1,6 +1,5 @@
 "use client";
 
-import { deleteUser } from "@/app/actions/delete-user";
 import { deleteWine } from "@/app/actions/delete-wine";
 import { Trash } from "lucide-react";
 import { useTransition } from "react";
