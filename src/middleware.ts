@@ -10,5 +10,5 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/((?!general).*)', '/dashboard', '/clientes', '/clientes/((?!general).*)'],
+  matcher: ['/dashboard/((?!general).*)', '/dashboard', '/clientes', '/clientes/((?!general).*)', '/usuarios', '/usuarios/((?!general).*)'],
 }

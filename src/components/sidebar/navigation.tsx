@@ -25,7 +25,7 @@ const navLinks = [
   },
   {
     name: "Cadastro de Vinhos",
-    href: "/cadastro/vinhos",
+    href: "/vinhos",
     icon: <Wine className="size-[18px]" />,
   },
   {

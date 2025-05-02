@@ -83,8 +83,9 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
 
             <Input
               type="text"
-              value={cnpj}
+              value={cnpj || ""}
               name="document"
+              inputMode="numeric"
               placeholder="00.000.000/0000-00"
               defaultValue={
                 formState.payload?.get("document")?.toString() ?? cnpj
@@ -142,7 +143,8 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
 
             <Input
               type="text"
-              value={cellphone}
+              value={cellphone || ""}
+              inputMode="numeric"
               onChange={(e) => setCellphone(formatPhone(e.target.value))}
               defaultValue={
                 formState.payload?.get("cellphone")?.toString() ?? cellphone
@@ -162,7 +164,8 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             <label className="block">Telefone comercial</label>
 
             <Input
-              value={businessPhone}
+              value={businessPhone || ""}
+              inputMode="numeric"
               onChange={(e) => setBusinessPhone(formatLandline(e.target.value))}
               placeholder="(00) 0000-0000"
               defaultValue={

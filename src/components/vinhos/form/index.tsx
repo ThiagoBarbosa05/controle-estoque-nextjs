@@ -1,158 +1,252 @@
 "use client";
 
+import { createWine } from "@/app/actions/create-wine";
+import { editWine } from "@/app/actions/edit-wine";
+import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Wine } from "@/interfaces/list-wines-response";
 import { formatCurrencyInput } from "@/lib/format-currency";
-import { parseCurrencyToNumber } from "@/lib/parse-currency";
-import { useWineStore } from "@/store/wine-store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { twMerge } from "tailwind-merge";
-import { z } from "zod";
+import { TriangleAlert } from "lucide-react";
+import Link from "next/link";
+import { useActionState, useState } from "react";
 
-const wineFormSchema = z.object({
-  name: z.string().min(1, { message: "Insira o nome do vinho" }),
-  harvest: z.string().optional(),
-  type: z.string().min(1, { message: "Insira o tipo do vinho" }),
-  price: z.string().min(1, { message: "Insira o preço do vinho" }),
-  producer: z.string().optional(),
-  country: z.string().optional(),
-});
+const wineTypes = [
+  { id: "Tinto", name: "Tinto" },
+  { id: "Branco", name: "Branco" },
+  { id: "Rose", name: "Rose" },
+  { id: "Espumante", name: "Espumante" },
 
-type FormData = z.infer<typeof wineFormSchema>;
+  { id: "outro", name: "Outro" },
+];
 
-export function CreateNewWineForm() {
-  const { createWine, isOpenForm } = useWineStore();
+const wineCountry = [
+  { id: "Argentina", name: "Argentina" },
+  { id: "Chile", name: "Chile" },
+  { id: "Brasil", name: "Brasil" },
+  { id: "Espanha", name: "Espanha" },
+  { id: "Portugal", name: "Portugal" },
+  { id: "França", name: "França" },
+  { id: "Itália", name: "Itália" },
+  { id: "Outro", name: "Outro" },
+];
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormData>({
-    resolver: zodResolver(wineFormSchema),
-    defaultValues: {
-      price: "",
-    },
-  });
+const wineSize = [
+  { id: "750ml", name: "750ml" },
+  { id: "1500ml", name: "1500ml" },
+  { id: "187ml", name: "187ml" },
+  { id: "375ml", name: "375ml" },
+];
 
-  function onSubmit(data: FormData) {
-    createWine({ ...data, price: parseCurrencyToNumber(data.price) });
-    reset();
-  }
+interface WineFormProps {
+  wine?: Wine;
+}
+
+export function WineForm({ wine }: WineFormProps) {
+  const [formState, action, isPending] = useActionState(
+    wine ? editWine : createWine,
+    EMPTY_FORM_STATE
+  );
+
+  const [price, setPrice] = useState(
+    wine ? formatCurrencyInput(wine!.price.toString()) : ""
+  );
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={twMerge(
-        "mt-6 border hidden border-zinc-300 p-4 rounded-md",
-        isOpenForm && "block"
-      )}
+      action={action}
+      className="mt-6 border  border-zinc-300 p-4 rounded-md"
     >
       <h3 className="text-xl sm:text-2xl">Adicionar Novo Vinho</h3>
 
+      {formState.status === "ERROR" && (
+        <Alert variant="destructive">
+          <TriangleAlert />
+          <AlertTitle>Não foi possível criar novo vinho</AlertTitle>
+          <AlertDescription>{formState.message}</AlertDescription>
+        </Alert>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 mt-6 gap-5">
+        <input type="hidden" name="wineId" value={wine?.id} />
         <div>
           <label className="block">Nome do Vinho*</label>
-          <input
+          <Input
             className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
             type="text"
-            {...register("name")}
+            name="name"
+            defaultValue={
+              formState.payload?.get("name")?.toString() ?? wine?.name ?? ""
+            }
           />
-          {errors.name && (
+          {formState.fieldErrors.name && (
             <span className="text-xs text-destructive">
-              {errors.name.message}
+              {formState.fieldErrors.name}
             </span>
           )}
         </div>
         <div>
           <label className="block">Tipo*</label>
-          <select
-            className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
-            {...register("type")}
+          <Select
+            name="type"
+            defaultValue={
+              formState.payload?.get("type")?.toString() ?? wine?.type ?? ""
+            }
           >
-            <option disabled value={""}>
-              Selecione o tipo do vinho
-            </option>
-            <option value={"Tinto"}>Tinto</option>
-            <option value={"Branco"}>Branco</option>
-            <option value={"Rose"}>Rose</option>
-            <option value={"Espumante"}>Espumante</option>
-            <option value={"Outro"}>Outro</option>
-          </select>
-          {errors.type && (
+            <SelectTrigger>
+              <SelectValue placeholder="Selecione o tipo do vinho" />
+            </SelectTrigger>
+            <SelectContent className="w-full">
+              {wineTypes.map((wine) => (
+                <SelectItem key={wine.id} value={wine.id}>
+                  {wine.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {formState.fieldErrors.type && (
             <span className="text-xs text-destructive">
-              {errors.type.message}
+              {formState.fieldErrors.type}
             </span>
           )}
         </div>
         <div>
           <label className="block">Safra</label>
-          <input
+          <Input
             className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
             type="number"
-            {...register("harvest")}
+            name="harvest"
+            defaultValue={
+              formState.payload?.get("harvest")?.toString() ??
+              wine?.harvest ??
+              ""
+            }
           />
-          {errors.harvest && (
+          {formState.fieldErrors.harvest && (
             <span className="text-xs text-destructive">
-              {errors.harvest.message}
+              {formState.fieldErrors.harvest}
             </span>
           )}
         </div>
         <div>
           <label className="block">Produtor</label>
-          <input
+          <Input
             className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
             type="text"
-            {...register("producer")}
+            name="producer"
+            defaultValue={
+              formState.payload?.get("producer")?.toString() ??
+              wine?.producer ??
+              ""
+            }
           />
-          {errors.producer && (
+          {formState.fieldErrors.producer && (
             <span className="text-xs text-destructive">
-              {errors.producer.message}
+              {formState.fieldErrors.producer}
             </span>
           )}
         </div>
+
         <div>
-          <label className="block">País</label>
-          <input
-            className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
+          <label className="block">Preço*</label>
+
+          <Input
             type="text"
-            {...register("country")}
-          />
-          {errors.country && (
-            <span className="text-xs text-destructive">
-              {errors.country.message}
-            </span>
-          )}
-        </div>
-        <div>
-          <label className="block">Preço</label>
-          <Controller
+            className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
             name="price"
-            control={control}
-            render={({ field }) => (
-              <input
-                {...field}
-                type="text"
-                className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
-                onChange={(e) =>
-                  field.onChange(formatCurrencyInput(e.target.value))
-                }
-                value={field.value}
-                placeholder={`${formatCurrencyInput("0,00")}`}
-              />
-            )}
+            inputMode="numeric"
+            onChange={(e) => setPrice(formatCurrencyInput(e.target.value))}
+            value={price || ""}
+            defaultValue={
+              formState.payload?.get("price")?.toString() ?? price ?? ""
+            }
+            placeholder={`${formatCurrencyInput("0,00")}`}
           />
-          {errors.price && (
+
+          {formState.fieldErrors.price && (
             <span className="text-xs text-destructive">
-              {errors.price.message}
+              {formState.fieldErrors.price}
+            </span>
+          )}
+        </div>
+
+        <div>
+          <label className="block">País*</label>
+          <Select
+            name="country"
+            defaultValue={
+              formState.payload?.get("country")?.toString() ??
+              wine?.country ??
+              ""
+            }
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Selecione o país do vinho" />
+            </SelectTrigger>
+            <SelectContent className="w-full">
+              {wineCountry.map((wine) => (
+                <SelectItem key={wine.id} value={wine.id}>
+                  {wine.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {formState.fieldErrors.country && (
+            <span className="text-xs text-destructive">
+              {formState.fieldErrors.country}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block">Tamanho*</label>
+          <Select
+            name="size"
+            defaultValue={
+              formState.payload?.get("size")?.toString() ?? wine?.size ?? ""
+            }
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Selecione o tamanho do vinho" />
+            </SelectTrigger>
+            <SelectContent className="w-full">
+              {wineSize.map((wine) => (
+                <SelectItem key={wine.id} value={wine.id}>
+                  {wine.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {formState.fieldErrors.size && (
+            <span className="text-xs text-destructive">
+              {formState.fieldErrors.size}
             </span>
           )}
         </div>
       </div>
-
-      <button className="bg-[#188754] w-full sm:w-[initial] mt-6 py-3 px-4 text-sm cursor-pointer transition hover:bg-[#03a679] text-white rounded-sm leading-none">
-        Salvar
-      </button>
+      <div className="mt-6 flex items-center gap-2">
+        <button
+          disabled={isPending}
+          className="bg-[#188754] disabled:bg-[#386651] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#03a679] text-white rounded-sm leading-none"
+        >
+          Salvar
+        </button>
+        <Link
+          className="border border-[#188754] w-full sm:w-[initial] py-3 px-4 text-sm text-[#188754] rounded-sm leading-none"
+          href={"/vinhos"}
+        >
+          Cancelar
+        </Link>
+      </div>
     </form>
   );
 }
