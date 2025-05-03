@@ -22,21 +22,17 @@ export default function ConsignadosPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="font-bold text-base sm:text-lg">
-                Cliente
-              </TableHead>
-              <TableHead className="font-bold text-base sm:text-lg">
+              <TableHead className="font-bold text-sm">Cliente</TableHead>
+              <TableHead className="font-bold text-sm">
                 Total de vinhos
               </TableHead>
-              <TableHead className="font-bold text-base sm:text-lg">
+              <TableHead className="font-bold text-sm">
                 Data de Criação
               </TableHead>
-              <TableHead className="font-bold text-base sm:text-lg">
+              <TableHead className="font-bold text-sm">
                 Última Atualização
               </TableHead>
-              <TableHead className="font-bold text-base sm:text-lg">
-                Ações
-              </TableHead>
+              <TableHead className="font-bold text-sm">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <ConsignedList />

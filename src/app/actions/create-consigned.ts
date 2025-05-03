@@ -1,6 +1,6 @@
 "use server";
 
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { ActionsResponse, FormState } from "./error-handler";
 import { getToken } from "../auth/get-token";
 import { revalidatePath } from "next/cache";
@@ -54,7 +54,6 @@ export async function createConsigned(
     if (!response.ok) {
       const result = await response.json();
 
-      console.log(result);
       return ActionsResponse.onError({
         err: new Error(result.message),
         status: "ERROR",
@@ -62,16 +61,21 @@ export async function createConsigned(
       });
     }
 
+    revalidatePath("/consignados");
+
     return ActionsResponse.onSuccess({
       message: "Consignado criado com sucesso!",
       status: "SUCCESS",
     });
   } catch (error) {
     console.log(error);
-    if (error instanceof z.ZodError) {
+    if (error instanceof ZodError) {
       return ActionsResponse.onError({
-        err: error,
-        status: "ERROR",
+        err: new Error(
+          (error.flatten().fieldErrors.customerId?.[0] ?? "") ||
+            (error.flatten().fieldErrors.wines?.[0] ?? "")
+        ),
+        status: "VALIDATION_ERROR",
         payload: formData,
       });
     }
@@ -82,5 +86,4 @@ export async function createConsigned(
       payload: formData,
     });
   }
-  revalidatePath("/consignados");
 }

@@ -241,7 +241,7 @@ export function WineForm({ wine }: WineFormProps) {
           Salvar
         </button>
         <Link
-          className="border border-[#188754] w-full sm:w-[initial] py-3 px-4 text-sm text-[#188754] rounded-sm leading-none"
+          className="border text-center border-[#188754] w-full sm:w-[initial] py-3 px-4 text-sm text-[#188754] rounded-sm leading-none"
           href={"/vinhos"}
         >
           Cancelar

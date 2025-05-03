@@ -1,8 +1,8 @@
 "use client";
 import { useCustomerStore } from "@/store/customer-store";
 import { useWineStore } from "@/store/wine-store";
-import { LoaderCircle } from "lucide-react";
-import { useTransition } from "react";
+import { LoaderCircle, TriangleAlert } from "lucide-react";
+import { useState, useTransition } from "react";
 import { twMerge } from "tailwind-merge";
 import {
   Table,
@@ -21,6 +21,7 @@ import { formatCurrencyInput } from "@/lib/format-currency";
 import Link from "next/link";
 import { createConsigned } from "@/app/actions/create-consigned";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function CreateNewConsignedForm({
   customers,
@@ -42,14 +43,11 @@ export function CreateNewConsignedForm({
     reset: resetWines,
   } = useWineStore();
 
-  // const [formState, action, isPending] = useActionState(
-  //   createConsigned,
-  //   EMPTY_FORM_STATE
-  // );
-
   const [isPendingCustomer, startTransitionCustomer] = useTransition();
   const [isPendingWine, startTransitionWine] = useTransition();
   const [isPendingAction, startTransitionAction] = useTransition();
+
+  const [formError, setFormError] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -102,10 +100,18 @@ export function CreateNewConsignedForm({
     if (result?.status === "SUCCESS") {
       deleteCustomer();
       resetWines();
-      push("/consignados"); // redireciona no cliente
+      push("/consignados");
     }
 
-    // Aqui você pode tratar erros se houver
+    if (result?.status === "ERROR") {
+      setFormError(result.message);
+      return;
+    }
+
+    if (result?.status === "VALIDATION_ERROR") {
+      setFormError(result.message);
+      return;
+    }
   }
 
   return (
@@ -114,6 +120,14 @@ export function CreateNewConsignedForm({
       className={"mt-6 border p-4 rounded-md"}
     >
       <h3 className="text-xl sm:text-2xl">Adicionar Novo Consignado</h3>
+
+      {formError && (
+        <Alert className="mt-6" variant="destructive">
+          <TriangleAlert />
+          <AlertTitle>Não foi possível criar um novo consignado</AlertTitle>
+          <AlertDescription>{formError}</AlertDescription>
+        </Alert>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-1 mt-6 gap-5">
         <div className="w-full  relative">
@@ -247,7 +261,7 @@ export function CreateNewConsignedForm({
               {wineStored.map((wine) => (
                 <TableRow className="text-sm" key={wine.id}>
                   <TableCell>
-                    {wine.name}{" "}
+                    {wine.name}
                     <Input type="hidden" name="wineId" value={wine.id} />
                   </TableCell>
                   <TableCell>
@@ -286,7 +300,7 @@ export function CreateNewConsignedForm({
         <Link
           href="/consignados"
           type="button"
-          className="border border-[#0d6efd] mt-4 w-full sm:w-[initial]  py-3 px-4 text-sm cursor-pointer transition text-[#0d6efd] rounded-sm leading-none"
+          className="border border-[#0d6efd] text-center mt-4 w-full sm:w-[initial]  py-3 px-4 text-sm cursor-pointer transition text-[#0d6efd] rounded-sm leading-none"
         >
           Voltar
         </Link>
