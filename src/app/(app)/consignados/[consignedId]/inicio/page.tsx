@@ -1,8 +1,10 @@
 import { getToken } from "@/app/auth/get-token";
+import { AddWine } from "@/components/consignados/form/add-wine";
 import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -16,7 +18,6 @@ async function getConsignedDetails(
   consignedId: string
 ): Promise<GetConsignedDetailsResponse> {
   const accessToken = await getToken();
-  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const response = await fetch(
     `${process.env.API_BASE_URL}/consigned/${consignedId}`,
@@ -47,19 +48,28 @@ export default async function ConsignedStartPage(props: {
 
   return (
     <section className="w-full h-full">
-      <div className="flex items-center mt-6 gap-2">
-        <span className="text-zinc-700">Cliente: </span>
-        <h4 className="text-[#93173c] font-semibold">
-          {consigned.customer.name}
-        </h4>
-      </div>
-      <div className="text-sm mt-2 mb-6 text-zinc-700">
-        Data de criação:{" "}
-        <span className="text-[#93173c]">
-          {format(new Date(consigned.createdAt), "dd 'de' MMMM yyyy", {
-            locale: ptBR,
-          })}
-        </span>
+      <div className="flex mt-6 sm:flex-row mb-5 justify-center items-center flex-col sm:items-start gap-2 sm:justify-between">
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <span className="text-zinc-700">Cliente: </span>
+            <h4 className="text-[#93173c] font-semibold">
+              {consigned.customer.name}
+            </h4>
+          </div>
+          <div className="text-sm mt-2 text-zinc-700">
+            Data de criação:{" "}
+            <span className="text-[#93173c]">
+              {format(new Date(consigned.createdAt), "dd 'de' MMMM yyyy", {
+                locale: ptBR,
+              })}
+            </span>
+          </div>
+        </div>
+        {/* <AddWine>
+          <button className="bg-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none">
+            Editar
+          </button>
+        </AddWine> */}
       </div>
 
       <Table>

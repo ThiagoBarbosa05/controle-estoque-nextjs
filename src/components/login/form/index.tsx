@@ -54,7 +54,7 @@ export function LoginForm() {
       </div>
       <button
         disabled={isPending}
-        className="bg-[#93173c] disabled:opacity-55 w-full py-3 px-4 text-sm cursor-pointer transition hover:bg-[#c03642] text-white rounded-sm leading-none"
+        className="bg-[#93173c] disabled:opacity-55 w-full py-4 px-5 text-sm cursor-pointer transition hover:bg-[#c03642] text-white rounded-sm leading-none"
       >
         Entrar
       </button>
