@@ -64,5 +64,6 @@ export async function editWine(formState: FormState, formData: FormData) {
 
   revalidatePath("/vinhos");
   revalidateTag("wine-details");
+  revalidateTag("consigned-details");
   redirect("/vinhos");
 }

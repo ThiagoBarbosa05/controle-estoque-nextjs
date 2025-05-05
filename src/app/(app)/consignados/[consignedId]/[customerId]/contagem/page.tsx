@@ -4,7 +4,7 @@ import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-
 
 async function getConsignedDetails(
   consignedId: string
-): Promise<GetConsignedDetailsResponse> {
+): Promise<GetConsignedDetailsResponse | null> {
   const accessToken = await getToken();
 
   const response = await fetch(
@@ -21,7 +21,8 @@ async function getConsignedDetails(
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.message || "Failed to fetch consigned details");
+    console.log(error);
+    return null;
   }
 
   return response.json();
@@ -32,7 +33,17 @@ export default async function ConsignedCountPage(props: {
 }) {
   const { consignedId } = await props.params;
 
-  const { consigned } = await getConsignedDetails(consignedId);
+  const result = await getConsignedDetails(consignedId);
 
-  return <WineCountForm consigned={consigned} />;
+  return (
+    <>
+      {!result ? (
+        <div className="mt-6 w-full text-center text-zinc-600">
+          <p>Nenhum consignado encontrado</p>
+        </div>
+      ) : (
+        <WineCountForm consigned={result.consigned} />
+      )}
+    </>
+  );
 }

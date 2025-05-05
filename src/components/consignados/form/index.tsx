@@ -1,7 +1,7 @@
 "use client";
 import { useCustomerStore } from "@/store/customer-store";
 import { useWineStore } from "@/store/wine-store";
-import { LoaderCircle, TriangleAlert } from "lucide-react";
+import { LoaderCircle, TriangleAlert, X } from "lucide-react";
 import { useState, useTransition } from "react";
 import { twMerge } from "tailwind-merge";
 import {
@@ -22,6 +22,7 @@ import Link from "next/link";
 import { createConsigned } from "@/app/actions/create-consigned";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { toast } from "sonner";
 
 export function CreateNewConsignedForm({
   customers,
@@ -48,6 +49,9 @@ export function CreateNewConsignedForm({
   const [isPendingAction, startTransitionAction] = useTransition();
 
   const [formError, setFormError] = useState<string | null>(null);
+  const [existingWineError, setExistingWineError] = useState<string | null>(
+    null
+  );
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -90,7 +94,25 @@ export function CreateNewConsignedForm({
     quantity: number;
     price: number;
   }) {
+    const existingWine = wineStored.find((w) => w.id === wine.id);
+
+    if (existingWine) {
+      toast.error("Vinho já adicionado", {
+        description: existingWine.name,
+        // style: {
+        //   color: "red",
+        //   borderColor: "red",
+        // },
+        action: {
+          label: "fechar",
+          onClick: () => toast.dismiss(),
+        },
+      });
+      return;
+    }
+
     createWine(wine);
+    setExistingWineError(null);
     replace(`${pathname}`);
   }
 
@@ -165,6 +187,7 @@ export function CreateNewConsignedForm({
                 type="text"
                 onChange={(e) => handleSearchCustomer(e.target.value)}
                 autoComplete="off"
+                placeholder="Digite o nome do cliente"
                 defaultValue={searchParams.get("searchCustomer")?.toString()}
               />
               {isPendingCustomer && (
@@ -210,6 +233,7 @@ export function CreateNewConsignedForm({
               onChange={(e) => handleSearchWine(e.target.value)}
               autoComplete="off"
               defaultValue={searchParams.get("searchWine")?.toString()}
+              placeholder="Digite o nome do vinho"
             />
             {isPendingWine && (
               <div className="text-sm absolute bottom-1/2 right-4 translate-y-1/2 text-[#93173c] mt-1">

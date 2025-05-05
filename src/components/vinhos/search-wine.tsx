@@ -32,7 +32,7 @@ export function SearchWine() {
             e.preventDefault();
           }
         }}
-        placeholder="Pesquise um cliente"
+        placeholder="Pesquise por um vinho"
         defaultValue={searchParams.get("search")?.toString()}
       />
       <Search className="size-5 text-zinc-400 absolute top-1/2 right-3 -translate-y-1/2" />

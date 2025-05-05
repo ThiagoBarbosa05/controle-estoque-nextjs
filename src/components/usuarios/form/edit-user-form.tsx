@@ -1,7 +1,7 @@
 "use client";
 
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
-import { updateUser } from "@/app/actions/update.use";
+import { updateUser } from "@/app/actions/update-user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";

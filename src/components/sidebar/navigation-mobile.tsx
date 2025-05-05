@@ -1,5 +1,3 @@
-"use client";
-
 import {
   CircleDollarSign,
   Contact,
@@ -11,42 +9,43 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
-import { SheetClose } from "../ui/sheet";
 
-const navLinks = [
-  {
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: <LayoutDashboard className="size-[18px]" />,
-  },
-  {
-    name: "Consignados",
-    href: "/consignados",
-    icon: <CircleDollarSign className="size-[18px]" />,
-  },
-  {
-    name: "Cadastro de Vinhos",
-    href: "/vinhos",
-    icon: <Wine className="size-[18px]" />,
-  },
-  {
-    name: "Clientes",
-    href: "/clientes",
-    icon: <Contact className="size-[18px]" />,
-  },
-  {
-    name: "Usuários",
-    href: "/usuarios",
-    icon: <Users className="size-[18px]" />,
-  },
-  {
-    name: "Controle de Estoque",
-    href: "/estoque",
-    icon: <ScanBarcode className="size-[18px]" />,
-  },
-];
-export function Navigation() {
+export function NavigationMobile() {
+  const navLinks = [
+    {
+      name: "Dashboard",
+      href: "/dashboard",
+      icon: <LayoutDashboard className="size-[18px]" />,
+    },
+    {
+      name: "Consignados",
+      href: "/consignados",
+      icon: <CircleDollarSign className="size-[18px]" />,
+    },
+    {
+      name: "Cadastro de Vinhos",
+      href: "/vinhos",
+      icon: <Wine className="size-[18px]" />,
+    },
+    {
+      name: "Clientes",
+      href: "/clientes",
+      icon: <Contact className="size-[18px]" />,
+    },
+    {
+      name: "Usuários",
+      href: "/usuarios",
+      icon: <Users className="size-[18px]" />,
+    },
+    {
+      name: "Controle de Estoque",
+      href: "/estoque",
+      icon: <ScanBarcode className="size-[18px]" />,
+    },
+  ];
+
   const pathname = usePathname();
+
   return (
     <nav>
       <ul className="flex flex-col gap-3">

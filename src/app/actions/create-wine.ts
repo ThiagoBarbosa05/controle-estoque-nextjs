@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { ActionsResponse, FormState } from "./error-handler";
 import { getToken } from "../auth/get-token";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 const wineFormSchema = z.object({
@@ -25,8 +25,6 @@ export async function createWine(formState: FormState, formData: FormData) {
     const parsedPrice = parseFloat(
       wineSchema.price.replace("R$", "").replace(/\s/g, "").replace(",", ".")
     );
-
-    // const priceInCents = parsedPrice * 100;
 
     const response = await fetch(`${process.env.API_BASE_URL}/wines`, {
       method: "POST",
@@ -55,5 +53,6 @@ export async function createWine(formState: FormState, formData: FormData) {
   }
 
   revalidatePath("/vinhos");
+  revalidateTag("dashboard-metrics");
   redirect("/vinhos");
 }

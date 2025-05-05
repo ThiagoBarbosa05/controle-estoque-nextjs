@@ -38,7 +38,7 @@ export async function ConsignedList() {
           <TableCell>
             <Link
               className="border border-[#0d6efd]  text-[#0d6efd] hover:bg-[#0d6efd] hover:text-white transition px-3 py-2 text-sm rounded-sm"
-              href={`/consignados/${consigned.id}/inicio`}
+              href={`/consignados/${consigned.id}/${consigned.customer.id}/inicio`}
             >
               Ver Detalhes
             </Link>

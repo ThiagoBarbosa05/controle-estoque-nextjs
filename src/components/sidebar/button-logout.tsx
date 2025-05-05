@@ -7,9 +7,9 @@ export function ButtonLogout() {
   return (
     <button
       onClick={() => logout()}
-      className="flex cursor-pointer pl-3 text-[#93173c] mt-6 items-center gap-3"
+      className="flex cursor-pointer text-sm pl-3 text-[#93173c] mt-6 items-center gap-2"
     >
-      Sair <LogOut className="size-5" />
+      Sair <LogOut className="size-4" />
     </button>
   );
 }

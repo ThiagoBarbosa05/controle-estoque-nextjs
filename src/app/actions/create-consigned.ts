@@ -3,7 +3,7 @@
 import { z, ZodError } from "zod";
 import { ActionsResponse, FormState } from "./error-handler";
 import { getToken } from "../auth/get-token";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 const createConsignedSchema = z.object({
   customerId: z.string({
@@ -62,6 +62,7 @@ export async function createConsigned(
     }
 
     revalidatePath("/consignados");
+    revalidateTag("dashboard-metrics");
 
     return ActionsResponse.onSuccess({
       message: "Consignado criado com sucesso!",

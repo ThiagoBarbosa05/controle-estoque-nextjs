@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { getToken } from "../auth/get-token";
 import { ActionsResponse } from "./error-handler";
 import { redirect } from "next/navigation";
@@ -19,8 +19,8 @@ export async function deleteWine(wineId: string) {
     );
 
     if (!response.ok) {
-      console.log(await response.json());
-      throw new Error("Erro ao deletar vinho.");
+      const messageResponse = await response.json();
+      throw new Error(messageResponse.message);
     }
   } catch (error) {
     console.log(error);
@@ -28,5 +28,6 @@ export async function deleteWine(wineId: string) {
   }
 
   revalidatePath("/vinhos");
+  revalidateTag("dashboard-metrics");
   redirect("/vinhos");
 }

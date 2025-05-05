@@ -1,3 +1,4 @@
+import { getToken } from "@/app/auth/get-token";
 import { CardCustomer } from "@/components/dashboard/card-customer";
 import { CardWine } from "@/components/dashboard/card-wine";
 import {
@@ -8,10 +9,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ListCustomerSummaryResponse } from "@/interfaces/list-customer-summary-response";
+import { Metrics } from "@/interfaces/metrics-response";
 import Link from "next/link";
 
-async function getDashboardMetrics(): Promise<{ count: number }> {
+async function getDashboardMetrics(): Promise<Metrics> {
+  const accessToken = await getToken();
+
   const response = await fetch(`${process.env.API_BASE_URL}/metrics`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    cache: "force-cache",
+    next: { tags: ["dashboard-metrics"] },
+  });
+
+  return response.json();
+}
+
+async function listCustomerSummary(): Promise<ListCustomerSummaryResponse> {
+  const accessToken = await getToken();
+
+  const response = await fetch(`${process.env.API_BASE_URL}/summary`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
     cache: "force-cache",
     next: { tags: ["dashboard-metrics"] },
   });
@@ -22,21 +44,25 @@ async function getDashboardMetrics(): Promise<{ count: number }> {
 export default async function DashboardPage() {
   const metrics = await getDashboardMetrics();
 
+  const { summary } = await listCustomerSummary();
+
   return (
     <section>
       <h2 className="text-2xl sm:text-4xl font-medium">Dashboard</h2>
       {/* Resumo Dados */}
       <div className="grid mt-5 grid-cols-1 sm:grid-cols-3 gap-5">
-        <CardCustomer customersQuantity={metrics.count} />
+        <CardCustomer customersQuantity={metrics.count ?? 0} />
 
-        <CardWine />
+        <CardWine winesQuantity={metrics.winesQuantity ?? 0} />
 
         <div className="p-4 text-white rounded-lg bg-[#0cc9ef]">
           <p className="text-lg sm:text-xl mb-2 min-h-12">
             Total em Consignação
           </p>
 
-          <span className="text-4xl sm:text-6xl font-light">105</span>
+          <span className="text-4xl sm:text-6xl font-light">
+            {metrics.winesOnConsigned ?? 0}
+          </span>
         </div>
       </div>
 
@@ -57,58 +83,21 @@ export default async function DashboardPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="py-10 text-zinc-800">
-                <TableCell>Cliente 1</TableCell>
-                <TableCell>12</TableCell>
-                <TableCell>27</TableCell>
-                <TableCell>
-                  <Link
-                    className="border border-[#93173c] text-[#93173c] hover:bg-[#93173c] hover:text-white transition px-3 py-2 text-sm rounded-sm"
-                    href=""
-                  >
-                    Ver Detalhes
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow className="py-10 text-zinc-800">
-                <TableCell>Cliente 2</TableCell>
-                <TableCell>15</TableCell>
-                <TableCell>45</TableCell>
-                <TableCell>
-                  <Link
-                    className="border border-[#93173c] text-[#93173c] hover:bg-[#93173c] hover:text-white transition px-3 py-2 text-sm rounded-sm"
-                    href=""
-                  >
-                    Ver Detalhes
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow className="py-10 text-zinc-800">
-                <TableCell>Cliente 3</TableCell>
-                <TableCell>15</TableCell>
-                <TableCell>45</TableCell>
-                <TableCell>
-                  <Link
-                    className="border border-[#93173c] text-[#93173c] hover:bg-[#93173c] hover:text-white transition px-3 py-2 text-sm rounded-sm"
-                    href=""
-                  >
-                    Ver Detalhes
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow className="py-10 text-zinc-800">
-                <TableCell>Cliente 4</TableCell>
-                <TableCell>15</TableCell>
-                <TableCell>45</TableCell>
-                <TableCell>
-                  <Link
-                    className="border border-[#93173c] text-[#93173c] hover:bg-[#93173c] hover:text-white transition px-3 py-2 text-sm rounded-sm"
-                    href=""
-                  >
-                    Ver Detalhes
-                  </Link>
-                </TableCell>
-              </TableRow>
+              {summary.map((data) => (
+                <TableRow key={data.customerId} className="py-10 text-zinc-800">
+                  <TableCell>{data.customer}</TableCell>
+                  <TableCell>{data.totalTypes}</TableCell>
+                  <TableCell>{data.totalBalance}</TableCell>
+                  <TableCell>
+                    <Link
+                      className="border border-[#93173c] text-[#93173c] hover:bg-[#93173c] hover:text-white transition px-3 py-2 text-sm rounded-sm"
+                      href=""
+                    >
+                      Ver Detalhes
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>

@@ -4,23 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
-export function ConsignedNavigation({ consignedId }: { consignedId: string }) {
+export function ConsignedNavigation({
+  consignedId,
+  customerId,
+}: {
+  consignedId: string;
+  customerId: string;
+}) {
   const pathname = usePathname();
-
-  console.log(consignedId);
 
   const navLinks = [
     {
       name: "Início",
-      href: `/consignados/${consignedId}/inicio`,
+      href: `/consignados/${consignedId}/${customerId}/inicio`,
     },
     {
       name: "Contagem",
-      href: `/consignados/${consignedId}/contagem`,
+      href: `/consignados/${consignedId}/${customerId}/contagem`,
     },
     {
       name: "Histórico",
-      href: `/consignados/${consignedId}/historico`,
+      href: `/consignados/${consignedId}/${customerId}/historico`,
     },
   ];
 
