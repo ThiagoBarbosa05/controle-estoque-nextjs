@@ -32,6 +32,7 @@ async function getConsignedHistory(
         "Content-Type": "application/json",
       },
       cache: "force-cache",
+      next: { tags: ["consigned-history"] },
     }
   );
 
