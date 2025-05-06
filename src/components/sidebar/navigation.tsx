@@ -48,7 +48,7 @@ const navLinks = [
 export function Navigation() {
   const pathname = usePathname();
   return (
-    <nav>
+    <nav className="pb-5">
       <ul className="flex flex-col gap-3">
         {navLinks.map((link) => {
           const isActive =

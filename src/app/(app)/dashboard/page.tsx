@@ -91,7 +91,7 @@ export default async function DashboardPage() {
                   <TableCell>
                     <Link
                       className="border border-[#93173c] text-[#93173c] hover:bg-[#93173c] hover:text-white transition px-3 py-2 text-sm rounded-sm"
-                      href=""
+                      href={`/consignados/${data.consignedId}/${data.customerId}/inicio`}
                     >
                       Ver Detalhes
                     </Link>

@@ -8,6 +8,7 @@ import {
 } from "../ui/sheet";
 import { Navigation } from "./navigation";
 import { ButtonLogout } from "./button-logout";
+import { NavigationMobile } from "./navigation-mobile";
 
 export function MenuMobile() {
   return (
@@ -19,7 +20,7 @@ export function MenuMobile() {
         <SheetHeader className="border-b">
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
-        <Navigation />
+        <NavigationMobile />
         <ButtonLogout />
       </SheetContent>
     </Sheet>

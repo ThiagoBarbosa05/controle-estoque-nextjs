@@ -1,4 +1,5 @@
 import { getToken } from "@/app/auth/get-token";
+import { AddWine } from "@/components/consignados/form/add-wine";
 import {
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-response";
+import { ListWinesResponse } from "@/interfaces/list-wines-response";
 import { formatCurrencyInput } from "@/lib/format-currency";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -36,12 +38,38 @@ async function getConsignedDetails(
   return null;
 }
 
+async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
+  const accessToken = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/wines?search=${searchTerm}`,
+    {
+      cache: "force-cache",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.log(res.status);
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
 export default async function ConsignedStartPage(props: {
   params: Promise<{ consignedId: string }>;
+  searchParams?: Promise<{
+    searchWine?: string;
+  }>;
 }) {
   const { consignedId } = await props.params;
 
   const result = await getConsignedDetails(consignedId);
+  const searchParams = await props.searchParams;
+  const searchTerm = searchParams?.searchWine;
+  const resultWines = await listWines(searchTerm);
 
   return (
     <section className="w-full h-full">
@@ -51,11 +79,11 @@ export default async function ConsignedStartPage(props: {
         </div>
       ) : (
         <>
-          <div className="flex mt-6 sm:flex-row mb-5 justify-center items-center flex-col sm:items-start gap-2 sm:justify-between">
+          <div className="flex mt-6  mb-5 items-center  sm:items-start gap-2 sm:justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <span className="text-zinc-700">Cliente: </span>
-                <h4 className="text-[#93173c] font-semibold">
+                <h4 className="text-[#93173c] text-sm font-semibold">
                   {result.consigned.customer.name}
                 </h4>
               </div>
@@ -72,11 +100,6 @@ export default async function ConsignedStartPage(props: {
                 </span>
               </div>
             </div>
-            {/* <AddWine>
-        <button className="bg-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none">
-          Editar
-        </button>
-      </AddWine> */}
           </div>
 
           <Table>
@@ -110,6 +133,24 @@ export default async function ConsignedStartPage(props: {
           </Table>
         </>
       )}
+      <AddWine
+        consigned={{
+          customerId: result!.consigned.customer.id,
+          id: result!.consigned.id,
+        }}
+        wines={resultWines.wines}
+        winesOnTheList={result?.consigned.winesOnConsigned.map((wine) => ({
+          wineId: wine.wineId,
+          quantity: wine.balance,
+        }))}
+      >
+        <button
+          type="button"
+          className="bg-[#0d6efd] mt-4 w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none"
+        >
+          Adicionar vinhos
+        </button>
+      </AddWine>
     </section>
   );
 }

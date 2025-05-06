@@ -1,3 +1,5 @@
+"use client";
+
 import {
   CircleDollarSign,
   Contact,
@@ -9,6 +11,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
+import { SheetClose } from "../ui/sheet";
 
 export function NavigationMobile() {
   const navLinks = [
@@ -55,16 +58,18 @@ export function NavigationMobile() {
 
           return (
             <li className="" key={link.href}>
-              <Link
-                className={twMerge(
-                  "text-sm flex items-center gap-2 rounded-md hover:text-[#93173c] py-2 px-3 transition text-zinc-600",
-                  isActive && "bg-[#93173c] text-zinc-100 hover:text-zinc-100"
-                )}
-                href={link.href}
-              >
-                {link.icon}
-                {link.name}
-              </Link>
+              <SheetClose asChild>
+                <Link
+                  className={twMerge(
+                    "text-sm flex items-center gap-2 rounded-md hover:text-[#93173c] py-2 px-3 transition text-zinc-600",
+                    isActive && "bg-[#93173c] text-zinc-100 hover:text-zinc-100"
+                  )}
+                  href={link.href}
+                >
+                  {link.icon}
+                  {link.name}
+                </Link>
+              </SheetClose>
             </li>
           );
         })}
