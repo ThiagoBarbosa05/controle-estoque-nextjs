@@ -33,8 +33,7 @@ async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
   );
 
   if (!res.ok) {
-    console.log(res.status);
-    throw new Error("Failed to fetch data");
+    throw new Error("Error ao recuperar dados no servidor");
   }
 
   return res.json();

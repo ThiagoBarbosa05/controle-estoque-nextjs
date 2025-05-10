@@ -1,4 +1,4 @@
-import { getToken } from "@/app/auth/get-token";
+import { getToken, getUserFromToken } from "@/app/auth/get-token";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { ListConsignedResponse } from "@/interfaces/list-consigned-response";
 import { useConsignedStore } from "@/store/consigned-store";
@@ -7,10 +7,12 @@ import Link from "next/link";
 
 async function listConsigned(): Promise<ListConsignedResponse> {
   const accessToken = await getToken();
+
   const response = await fetch(`${process.env.API_BASE_URL}/consigned`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
+
     cache: "force-cache",
   });
 

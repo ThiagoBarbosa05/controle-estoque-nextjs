@@ -50,6 +50,7 @@ export function WineCountForm({ consigned }: WineCountProps) {
                 className="max-w-16 text-center"
                 defaultValue={wine.balance}
                 name="quantity"
+                min={0}
                 onChange={(e) =>
                   handleChangeQuantity(wine.wineId, Number(e.target.value))
                 }

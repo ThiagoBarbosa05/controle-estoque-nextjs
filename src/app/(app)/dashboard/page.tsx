@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { ListCustomerSummaryResponse } from "@/interfaces/list-customer-summary-response";
 import { Metrics } from "@/interfaces/metrics-response";
+import { jwtDecode } from "jwt-decode";
 import Link from "next/link";
 
 async function getDashboardMetrics(): Promise<Metrics> {

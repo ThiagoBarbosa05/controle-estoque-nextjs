@@ -32,31 +32,30 @@ async function getConsignedDetails(
   );
 
   if (response.ok) {
+    console.log(response);
     return response.json();
   }
-
-  return null;
+  return response.json();
 }
 
-async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
-  const accessToken = await getToken();
-  const res = await fetch(
-    `${process.env.API_BASE_URL}/wines?search=${searchTerm}`,
-    {
-      cache: "force-cache",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+// async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
+//   const accessToken = await getToken();
+//   const res = await fetch(
+//     `${process.env.API_BASE_URL}/wines?search=${searchTerm}`,
+//     {
+//       cache: "force-cache",
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//       },
+//     }
+//   );
 
-  if (!res.ok) {
-    console.log(res.status);
-    throw new Error("Failed to fetch data");
-  }
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch data");
+//   }
 
-  return res.json();
-}
+//   return res.json();
+// }
 
 export default async function ConsignedStartPage(props: {
   params: Promise<{ consignedId: string }>;
@@ -69,7 +68,7 @@ export default async function ConsignedStartPage(props: {
   const result = await getConsignedDetails(consignedId);
   const searchParams = await props.searchParams;
   const searchTerm = searchParams?.searchWine;
-  const resultWines = await listWines(searchTerm);
+  // const resultWines = await listWines(searchTerm);
 
   return (
     <section className="w-full h-full">
@@ -133,7 +132,7 @@ export default async function ConsignedStartPage(props: {
           </Table>
         </>
       )}
-      <AddWine
+      {/* <AddWine
         consigned={{
           customerId: result!.consigned.customer.id,
           id: result!.consigned.id,
@@ -150,7 +149,7 @@ export default async function ConsignedStartPage(props: {
         >
           Adicionar vinhos
         </button>
-      </AddWine>
+      </AddWine> */}
     </section>
   );
 }
