@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { ConsignedDetails } from "@/interfaces/get-consigned-details-response";
 import { useWineCountStore } from "@/store/wine-count-store";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
 interface WineCountProps {
   consigned: ConsignedDetails;
@@ -23,6 +24,12 @@ export function WineCountForm({ consigned }: WineCountProps) {
   function handleChangeQuantity(id: string, value: number) {
     setQuantity(id, value);
   }
+
+  useEffect(() => {
+    if (formSate.status === "ERROR") {
+      toast.error(formSate.message);
+    }
+  }, [formSate]);
 
   return (
     <form action={action} className="w-full space-y-4 mt-6 h-full">

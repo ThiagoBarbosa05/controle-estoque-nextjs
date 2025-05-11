@@ -73,19 +73,18 @@ export default async function DashboardPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="font-bold sm:text-lg">Cliente</TableHead>
-                <TableHead className="font-bold sm:text-lg">
-                  Tipos de Vinhos
-                </TableHead>
-                <TableHead className="font-bold sm:text-lg">
-                  Total Garrafas
-                </TableHead>
-                <TableHead className="font-bold sm:text-lg">Ações</TableHead>
+                <TableHead className="text-sm">Cliente</TableHead>
+                <TableHead className="text-sm">Tipos de Vinhos</TableHead>
+                <TableHead className="text-sm">Total Garrafas</TableHead>
+                <TableHead className="text-sm">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {summary.map((data) => (
-                <TableRow key={data.customerId} className="py-10 text-zinc-800">
+                <TableRow
+                  key={data.customerId}
+                  className="py-10 text-sm text-zinc-800"
+                >
                   <TableCell>{data.customer}</TableCell>
                   <TableCell>{data.totalTypes}</TableCell>
                   <TableCell>{data.totalBalance}</TableCell>

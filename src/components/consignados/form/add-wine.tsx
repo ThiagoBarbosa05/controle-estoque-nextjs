@@ -132,6 +132,7 @@ export function AddWine({
                 onChange={(e) => handleSearchWine(e.target.value)}
                 autoComplete="off"
                 defaultValue={searchParams.get("searchWine")?.toString()}
+                placeholder="Digite o nome do vinho"
               />
               {isPendingWine && (
                 <div className="text-sm absolute bottom-1/2 right-4 translate-y-1/2 text-[#93173c] mt-1">

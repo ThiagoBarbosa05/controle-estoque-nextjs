@@ -69,9 +69,7 @@ export default async function CadastroVinhosPage(props: {
               <TableHead className="font-bold text-sm">Ações</TableHead>
             </TableRow>
           </TableHeader>
-          <Suspense key={searchTerm} fallback={<div>Loading.....</div>}>
-            <WinesList wines={result.wines} />
-          </Suspense>
+          <WinesList wines={result.wines} />
         </Table>
       </section>
     </section>

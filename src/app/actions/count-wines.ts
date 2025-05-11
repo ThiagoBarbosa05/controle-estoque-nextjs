@@ -57,7 +57,7 @@ export async function countWine(formState: FormState, formData: FormData) {
     if (!response.ok) {
       const result = await response.json();
       console.log(result);
-      throw new Error(result.message);
+      throw new Error("Não foi possível realizar esta operação.");
     }
   } catch (error) {
     console.error(error);

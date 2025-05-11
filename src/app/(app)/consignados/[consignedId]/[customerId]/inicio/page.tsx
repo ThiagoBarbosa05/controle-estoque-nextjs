@@ -1,4 +1,5 @@
-import { getToken } from "@/app/auth/get-token";
+import { getToken, getUserFromToken } from "@/app/auth/get-token";
+import { AddNewWine } from "@/components/consignados/add-new-wine";
 import { AddWine } from "@/components/consignados/form/add-wine";
 import {
   Table,
@@ -9,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-response";
-import { ListWinesResponse } from "@/interfaces/list-wines-response";
 import { formatCurrencyInput } from "@/lib/format-currency";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -38,25 +38,6 @@ async function getConsignedDetails(
   return response.json();
 }
 
-// async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
-//   const accessToken = await getToken();
-//   const res = await fetch(
-//     `${process.env.API_BASE_URL}/wines?search=${searchTerm}`,
-//     {
-//       cache: "force-cache",
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//       },
-//     }
-//   );
-
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch data");
-//   }
-
-//   return res.json();
-// }
-
 export default async function ConsignedStartPage(props: {
   params: Promise<{ consignedId: string }>;
   searchParams?: Promise<{
@@ -68,7 +49,9 @@ export default async function ConsignedStartPage(props: {
   const result = await getConsignedDetails(consignedId);
   const searchParams = await props.searchParams;
   const searchTerm = searchParams?.searchWine;
-  // const resultWines = await listWines(searchTerm);
+
+  const user = await getUserFromToken();
+  const isAdmin = user.roles.includes("administrador");
 
   return (
     <section className="w-full h-full">
@@ -132,24 +115,8 @@ export default async function ConsignedStartPage(props: {
           </Table>
         </>
       )}
-      {/* <AddWine
-        consigned={{
-          customerId: result!.consigned.customer.id,
-          id: result!.consigned.id,
-        }}
-        wines={resultWines.wines}
-        winesOnTheList={result?.consigned.winesOnConsigned.map((wine) => ({
-          wineId: wine.wineId,
-          quantity: wine.balance,
-        }))}
-      >
-        <button
-          type="button"
-          className="bg-[#0d6efd] mt-4 w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none"
-        >
-          Adicionar vinhos
-        </button>
-      </AddWine> */}
+
+      {isAdmin && <AddNewWine searchTerm={searchTerm} result={result} />}
     </section>
   );
 }
