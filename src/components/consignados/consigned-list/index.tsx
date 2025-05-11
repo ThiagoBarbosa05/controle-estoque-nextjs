@@ -17,6 +17,8 @@ async function listConsigned(): Promise<ListConsignedResponse> {
   });
 
   if (!response.ok) {
+    const message = await response.json();
+    console.log(message);
     throw new Error("Failed to fetch data");
   }
 
