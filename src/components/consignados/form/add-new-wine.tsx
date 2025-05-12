@@ -1,5 +1,5 @@
 import { ListWinesResponse } from "@/interfaces/list-wines-response";
-import { AddWine } from "./form/add-wine";
+import { AddWine } from "./add-wine";
 import { getToken } from "@/app/auth/get-token";
 import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-response";
 

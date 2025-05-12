@@ -1,14 +1,22 @@
 import { getUserFromToken } from "@/app/auth/get-token";
 import { ConsignedList } from "@/components/consignados/consigned-list";
+import { SearchConsigned } from "@/components/consignados/search-consigned";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-export default async function ConsignadosPage() {
+export default async function ConsignadosPage(props: {
+  searchParams?: Promise<{
+    search?: string;
+  }>;
+}) {
   const user = await getUserFromToken();
 
   const isAdmin = user.roles.includes("administrador");
+
+  const searchParams = await props.searchParams;
+  const searchTerm = searchParams?.search;
 
   return (
     <section>
@@ -25,6 +33,8 @@ export default async function ConsignadosPage() {
           </Link>
         )}
       </div>
+
+      <SearchConsigned />
 
       <section className="mt-6">
         <Table>
@@ -43,7 +53,7 @@ export default async function ConsignadosPage() {
               <TableHead className="font-bold text-sm">Ações</TableHead>
             </TableRow>
           </TableHeader>
-          <ConsignedList />
+          <ConsignedList searchTerm={searchParams?.search} />
         </Table>
       </section>
     </section>

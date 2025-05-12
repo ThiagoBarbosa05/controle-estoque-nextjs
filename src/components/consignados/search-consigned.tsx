@@ -1,19 +1,19 @@
 "use client";
 
-import { LoaderCircle, Search } from "lucide-react";
-import { Input } from "../ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useDebouncedCallback } from "use-debounce";
 import { useTransition } from "react";
+import { useDebouncedCallback } from "use-debounce";
+import { Input } from "../ui/input";
+import { LoaderCircle, Search } from "lucide-react";
 
-export function SearchWine() {
+export function SearchConsigned() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
   const [isPending, startTransition] = useTransition();
 
-  const handleSearchWine = useDebouncedCallback((term: string) => {
+  const handleSearchConsigned = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set("search", term);
@@ -31,13 +31,13 @@ export function SearchWine() {
       <Input
         type="text"
         className="text-sm"
-        onChange={(e) => handleSearchWine(e.target.value)}
+        onChange={(e) => handleSearchConsigned(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();
           }
         }}
-        placeholder="Pesquise por um vinho"
+        placeholder="Digite o nome do cliente do consignado"
         defaultValue={searchParams.get("search")?.toString()}
       />
       {isPending ? (

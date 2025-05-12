@@ -8,7 +8,6 @@ import { WinesList } from "@/components/vinhos/wines-list";
 import { ListWinesResponse } from "@/interfaces/list-wines-response";
 
 import Link from "next/link";
-import { Suspense } from "react";
 
 async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
   const accessToken = await getToken();

@@ -1,6 +1,13 @@
 import { getToken, getUserFromToken } from "@/app/auth/get-token";
-import { AddNewWine } from "@/components/consignados/add-new-wine";
-import { AddWine } from "@/components/consignados/form/add-wine";
+import { HandleWineBalance } from "@/components/consignados/consigned-list/handle-wine-balance";
+import { AddNewWine } from "@/components/consignados/form/add-new-wine";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -13,6 +20,7 @@ import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-
 import { formatCurrencyInput } from "@/lib/format-currency";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { EllipsisVertical, Pen } from "lucide-react";
 
 async function getConsignedDetails(
   consignedId: string
@@ -32,7 +40,6 @@ async function getConsignedDetails(
   );
 
   if (response.ok) {
-    console.log(response);
     return response.json();
   }
   return response.json();
@@ -108,7 +115,18 @@ export default async function ConsignedStartPage(props: {
                   <TableCell>
                     {formatCurrencyInput(wine.wines.price.toString())}
                   </TableCell>
-                  <TableCell>{wine.balance}</TableCell>
+                  <TableCell className="min-w-[160px]">
+                    {isAdmin ? (
+                      <HandleWineBalance
+                        consignedId={consignedId}
+                        wineId={wine.wineId}
+                        wineBalance={wine.balance}
+                        customerId={result.consigned.customer.id}
+                      />
+                    ) : (
+                      wine.balance
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

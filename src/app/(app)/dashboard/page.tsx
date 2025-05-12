@@ -1,6 +1,7 @@
 import { getToken } from "@/app/auth/get-token";
 import { CardCustomer } from "@/components/dashboard/card-customer";
 import { CardWine } from "@/components/dashboard/card-wine";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { ListCustomerSummaryResponse } from "@/interfaces/list-customer-summary-response";
 import { Metrics } from "@/interfaces/metrics-response";
-import { jwtDecode } from "jwt-decode";
+import { Amphora, CircleDollarSign } from "lucide-react";
 import Link from "next/link";
 
 async function getDashboardMetrics(): Promise<Metrics> {
@@ -56,7 +57,7 @@ export default async function DashboardPage() {
 
         <CardWine winesQuantity={metrics.winesQuantity ?? 0} />
 
-        <div className="p-4 text-white rounded-lg bg-[#0cc9ef]">
+        {/* <div className="p-4 text-white rounded-lg bg-[#0cc9ef]">
           <p className="text-lg sm:text-xl mb-2 min-h-12">
             Total em Consignação
           </p>
@@ -64,7 +65,20 @@ export default async function DashboardPage() {
           <span className="text-4xl sm:text-6xl font-light">
             {metrics.winesOnConsigned ?? 0}
           </span>
-        </div>
+        </div> */}
+        <Card className="border-[#93173c]">
+          <CardHeader className="flex flex-row justify-between">
+            <CardTitle className="text-[#93173c] text-lg sm:text-xl">
+              Total em Consignação (garrafas)
+            </CardTitle>
+            <CircleDollarSign className="text-[#93173c] size-7" />
+          </CardHeader>
+          <CardContent>
+            <span className="text-4xl text-[#93173c] sm:text-6xl font-light">
+              {metrics.winesOnConsigned ?? 0}
+            </span>
+          </CardContent>
+        </Card>
       </div>
 
       <section className="w-full mt-6">

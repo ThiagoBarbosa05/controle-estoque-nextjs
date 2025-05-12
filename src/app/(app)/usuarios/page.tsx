@@ -15,14 +15,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DeleteUserButton } from "@/components/usuarios/delete-user-button";
+import { SearchUser } from "@/components/usuarios/search-user";
 import { ListUsersResponse } from "@/interfaces/list-users-response";
 import { format } from "date-fns";
 import { EllipsisVertical, Pen } from "lucide-react";
 import Link from "next/link";
 
-async function listUsers(): Promise<ListUsersResponse> {
+async function listUsers(searchTerm?: string): Promise<ListUsersResponse> {
   const accessToken = await getToken();
-  const response = await fetch(`${process.env.API_BASE_URL}/users`, {
+
+  const url = searchTerm
+    ? `${process.env.API_BASE_URL}/users?search=${searchTerm}`
+    : `${process.env.API_BASE_URL}/users`;
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -32,8 +38,15 @@ async function listUsers(): Promise<ListUsersResponse> {
   return response.json();
 }
 
-export default async function UsersPage() {
-  const usersList = await listUsers();
+export default async function UsersPage(props: {
+  searchParams?: Promise<{
+    search?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const searchTerm = searchParams?.search;
+
+  const usersList = await listUsers(searchTerm);
 
   return (
     <section>
@@ -46,6 +59,8 @@ export default async function UsersPage() {
           Criar Novo
         </Link>
       </div>
+
+      <SearchUser />
 
       <section className="mt-6">
         <Table>

@@ -1,9 +1,17 @@
 import { CustomerList } from "@/components/clientes/customer-list";
+import { SearchCustomer } from "@/components/clientes/search-customer";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 
-export default function ClientesPage() {
+export default async function ClientesPage(props: {
+  searchParams?: Promise<{
+    search?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const searchTerm = searchParams?.search;
+
   return (
     <section>
       <div className="flex w-full items-center justify-between gap-4">
@@ -18,6 +26,8 @@ export default function ClientesPage() {
         </Link>
       </div>
 
+      <SearchCustomer />
+
       <section className="mt-6">
         <Table>
           <TableHeader>
@@ -29,7 +39,7 @@ export default function ClientesPage() {
               <TableHead className="font-bold text-sm">Ações</TableHead>
             </TableRow>
           </TableHeader>
-          <CustomerList />
+          <CustomerList searchTerm={searchTerm} />
         </Table>
       </section>
     </section>

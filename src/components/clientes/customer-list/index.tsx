@@ -3,9 +3,16 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
 import Link from "next/link";
 
-async function listCustomers(): Promise<ListCustomerResponse> {
+async function listCustomers(
+  searchTerm?: string
+): Promise<ListCustomerResponse> {
   const accessToken = await getToken();
-  const response = await fetch(`${process.env.API_BASE_URL}/customers`, {
+
+  const url = searchTerm
+    ? `${process.env.API_BASE_URL}/customers?search=${searchTerm}`
+    : `${process.env.API_BASE_URL}/customers`;
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -15,8 +22,8 @@ async function listCustomers(): Promise<ListCustomerResponse> {
   return response.json();
 }
 
-export async function CustomerList() {
-  const { customers } = await listCustomers();
+export async function CustomerList({ searchTerm }: { searchTerm?: string }) {
+  const { customers } = await listCustomers(searchTerm);
 
   return (
     <>

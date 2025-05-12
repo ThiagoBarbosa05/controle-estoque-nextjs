@@ -1,14 +1,19 @@
 import { getToken, getUserFromToken } from "@/app/auth/get-token";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { ListConsignedResponse } from "@/interfaces/list-consigned-response";
-import { useConsignedStore } from "@/store/consigned-store";
 import { format } from "date-fns";
 import Link from "next/link";
 
-async function listConsigned(): Promise<ListConsignedResponse> {
+async function listConsigned(
+  searchTerm?: string
+): Promise<ListConsignedResponse> {
   const accessToken = await getToken();
 
-  const response = await fetch(`${process.env.API_BASE_URL}/consigned`, {
+  const url = searchTerm
+    ? `${process.env.API_BASE_URL}/consigned?search=${searchTerm}`
+    : `${process.env.API_BASE_URL}/consigned`;
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -25,8 +30,8 @@ async function listConsigned(): Promise<ListConsignedResponse> {
   return response.json();
 }
 
-export async function ConsignedList() {
-  const result = await listConsigned();
+export async function ConsignedList({ searchTerm }: { searchTerm?: string }) {
+  const result = await listConsigned(searchTerm);
 
   return (
     <TableBody>
