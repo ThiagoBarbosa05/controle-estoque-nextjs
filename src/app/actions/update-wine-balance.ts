@@ -59,6 +59,7 @@ export async function updateWineBalance(
   }
 
   revalidatePath(`/consignados/${consignedId}/${customerId}/inicio`);
+  revalidatePath(`/estoque`);
   revalidatePath(`/consignados`);
   revalidateTag("dashboard-metrics");
   revalidateTag("consigned-details");

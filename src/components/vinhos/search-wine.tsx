@@ -6,7 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { useTransition } from "react";
 
-export function SearchWine() {
+export function SearchWine({ placeholder }: { placeholder?: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -37,7 +37,7 @@ export function SearchWine() {
             e.preventDefault();
           }
         }}
-        placeholder="Pesquise por um vinho"
+        placeholder={placeholder ? placeholder : "Pesquise por um vinho"}
         defaultValue={searchParams.get("search")?.toString()}
       />
       {isPending ? (

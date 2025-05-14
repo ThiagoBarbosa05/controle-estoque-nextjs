@@ -76,5 +76,6 @@ export async function addWinesOnConsigned(
   }
 
   revalidatePath(`/consignados/${consignedId}/${customerId}/inicio`);
+  revalidatePath(`/estoque`);
   redirect(`/consignados/${consignedId}/${customerId}/inicio`);
 }

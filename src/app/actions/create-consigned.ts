@@ -61,6 +61,7 @@ export async function createConsigned(
       });
     }
 
+    revalidatePath(`/estoque`);
     revalidatePath("/consignados");
     revalidateTag("dashboard-metrics");
 
