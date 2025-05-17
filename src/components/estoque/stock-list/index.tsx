@@ -35,7 +35,7 @@ async function listWineMetrics(
         search ? `&search=${search}` : ""
       }`
     : `${process.env.API_BASE_URL}/metrics/wines${
-        search ? `&search=${search}` : ""
+        search ? `?search=${search}` : ""
       }`;
 
   console.log(url);
