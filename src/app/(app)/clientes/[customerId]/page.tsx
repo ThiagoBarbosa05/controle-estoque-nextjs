@@ -3,6 +3,7 @@ import { DeleteCustomer } from "@/components/clientes/delete-customer";
 import { Separator } from "@/components/ui/separator";
 import { GetCustomerDetailsResponse } from "@/interfaces/get-customer-details-response";
 import Link from "next/link";
+import { ListHistory } from "../../consignados/[consignedId]/[customerId]/historico/list-history";
 
 type Params = Promise<{ customerId: string }>;
 
@@ -168,8 +169,10 @@ export default async function CustomerDetailsPage({
           <Separator />
 
           <div className="mt-6">
-            <h4>Histórico</h4>
-            <p>em breve</p>
+            <h4 className="text-lg sm:text-xl font-medium">
+              Histórico de vendas do consignado
+            </h4>
+            <ListHistory customerId={customerId} />
           </div>
         </section>
       )}

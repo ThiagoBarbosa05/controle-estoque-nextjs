@@ -20,7 +20,6 @@ import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-
 import { formatCurrencyInput } from "@/lib/format-currency";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { EllipsisVertical, Pen } from "lucide-react";
 
 async function getConsignedDetails(
   consignedId: string

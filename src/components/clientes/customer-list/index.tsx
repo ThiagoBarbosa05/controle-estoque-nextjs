@@ -16,7 +16,7 @@ async function listCustomers(
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-    // cache: "force-cache",
+    cache: "force-cache",
   });
 
   return response.json();

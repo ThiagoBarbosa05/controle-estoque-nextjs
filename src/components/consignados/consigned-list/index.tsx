@@ -1,4 +1,4 @@
-import { getToken, getUserFromToken } from "@/app/auth/get-token";
+import { getToken } from "@/app/auth/get-token";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { ListConsignedResponse } from "@/interfaces/list-consigned-response";
 import { format } from "date-fns";
@@ -18,7 +18,7 @@ async function listConsigned(
       Authorization: `Bearer ${accessToken}`,
     },
 
-    // cache: "force-cache",
+    cache: "force-cache",
   });
 
   if (!response.ok) {

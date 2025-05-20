@@ -20,12 +20,11 @@ const countWineSchema = z.object({
 });
 
 export async function countWine(formState: FormState, formData: FormData) {
+  const winesId = formData.getAll("wineId");
+  const quantities = formData.getAll("quantity");
+  const customerId = formData.get("customerId");
+  const consignedId = formData.get("consignedId");
   try {
-    const winesId = formData.getAll("wineId");
-    const quantities = formData.getAll("quantity");
-    const customerId = formData.get("customerId");
-    const consignedId = formData.get("consignedId");
-
     const winesOnConsigned = winesId.map((wineId, index) => ({
       wineId: wineId.toString(),
       quantity: Number(quantities[index]),
@@ -75,5 +74,6 @@ export async function countWine(formState: FormState, formData: FormData) {
 
   revalidatePath(`/estoque`);
   revalidatePath("/consignados");
-  redirect("/consignados");
+  // redirect(`/consignados/${consignedId}/${customerId}/inicio`);
+  redirect(`/consignados`);
 }

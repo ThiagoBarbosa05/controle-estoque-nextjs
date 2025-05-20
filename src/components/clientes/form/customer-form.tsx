@@ -284,7 +284,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
           Salvar
         </button>
         <Link
-          href="/clientes"
+          href={`/clientes/${customerToEdit?.id ?? ""}`}
           className="border border-[#0d6efd] text-center text-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer rounded-sm leading-none"
         >
           Cancelar
