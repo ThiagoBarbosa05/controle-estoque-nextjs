@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { ActionsResponse, FormState } from "./error-handler";
 import { getToken } from "../auth/get-token";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 const addWinesOnConsignedSchema = z.object({
@@ -77,5 +77,8 @@ export async function addWinesOnConsigned(
 
   revalidatePath(`/consignados/${consignedId}/${customerId}/inicio`);
   revalidatePath(`/estoque`);
+  revalidateTag("customer-summary");
+  revalidateTag("dashboard-metrics");
+
   redirect(`/consignados/${consignedId}/${customerId}/inicio`);
 }

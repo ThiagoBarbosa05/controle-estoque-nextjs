@@ -53,7 +53,7 @@ export default async function ConsignadosPage(props: {
               <TableHead className="font-bold text-sm">Ações</TableHead>
             </TableRow>
           </TableHeader>
-          <ConsignedList searchTerm={searchParams?.search} />
+          <ConsignedList searchTerm={searchTerm} />
         </Table>
       </section>
     </section>

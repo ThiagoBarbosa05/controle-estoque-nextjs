@@ -52,7 +52,6 @@ export default async function ConsignedHistoryPage(props: {
 
   const result = await getConsignedHistory(customerId);
 
-  console.log(result);
   return (
     <section className="w-full space-y-3 mt-6 h-full">
       {!result || result?.consignedByCustomerId.length === 0 ? (
@@ -87,10 +86,15 @@ export default async function ConsignedHistoryPage(props: {
                         )}
                       />
                       <p className="text-sm text-zinc-600">
-                        {consigned.status.replace("_", " ").toLowerCase()} em{" "}
-                        {format(consigned.completedIn, "dd 'de' MMMM yyyy", {
-                          locale: ptBR,
-                        })}
+                        {consigned.status.replace("_", " ").toLowerCase()}
+                        {consigned.status === "CONCLUÍDO" &&
+                          ` em ${format(
+                            consigned.completedIn,
+                            "dd 'de' MMMM yyyy",
+                            {
+                              locale: ptBR,
+                            }
+                          )}`}
                       </p>
                     </div>
                   </span>

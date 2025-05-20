@@ -18,7 +18,7 @@ async function listConsigned(
       Authorization: `Bearer ${accessToken}`,
     },
 
-    cache: "force-cache",
+    // cache: "force-cache",
   });
 
   if (!response.ok) {

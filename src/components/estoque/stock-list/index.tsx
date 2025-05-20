@@ -64,6 +64,9 @@ export async function StockList({ page, search }: StockListProps) {
     wineMetricsList.total / wineMetricsList.pageSize
   );
 
+  const isFirstPage = Number(page) <= 1;
+  const isLastPage = Number(page) >= totalPages;
+
   return (
     <section className="mt-6">
       <Table>
@@ -113,7 +116,31 @@ export async function StockList({ page, search }: StockListProps) {
 
       <Pagination className="mt-2">
         <PaginationContent>
-          <PaginationItem>
+          <PaginationItem
+            aria-disabled={isFirstPage}
+            className={isFirstPage ? "pointer-events-none opacity-50" : ""}
+          >
+            {isFirstPage ? (
+              <PaginationPrevious
+                href={`/estoque?page=${Number(page) - 1}${
+                  search ? `&search=${search}` : ""
+                }`}
+              />
+            ) : null}
+          </PaginationItem>
+          <PaginationItem
+            aria-disabled={isLastPage}
+            className={isLastPage ? "pointer-events-none opacity-50" : ""}
+          >
+            {isLastPage ? (
+              <PaginationNext
+                href={`/estoque?page=${Number(page) + 1}${
+                  search ? `&search=${search}` : ""
+                }`}
+              />
+            ) : null}
+          </PaginationItem>
+          {/* <PaginationItem>
             <PaginationPrevious
               href={`/estoque?page=${
                 Number(page) && Number(page) > 1 ? Number(page) - 1 : 1
@@ -130,7 +157,7 @@ export async function StockList({ page, search }: StockListProps) {
                   : totalPages
               }${search ? `&search=${search}` : ""}`}
             />
-          </PaginationItem>
+          </PaginationItem> */}
         </PaginationContent>
       </Pagination>
     </section>

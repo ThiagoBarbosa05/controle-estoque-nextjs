@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { ListCustomerSummaryResponse } from "@/interfaces/list-customer-summary-response";
 import { Metrics } from "@/interfaces/metrics-response";
-import { Amphora, CircleDollarSign } from "lucide-react";
+import { CircleDollarSign } from "lucide-react";
 import Link from "next/link";
 
 async function getDashboardMetrics(): Promise<Metrics> {
@@ -37,7 +37,7 @@ async function listCustomerSummary(): Promise<ListCustomerSummaryResponse> {
       Authorization: `Bearer ${accessToken}`,
     },
     cache: "force-cache",
-    next: { tags: ["dashboard-metrics"] },
+    next: { tags: ["customer-summary"] },
   });
 
   return response.json();

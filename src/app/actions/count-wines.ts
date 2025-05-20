@@ -71,6 +71,8 @@ export async function countWine(formState: FormState, formData: FormData) {
   revalidateTag("consigned-details");
   revalidateTag("consigned-history");
   revalidateTag("dashboard-metrics");
+  revalidateTag("customer-summary");
+
   revalidatePath(`/estoque`);
   revalidatePath("/consignados");
   redirect("/consignados");

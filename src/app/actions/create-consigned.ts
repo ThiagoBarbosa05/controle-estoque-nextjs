@@ -64,6 +64,7 @@ export async function createConsigned(
     revalidatePath(`/estoque`);
     revalidatePath("/consignados");
     revalidateTag("dashboard-metrics");
+    revalidateTag("customer-summary");
 
     return ActionsResponse.onSuccess({
       message: "Consignado criado com sucesso!",
