@@ -315,7 +315,7 @@ export function CreateNewConsignedForm({
 
       <div className="flex mt-4 gap-2">
         <Button disabled={isPendingAction}>Salvar</Button>
-        <Button onClick={handleCancelForm} variant="outline">
+        <Button type="button" onClick={handleCancelForm} variant="outline">
           Cancelar
         </Button>
       </div>
