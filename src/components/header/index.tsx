@@ -1,12 +1,17 @@
+import { ScanBarcode } from "lucide-react";
 import { MenuMobile } from "../sidebar/menu-mobile";
+import { Separator } from "../ui/separator";
 
 export function Header() {
   return (
-    <header className="w-full px-5 gap-6 bg-[#7e1e2a] flex items-center shadow-md shadow-zinc-400 justify-center">
+    <header className="w-full md:hidden flex items-center gap-2 px-5 py-4 border-b">
       <MenuMobile />
 
-      <h1 className="font-bold text-lg sm:text-2xl  flex-1 py-6 text-white">
-        Controle de Estoque de Vinhos
+      <Separator orientation="vertical" />
+
+      <h1 className="flex text-[#7e1e2a] font-semibold text-lg whitespace-nowrap items-center gap-2">
+        <ScanBarcode className="size-5" />
+        Controle de estoque
       </h1>
     </header>
   );

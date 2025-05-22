@@ -59,7 +59,7 @@ export function Navigation({
   const pathname = usePathname();
 
   return (
-    <nav className="pb-5">
+    <nav className="pb-5 pt-3">
       <ul className="flex flex-col gap-3">
         {navLinks
           .filter((link) =>
@@ -73,7 +73,7 @@ export function Navigation({
               <li key={link.href}>
                 <Link
                   className={twMerge(
-                    "text-sm flex items-center gap-2 rounded-md hover:text-[#93173c] py-2 px-3 transition text-zinc-600",
+                    "text-sm flex items-center gap-2 rounded-md px-2 mx-3 hover:text-[#93173c] py-2 transition text-zinc-600",
                     isActive && "bg-[#93173c] text-zinc-100 hover:text-zinc-100"
                   )}
                   href={link.href}

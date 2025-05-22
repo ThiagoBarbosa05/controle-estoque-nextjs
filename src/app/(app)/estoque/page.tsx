@@ -1,5 +1,6 @@
 import { StockList } from "@/components/estoque/stock-list";
 import { Loading } from "@/components/ui/loading";
+import { Separator } from "@/components/ui/separator";
 import { SearchWine } from "@/components/vinhos/search-wine";
 
 import { Suspense } from "react";
@@ -13,10 +14,15 @@ export default async function EstoquePage(props: {
   const searchParams = await props.searchParams;
 
   return (
-    <section className="flex-1 flex flex-col">
-      <h2 className="text-2xl sm:text-4xl font-medium">Controle de Estoque</h2>
+    <section>
+      <h2 className="text-lg sm:text-2xl font-medium pb-3">
+        Controle de Estoque
+      </h2>
+      <Separator />
 
-      <SearchWine placeholder="Pesquise por um vinho ou cliente" />
+      <div className="mt-6">
+        <SearchWine placeholder="Pesquise por um vinho ou cliente" />
+      </div>
 
       <Suspense
         key={searchParams?.page}

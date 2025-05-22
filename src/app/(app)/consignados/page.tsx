@@ -1,8 +1,10 @@
 import { getUserFromToken } from "@/app/auth/get-token";
 import { ConsignedList } from "@/components/consignados/consigned-list";
 import { SearchConsigned } from "@/components/consignados/search-consigned";
+import { Separator } from "@/components/ui/separator";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
@@ -20,8 +22,10 @@ export default async function ConsignadosPage(props: {
 
   return (
     <section>
-      <div className="flex w-full items-center justify-between gap-4">
-        <h2 className="text-xl sm:text-4xl font-medium">Consignados</h2>
+      <h2 className="text-lg sm:text-2xl font-medium pb-3">Consignados</h2>
+      <Separator />
+      <div className="flex w-full mt-6 flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <SearchConsigned />
         {isAdmin && (
           <Link
             href={"/consignados/criar"}
@@ -34,9 +38,7 @@ export default async function ConsignadosPage(props: {
         )}
       </div>
 
-      <SearchConsigned />
-
-      <section className="mt-6">
+      <section className="mt-4">
         <Table>
           <TableHeader>
             <TableRow>

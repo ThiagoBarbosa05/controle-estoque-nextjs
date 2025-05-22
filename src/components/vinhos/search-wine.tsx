@@ -27,7 +27,7 @@ export function SearchWine({ placeholder }: { placeholder?: string }) {
   }, 300);
 
   return (
-    <div className="mt-6 relative max-w-[480px]">
+    <div className="flex-1 relative max-w-[480px]">
       <Input
         type="text"
         className="text-sm"

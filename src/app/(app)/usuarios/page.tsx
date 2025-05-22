@@ -50,8 +50,12 @@ export default async function UsersPage(props: {
 
   return (
     <section>
-      <div className="flex w-full items-center justify-between gap-4">
-        <h2 className="text-xl flex-1 sm:text-4xl font-medium">Usuários</h2>
+      <h2 className="text-lg sm:text-2xl font-medium pb-3">Usuários</h2>
+      <Separator />
+
+      <div className="flex mt-6 w-full items-center justify-between gap-4">
+        <SearchUser />
+
         <Link
           href="/usuarios/criar"
           className="bg-[#0d6efd] sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none"
@@ -60,9 +64,7 @@ export default async function UsersPage(props: {
         </Link>
       </div>
 
-      <SearchUser />
-
-      <section className="mt-6">
+      <section className="mt-4">
         <Table>
           <TableHeader>
             <TableRow>

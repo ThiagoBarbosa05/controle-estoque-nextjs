@@ -68,7 +68,7 @@ export async function StockList({ page, search }: StockListProps) {
   const isLastPage = Number(page) >= totalPages;
 
   return (
-    <section className="mt-6">
+    <section className="mt-4">
       <Table>
         <TableHeader>
           <TableRow>

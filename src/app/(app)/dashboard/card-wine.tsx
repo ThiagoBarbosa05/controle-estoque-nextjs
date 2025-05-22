@@ -1,13 +1,11 @@
 import { Wine } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function CardWine({ winesQuantity }: { winesQuantity: number }) {
   return (
-    <Card className="border-[#93173c]">
-      <CardHeader className="flex flex-row justify-between">
-        <CardTitle className="text-[#93173c] text-lg sm:text-xl">
-          Total de Vinhos
-        </CardTitle>
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle className="text-[#93173c]">Total de Vinhos</CardTitle>
         <Wine className="text-[#93173c] size-7" />
       </CardHeader>
       <CardContent>

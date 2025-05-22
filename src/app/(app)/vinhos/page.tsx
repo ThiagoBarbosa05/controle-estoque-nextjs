@@ -1,4 +1,5 @@
 import { getToken } from "@/app/auth/get-token";
+import { Separator } from "@/components/ui/separator";
 
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
@@ -43,8 +44,14 @@ export default async function CadastroVinhosPage(props: {
 
   return (
     <section>
-      <div className="flex w-full items-center justify-between gap-4">
-        <h2 className="text-2xl sm:text-4xl font-medium">Cadastro de vinhos</h2>
+      <h2 className="text-lg sm:text-2xl font-medium pb-3">
+        Cadastro de vinhos
+      </h2>
+      <Separator />
+
+      <div className="flex mt-6 w-full items-center justify-between gap-4">
+        <SearchWine />
+
         <Link
           href={"/vinhos/criar"}
           className="bg-[#188754] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#03a679] text-white rounded-sm leading-none"
@@ -53,9 +60,7 @@ export default async function CadastroVinhosPage(props: {
         </Link>
       </div>
 
-      <SearchWine />
-
-      <section className="mt-6">
+      <section className="mt-4">
         <Table>
           <TableHeader>
             <TableRow>

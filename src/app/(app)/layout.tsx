@@ -1,20 +1,23 @@
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
+import { MenuMobile } from "@/components/sidebar/menu-mobile";
 
-export default function AppLayout({
+export default async function AppLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex-1 flex flex-col">
-      <Header />
+    <>
+      {/* <Header /> */}
+
       <div className="flex flex-1">
         <Sidebar />
-        <main className="p-5 flex flex-col mt-6 overflow-x-hidden flex-1">
+
+        <main className="p-5 bg-[#f7f7f7] flex md:ml-60 flex-col overflow-x-hidden flex-1">
           {children}
         </main>
       </div>
-    </div>
+    </>
   );
 }

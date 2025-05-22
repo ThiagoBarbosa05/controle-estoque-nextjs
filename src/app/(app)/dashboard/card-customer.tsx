@@ -1,5 +1,5 @@
 import { Contact } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function CardCustomer({
   customersQuantity,
@@ -7,11 +7,9 @@ export function CardCustomer({
   customersQuantity: number;
 }) {
   return (
-    <Card className="border-[#93173c]">
-      <CardHeader className="flex flex-row justify-between">
-        <CardTitle className="text-[#93173c] text-lg sm:text-xl">
-          Total de Clientes
-        </CardTitle>
+    <Card className="">
+      <CardHeader className="flex flex-row items-center  justify-between">
+        <CardTitle className="text-[#93173c]">Total de Clientes</CardTitle>
         <Contact className="text-[#93173c] size-7" />
       </CardHeader>
       <CardContent>

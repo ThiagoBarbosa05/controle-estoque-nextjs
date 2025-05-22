@@ -27,7 +27,7 @@ export function SearchUser() {
   }, 300);
 
   return (
-    <div className="mt-6 relative max-w-[480px]">
+    <div className="relative flex-1 max-w-[480px]">
       <Input
         type="text"
         className="text-sm"
