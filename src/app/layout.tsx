@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { MenuMobile } from "@/components/sidebar/menu-mobile";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -20,7 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className}  antialiased`}>
-        <div className="min-h-screen w-full flex flex-col">{children}</div>
+        <div className="min-h-screen w-full flex flex-col">
+          <MenuMobile />
+          {children}
+        </div>
         <Toaster />
       </body>
     </html>
