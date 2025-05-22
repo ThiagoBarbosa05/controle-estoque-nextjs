@@ -18,11 +18,11 @@ import { Customer } from "@/interfaces/list-customer-response";
 import { Input } from "@/components/ui/input";
 import { Wine } from "@/interfaces/list-wines-response";
 import { formatCurrencyInput } from "@/lib/format-currency";
-import Link from "next/link";
 import { createConsigned } from "@/app/actions/create-consigned";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 export function CreateNewConsignedForm({
   customers,
@@ -49,13 +49,10 @@ export function CreateNewConsignedForm({
   const [isPendingAction, startTransitionAction] = useTransition();
 
   const [formError, setFormError] = useState<string | null>(null);
-  const [existingWineError, setExistingWineError] = useState<string | null>(
-    null
-  );
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace, push } = useRouter();
+  const { replace, push, refresh } = useRouter();
 
   const handleSearchCustomer = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
@@ -99,10 +96,7 @@ export function CreateNewConsignedForm({
     if (existingWine) {
       toast.error("Vinho já adicionado", {
         description: existingWine.name,
-        // style: {
-        //   color: "red",
-        //   borderColor: "red",
-        // },
+
         action: {
           label: "fechar",
           onClick: () => toast.dismiss(),
@@ -112,7 +106,6 @@ export function CreateNewConsignedForm({
     }
 
     createWine(wine);
-    setExistingWineError(null);
     replace(`${pathname}`);
   }
 
@@ -136,13 +129,16 @@ export function CreateNewConsignedForm({
     }
   }
 
+  function handleCancelForm() {
+    deleteCustomer();
+    resetWines();
+    push("/consignados");
+  }
+
   return (
     <form
       action={(formData) => startTransitionAction(() => handleSubmit(formData))}
-      className={"mt-6 border p-4 rounded-md"}
     >
-      <h3 className="text-xl sm:text-2xl">Adicionar Novo Consignado</h3>
-
       {formError && (
         <Alert className="mt-6" variant="destructive">
           <TriangleAlert />
@@ -151,10 +147,10 @@ export function CreateNewConsignedForm({
         </Alert>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 mt-6 gap-5">
+      <div className="grid max-w-[540px] grid-cols-1 sm:grid-cols-1 mt-6 gap-5">
         <div className="w-full  relative">
           <label htmlFor="customer" className="block">
-            Cliente*
+            Cliente *
           </label>
 
           {customerStore.name ? (
@@ -174,6 +170,7 @@ export function CreateNewConsignedForm({
                 type="button"
                 onClick={() => {
                   deleteCustomer();
+                  refresh();
                 }}
                 className="text-destructive text-sm border border-destructive px-2 rounded-sm cursor-pointer"
               >
@@ -185,6 +182,7 @@ export function CreateNewConsignedForm({
               <Input
                 id="customer"
                 type="text"
+                className="bg-white"
                 onChange={(e) => handleSearchCustomer(e.target.value)}
                 autoComplete="off"
                 placeholder="Digite o nome do cliente"
@@ -224,12 +222,13 @@ export function CreateNewConsignedForm({
         </div>
 
         <div className="relative">
-          <label htmlFor="wine">Vinhos*</label>
+          <label htmlFor="wine">Vinhos *</label>
 
           <div className="relative">
             <Input
               id="wine"
               type="text"
+              className="bg-white"
               onChange={(e) => handleSearchWine(e.target.value)}
               autoComplete="off"
               defaultValue={searchParams.get("searchWine")?.toString()}
@@ -300,12 +299,12 @@ export function CreateNewConsignedForm({
                     />
                   </TableCell>
                   <TableCell>
-                    <button
+                    <Button
+                      variant="outline"
                       onClick={() => deleteWine(wine.id)}
-                      className="text-destructive text-sm border border-destructive py-1.5 px-2 rounded-sm cursor-pointer"
                     >
                       Excluir
-                    </button>
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -314,20 +313,11 @@ export function CreateNewConsignedForm({
         </div>
       )}
 
-      <div className="flex gap-2">
-        <button
-          disabled={isPendingAction}
-          className="bg-[#0d6efd] mt-4 w-full disabled:bg-[#5a82cc] sm:w-[initial]  py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none"
-        >
-          Salvar
-        </button>
-        <Link
-          href="/consignados"
-          type="button"
-          className="border border-[#0d6efd] text-center mt-4 w-full sm:w-[initial]  py-3 px-4 text-sm cursor-pointer transition text-[#0d6efd] rounded-sm leading-none"
-        >
-          Voltar
-        </Link>
+      <div className="flex mt-4 gap-2">
+        <Button disabled={isPendingAction}>Salvar</Button>
+        <Button onClick={handleCancelForm} variant="outline">
+          Cancelar
+        </Button>
       </div>
     </form>
   );

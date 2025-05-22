@@ -34,8 +34,8 @@ export function ConsignedNavigation({
   ];
 
   return (
-    <nav className="w-full mt-5">
-      <ul className="flex items-center w-full border-b gap-5">
+    <nav className="bg-white rounded-sm shadow-sm mt-5">
+      <ul className="flex items-center w-full">
         {navLinks
           .filter((link) =>
             link.allowedRoles.some((role) => allowedRoleList.includes(role))
@@ -44,17 +44,11 @@ export function ConsignedNavigation({
             const isActive = pathname === link.href;
 
             return (
-              <li
-                className={twMerge(
-                  "border-b-2 border-transparent",
-                  isActive && "border-b-2 border-[#7e1e2a] py-2 "
-                )}
-                key={link.href}
-              >
+              <li className="p-1.5" key={link.href}>
                 <Link
                   className={twMerge(
-                    "text-sm border-b-2 hover:text-[#7e1e2a] border-transparent font-medium py-2 px-3 cursor-pointer",
-                    isActive && " text-[#7e1e2a]"
+                    "text-sm text-zinc-500 hover:text-[#7e1e2a] rounded-sm border-transparent font-medium py-1.5 block px-3 cursor-pointer",
+                    isActive && "bg-[#93173c] text-white hover:text-white"
                   )}
                   href={link.href}
                 >

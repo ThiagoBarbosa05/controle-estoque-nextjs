@@ -10,10 +10,7 @@ import { TableSkeleton } from "@/components/ui/table-skeleton";
 export default async function DashboardPage() {
   return (
     <section>
-      <div className="flex pb-3 items-center gap-2">
-        <MenuMobile />
-        <h2 className="text-lg sm:text-2xl font-medium">Dashboard</h2>
-      </div>
+      <h2 className="text-lg sm:text-2xl font-medium">Dashboard</h2>
 
       <Separator />
       <Suspense fallback={<MetricsSkeleton />}>

@@ -1,12 +1,13 @@
 import { getUserFromToken } from "@/app/auth/get-token";
-import { ConsignedList } from "@/components/consignados/consigned-list";
+import { ConsignedList } from "@/app/(app)/consignados/consigned-list";
 import { SearchConsigned } from "@/components/consignados/search-consigned";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus } from "lucide-react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import { Suspense } from "react";
+import { TableSkeleton } from "@/components/ui/table-skeleton";
 
 export default async function ConsignadosPage(props: {
   searchParams?: Promise<{
@@ -26,37 +27,24 @@ export default async function ConsignadosPage(props: {
       <Separator />
       <div className="flex w-full mt-6 flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <SearchConsigned />
-        {isAdmin && (
-          <Link
-            href={"/consignados/criar"}
-            className={twMerge(
-              "bg-[#0d6efd] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none"
-            )}
-          >
-            Novo Consignado
-          </Link>
-        )}
+        <Button asChild>
+          {isAdmin && (
+            <Link
+              href={"/consignados/criar"}
+              className={twMerge(
+                "bg-[#0d6efd] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none"
+              )}
+            >
+              Novo Consignado
+            </Link>
+          )}
+        </Button>
       </div>
 
       <section className="mt-4">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="font-bold text-sm">Cliente</TableHead>
-              <TableHead className="font-bold text-sm">
-                Total de vinhos
-              </TableHead>
-              <TableHead className="font-bold text-sm">
-                Data de Criação
-              </TableHead>
-              <TableHead className="font-bold text-sm">
-                Última Atualização
-              </TableHead>
-              <TableHead className="font-bold text-sm">Ações</TableHead>
-            </TableRow>
-          </TableHeader>
+        <Suspense key={searchTerm} fallback={<TableSkeleton />}>
           <ConsignedList searchTerm={searchTerm} />
-        </Table>
+        </Suspense>
       </section>
     </section>
   );

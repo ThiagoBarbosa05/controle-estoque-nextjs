@@ -2,6 +2,7 @@ import { ListWinesResponse } from "@/interfaces/list-wines-response";
 import { AddWine } from "./add-wine";
 import { getToken } from "@/app/auth/get-token";
 import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-response";
+import { Button } from "@/components/ui/button";
 
 async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
   const accessToken = await getToken();
@@ -43,12 +44,9 @@ export async function AddNewWine({
         quantity: wine.balance,
       }))}
     >
-      <button
-        type="button"
-        className="bg-[#0d6efd] mt-4 w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none"
-      >
+      <Button className="mt-4" variant="outline" type="button">
         Adicionar vinhos
-      </button>
+      </Button>
     </AddWine>
   );
 }

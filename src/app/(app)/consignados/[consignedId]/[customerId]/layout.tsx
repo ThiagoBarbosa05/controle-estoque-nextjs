@@ -1,4 +1,5 @@
 import { ConsignedNavigation } from "@/components/consignados/navigation";
+import { Separator } from "@/components/ui/separator";
 import { TokenPayload } from "@/interfaces/token-payload";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
@@ -17,9 +18,10 @@ export default async function ConsignedDetailsLayout({
 
   return (
     <section className="flex flex-1 flex-col w-full items-start">
-      <h2 className="text-xl sm:text-4xl font-medium">
-        Detalhes do Consignado
+      <h2 className="text-lg sm:text-2xl font-medium pb-3">
+        Detalhes do consignado
       </h2>
+      <Separator />
       <ConsignedNavigation
         allowedRoleList={userRoles.roles}
         consignedId={consignedId}

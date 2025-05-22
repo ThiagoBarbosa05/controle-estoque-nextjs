@@ -30,7 +30,7 @@ export function SearchConsigned() {
     <div className="relative flex-1 w-full max-w-[480px]">
       <Input
         type="text"
-        className="text-sm"
+        className="text-sm bg-white"
         onChange={(e) => handleSearchConsigned(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
@@ -40,13 +40,14 @@ export function SearchConsigned() {
         placeholder="Digite o nome do cliente do consignado"
         defaultValue={searchParams.get("search")?.toString()}
       />
-      {isPending ? (
+      <Search className="size-5 text-zinc-400 absolute top-1/2 right-3 -translate-y-1/2" />
+      {/* {isPending ? (
         <div className="text-sm absolute bottom-1/2 right-4 translate-y-1/2 text-[#93173c] mt-1">
           <LoaderCircle className="size-5  animate-spin" />
         </div>
       ) : (
         <Search className="size-5 text-zinc-400 absolute top-1/2 right-3 -translate-y-1/2" />
-      )}
+      )} */}
     </div>
   );
 }
