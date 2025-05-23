@@ -20,6 +20,7 @@ export default async function DashboardPage() {
       <section className="w-full mt-6">
         <h3 className="text-lg font-medium py-3">Resumo por cliente</h3>
 
+        {/* <TableSkeleton /> */}
         <Suspense fallback={<TableSkeleton />}>
           <CustomersSummary />
         </Suspense>

@@ -56,7 +56,7 @@ export async function ListHistory({ customerId }: ListHistoryProps) {
     <section className="w-full space-y-3 mt-6 h-full">
       {!result || result?.consignedByCustomerId.length === 0 ? (
         <div className=" w-full text-center text-zinc-600">
-          <p>Nenhum consignado encontrado</p>
+          <p>Nenhum histórico encontrado.</p>
         </div>
       ) : (
         <>

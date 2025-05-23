@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import { HistorySkeleton } from "./history-skeleton";
 import { ListHistory } from "./list-history";
 
 export default async function ConsignedHistoryPage(props: {
@@ -5,5 +7,9 @@ export default async function ConsignedHistoryPage(props: {
 }) {
   const { customerId } = await props.params;
 
-  return <ListHistory customerId={customerId} />;
+  return (
+    <Suspense fallback={<HistorySkeleton />}>
+      <ListHistory customerId={customerId} />
+    </Suspense>
+  );
 }

@@ -166,7 +166,7 @@ export function CreateNewConsignedForm({
                 name="customerId"
                 value={customerStore.id ?? ""}
               />
-              <button
+              <Button
                 type="button"
                 onClick={() => {
                   deleteCustomer();
@@ -175,7 +175,7 @@ export function CreateNewConsignedForm({
                 className="text-destructive text-sm border border-destructive px-2 rounded-sm cursor-pointer"
               >
                 cancelar
-              </button>
+              </Button>
             </div>
           ) : (
             <div className="relative">
@@ -301,6 +301,7 @@ export function CreateNewConsignedForm({
                   <TableCell>
                     <Button
                       variant="outline"
+                      type="button"
                       onClick={() => deleteWine(wine.id)}
                     >
                       Excluir
