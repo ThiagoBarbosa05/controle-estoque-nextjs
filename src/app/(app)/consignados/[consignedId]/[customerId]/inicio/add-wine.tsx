@@ -2,6 +2,7 @@
 
 import { addWinesOnConsigned } from "@/app/actions/add-wines-on-consigned";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Sheet,
@@ -202,13 +203,13 @@ export function AddWine({
                           />
                         </TableCell>
                         <TableCell>
-                          <button
+                          <Button
+                            variant="outline"
                             type="button"
                             onClick={() => handleDeleteWine(wine.id)}
-                            className="text-destructive text-sm border border-destructive py-1.5 px-2 rounded-sm cursor-pointer"
                           >
                             Excluir
-                          </button>
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -217,9 +218,7 @@ export function AddWine({
               </div>
             )}
           </div>
-          <button className="bg-[#0d6efd] mt-4 w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none">
-            Salvar
-          </button>
+          <Button className="mt-4">Salvar</Button>
         </form>
       </SheetContent>
     </Sheet>

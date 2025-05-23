@@ -1,6 +1,5 @@
 import { getToken, getUserFromToken } from "@/app/auth/get-token";
-import { HandleWineBalance } from "@/components/consignados/consigned-list/handle-wine-balance";
-import { AddNewWine } from "@/components/consignados/form/add-new-wine";
+import { HandleWineBalance } from "@/app/(app)/consignados/[consignedId]/[customerId]/inicio/handle-wine-balance";
 import {
   Table,
   TableBody,
@@ -13,6 +12,7 @@ import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-
 import { formatCurrencyInput } from "@/lib/format-currency";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { AddNewWine } from "./add-new-wine";
 
 async function getConsignedDetails(
   consignedId: string

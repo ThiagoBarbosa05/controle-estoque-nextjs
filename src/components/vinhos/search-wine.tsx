@@ -1,17 +1,14 @@
 "use client";
 
-import { LoaderCircle, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import { useTransition } from "react";
 
 export function SearchWine({ placeholder }: { placeholder?: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-
-  const [isPending, startTransition] = useTransition();
 
   const handleSearchWine = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
@@ -21,16 +18,14 @@ export function SearchWine({ placeholder }: { placeholder?: string }) {
       params.delete("search");
     }
 
-    startTransition(() => {
-      replace(`${pathname}?${params.toString()}`);
-    });
+    replace(`${pathname}?${params.toString()}`);
   }, 300);
 
   return (
     <div className="flex-1 relative max-w-[480px]">
       <Input
         type="text"
-        className="text-sm"
+        className="text-sm bg-white"
         onChange={(e) => handleSearchWine(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
@@ -40,13 +35,8 @@ export function SearchWine({ placeholder }: { placeholder?: string }) {
         placeholder={placeholder ? placeholder : "Pesquise por um vinho"}
         defaultValue={searchParams.get("search")?.toString()}
       />
-      {isPending ? (
-        <div className="text-sm absolute bottom-1/2 right-4 translate-y-1/2 text-[#93173c] mt-1">
-          <LoaderCircle className="size-5  animate-spin" />
-        </div>
-      ) : (
-        <Search className="size-5 text-zinc-400 absolute top-1/2 right-3 -translate-y-1/2" />
-      )}
+
+      <Search className="size-5 text-zinc-400 absolute top-1/2 right-3 -translate-y-1/2" />
     </div>
   );
 }

@@ -4,33 +4,14 @@ import { Separator } from "@/components/ui/separator";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 import { SearchWine } from "@/components/vinhos/search-wine";
-import { WinesList } from "@/components/vinhos/wines-list";
 
 import { ListWinesResponse } from "@/interfaces/list-wines-response";
 
 import Link from "next/link";
-
-async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
-  const accessToken = await getToken();
-  const res = await fetch(
-    searchTerm
-      ? `${process.env.API_BASE_URL}/wines?search=${searchTerm}`
-      : `${process.env.API_BASE_URL}/wines`,
-    {
-      cache: "force-cache",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-
-  if (!res.ok) {
-    console.log(res.status);
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
+import { ListWines } from "./list-wines";
+import { Suspense } from "react";
+import { TableSkeleton } from "@/components/ui/table-skeleton";
+import { Button } from "@/components/ui/button";
 
 export default async function CadastroVinhosPage(props: {
   searchParams?: Promise<{
@@ -39,8 +20,6 @@ export default async function CadastroVinhosPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const searchTerm = searchParams?.search;
-
-  const result = await listWines(searchTerm);
 
   return (
     <section>
@@ -51,31 +30,14 @@ export default async function CadastroVinhosPage(props: {
 
       <div className="flex mt-6 w-full items-center justify-between gap-4">
         <SearchWine />
-
-        <Link
-          href={"/vinhos/criar"}
-          className="bg-[#188754] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#03a679] text-white rounded-sm leading-none"
-        >
-          Novo Vinho
-        </Link>
+        <Button asChild>
+          <Link href={"/vinhos/criar"}>Novo Vinho</Link>
+        </Button>
       </div>
 
-      <section className="mt-4">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="font-bold text-sm">Nome</TableHead>
-              <TableHead className="font-bold text-sm">Tipo</TableHead>
-              <TableHead className="font-bold text-sm">Safra</TableHead>
-              <TableHead className="font-bold text-sm">Produtor</TableHead>
-              <TableHead className="font-bold text-sm">País</TableHead>
-              <TableHead className="font-bold text-sm">Preço</TableHead>
-              <TableHead className="font-bold text-sm">Ações</TableHead>
-            </TableRow>
-          </TableHeader>
-          <WinesList wines={result.wines} />
-        </Table>
-      </section>
+      <Suspense key={searchTerm} fallback={<TableSkeleton />}>
+        <ListWines searchTerm={searchTerm} />
+      </Suspense>
     </section>
   );
 }

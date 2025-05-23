@@ -1,17 +1,14 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { Input } from "../ui/input";
-import { LoaderCircle, Search } from "lucide-react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export function SearchConsigned() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-
-  const [isPending, startTransition] = useTransition();
 
   const handleSearchConsigned = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
@@ -21,9 +18,7 @@ export function SearchConsigned() {
       params.delete("search");
     }
 
-    startTransition(() => {
-      replace(`${pathname}?${params.toString()}`);
-    });
+    replace(`${pathname}?${params.toString()}`);
   }, 300);
 
   return (
@@ -41,13 +36,6 @@ export function SearchConsigned() {
         defaultValue={searchParams.get("search")?.toString()}
       />
       <Search className="size-5 text-zinc-400 absolute top-1/2 right-3 -translate-y-1/2" />
-      {/* {isPending ? (
-        <div className="text-sm absolute bottom-1/2 right-4 translate-y-1/2 text-[#93173c] mt-1">
-          <LoaderCircle className="size-5  animate-spin" />
-        </div>
-      ) : (
-        <Search className="size-5 text-zinc-400 absolute top-1/2 right-3 -translate-y-1/2" />
-      )} */}
     </div>
   );
 }

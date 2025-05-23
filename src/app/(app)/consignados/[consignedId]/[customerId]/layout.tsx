@@ -1,4 +1,4 @@
-import { ConsignedNavigation } from "@/components/consignados/navigation";
+import { ConsignedNavigation } from "@/app/(app)/consignados/[consignedId]/navigation";
 import { Separator } from "@/components/ui/separator";
 import { TokenPayload } from "@/interfaces/token-payload";
 import { jwtDecode } from "jwt-decode";

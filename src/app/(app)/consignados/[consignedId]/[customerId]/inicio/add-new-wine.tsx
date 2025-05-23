@@ -1,8 +1,8 @@
 import { ListWinesResponse } from "@/interfaces/list-wines-response";
-import { AddWine } from "./add-wine";
 import { getToken } from "@/app/auth/get-token";
 import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-response";
 import { Button } from "@/components/ui/button";
+import { AddWine } from "./add-wine";
 
 async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
   const accessToken = await getToken();

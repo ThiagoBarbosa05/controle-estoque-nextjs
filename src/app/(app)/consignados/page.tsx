@@ -1,6 +1,5 @@
 import { getUserFromToken } from "@/app/auth/get-token";
 import { ConsignedList } from "@/app/(app)/consignados/consigned-list";
-import { SearchConsigned } from "@/components/consignados/search-consigned";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
@@ -8,6 +7,7 @@ import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
+import { SearchConsigned } from "./search-consigned";
 
 export default async function ConsignadosPage(props: {
   searchParams?: Promise<{
@@ -28,16 +28,7 @@ export default async function ConsignadosPage(props: {
       <div className="flex w-full mt-6 flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <SearchConsigned />
         <Button asChild>
-          {isAdmin && (
-            <Link
-              href={"/consignados/criar"}
-              className={twMerge(
-                "bg-[#0d6efd] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none"
-              )}
-            >
-              Novo Consignado
-            </Link>
-          )}
+          {isAdmin && <Link href={"/consignados/criar"}>Novo Consignado</Link>}
         </Button>
       </div>
 

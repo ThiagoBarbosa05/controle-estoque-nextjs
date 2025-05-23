@@ -2,6 +2,7 @@
 
 import { countWine } from "@/app/actions/count-wines";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ConsignedDetails } from "@/interfaces/get-consigned-details-response";
 import { useWineCountStore } from "@/store/wine-count-store";
@@ -68,18 +69,15 @@ export function WineCountForm({ consigned }: WineCountProps) {
       ))}
 
       <div className="flex gap-3">
-        <button
-          disabled={isPending}
-          className="bg-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0d6efd] text-white rounded-sm leading-none"
-        >
-          Salvar
-        </button>
-        <Link
-          href={`/consignados/${consigned.id}/${consigned.customer.id}/inicio`}
-          className="border border-[#0d6efd] block text-center w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition text-[#0d6efd]  rounded-sm leading-none"
-        >
-          Cancelar
-        </Link>
+        <Button disabled={isPending}>Salvar</Button>
+
+        <Button variant="outline" asChild>
+          <Link
+            href={`/consignados/${consigned.id}/${consigned.customer.id}/inicio`}
+          >
+            Cancelar
+          </Link>
+        </Button>
       </div>
     </form>
   );

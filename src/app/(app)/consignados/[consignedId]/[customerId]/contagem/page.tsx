@@ -1,5 +1,5 @@
 import { getToken } from "@/app/auth/get-token";
-import { WineCountForm } from "@/components/consignados/form/count-wine";
+import { WineCountForm } from "@/app/(app)/consignados/[consignedId]/[customerId]/contagem/count-wine";
 import { GetConsignedDetailsResponse } from "@/interfaces/get-consigned-details-response";
 import { Suspense } from "react";
 import { WineCountWrapper } from "./wine-count-wrapper";
