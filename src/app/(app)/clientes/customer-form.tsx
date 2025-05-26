@@ -4,6 +4,7 @@ import { createCustomer } from "@/app/actions/create-customer";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
 import { updateCustomer } from "@/app/actions/update-customer";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { CustomerDetails } from "@/interfaces/get-customer-details-response";
@@ -33,8 +34,6 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
 
   return (
     <form action={action}>
-      <h3 className="text-lg sm:text-2xl mb-5">Adicionar Novo Cliente</h3>
-
       {formState.status === "ERROR" && (
         <Alert variant="destructive">
           <TriangleAlert />
@@ -51,6 +50,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             <Input
               type="text"
               name="name"
+              className="bg-white"
               defaultValue={
                 formState.payload?.get("name")?.toString() ??
                 customerToEdit?.name ??
@@ -67,6 +67,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             <label className="block">Pessoa de Contato</label>
             <Input
               type="text"
+              className="bg-white"
               name="contactPerson"
               defaultValue={
                 formState.payload?.get("contactPerson")?.toString() ??
@@ -86,6 +87,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
               value={cnpj || ""}
               name="document"
               inputMode="numeric"
+              className="bg-white"
               placeholder="00.000.000/0000-00"
               defaultValue={
                 formState.payload?.get("document")?.toString() ?? cnpj
@@ -104,6 +106,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             <Input
               type="text"
               name="stateRegistration"
+              className="bg-white"
               defaultValue={
                 formState.payload?.get("stateRegistration")?.toString() ??
                 customerToEdit?.stateRegistration ??
@@ -125,6 +128,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
               type="email"
               placeholder="exemplo@email.com"
               name="email"
+              className="bg-white"
               defaultValue={
                 formState.payload?.get("email")?.toString() ??
                 customerToEdit?.email ??
@@ -145,6 +149,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
               type="text"
               value={cellphone || ""}
               inputMode="numeric"
+              className="bg-white"
               onChange={(e) => setCellphone(formatPhone(e.target.value))}
               defaultValue={
                 formState.payload?.get("cellphone")?.toString() ?? cellphone
@@ -166,6 +171,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             <Input
               value={businessPhone || ""}
               inputMode="numeric"
+              className="bg-white"
               onChange={(e) => setBusinessPhone(formatLandline(e.target.value))}
               placeholder="(00) 0000-0000"
               defaultValue={
@@ -195,6 +201,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
               <Input
                 type="text"
                 name="streetAddress"
+                className="bg-white"
                 defaultValue={
                   formState.payload?.get("streetAddress")?.toString() ??
                   customerToEdit?.address.streetAddress ??
@@ -208,6 +215,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
               <Input
                 type="text"
                 name="number"
+                className="bg-white"
                 defaultValue={
                   formState.payload?.get("number")?.toString() ??
                   customerToEdit?.address.number ??
@@ -222,6 +230,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
               <Input
                 type="text"
                 name="zipCode"
+                className="bg-white"
                 defaultValue={
                   formState.payload?.get("zipCode")?.toString() ??
                   customerToEdit?.address.zipCode ??
@@ -240,6 +249,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
               <Input
                 type="text"
                 name="city"
+                className="bg-white"
                 defaultValue={
                   formState.payload?.get("city")?.toString() ??
                   customerToEdit?.address.city ??
@@ -253,6 +263,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
               <Input
                 type="text"
                 name="state"
+                className="bg-white"
                 defaultValue={
                   formState.payload?.get("state")?.toString() ??
                   customerToEdit?.address.state ??
@@ -266,6 +277,7 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             <Input
               type="text"
               name="neighborhood"
+              className="bg-white"
               defaultValue={
                 formState.payload?.get("neighborhood")?.toString() ??
                 customerToEdit?.address.neighborhood ??
@@ -277,18 +289,10 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4">
-        <button
-          disabled={isPending}
-          className="bg-[#0d6efd] disabled:bg-[#0d6dfdad] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none"
-        >
-          Salvar
-        </button>
-        <Link
-          href={`/clientes/${customerToEdit?.id ?? ""}`}
-          className="border border-[#0d6efd] text-center text-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer rounded-sm leading-none"
-        >
-          Cancelar
-        </Link>
+        <Button disabled={isPending}>Salvar</Button>
+        <Button asChild variant={"outline"}>
+          <Link href={`/clientes/${customerToEdit?.id ?? ""}`}>Cancelar</Link>
+        </Button>
       </div>
     </form>
   );

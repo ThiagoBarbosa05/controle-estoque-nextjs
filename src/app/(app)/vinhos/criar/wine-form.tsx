@@ -4,6 +4,7 @@ import { createWine } from "@/app/actions/create-wine";
 import { editWine } from "@/app/actions/edit-wine";
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -62,10 +63,8 @@ export function WineForm({ wine }: WineFormProps) {
   return (
     <form
       action={action}
-      className="mt-6 border  border-zinc-300 p-4 rounded-md"
+      className="mt-6 border border-zinc-300 p-4 rounded-md"
     >
-      <h3 className="text-xl sm:text-2xl">Adicionar Novo Vinho</h3>
-
       {formState.status === "ERROR" && (
         <Alert variant="destructive">
           <TriangleAlert />
@@ -74,12 +73,12 @@ export function WineForm({ wine }: WineFormProps) {
         </Alert>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 mt-6 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2  gap-5">
         <input type="hidden" name="wineId" value={wine?.id} />
         <div>
           <label className="block">Nome do Vinho*</label>
           <Input
-            className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
+            className="border w-full px-3 py-1.5 bg-white border-zinc-300 rounded-sm"
             type="text"
             name="name"
             defaultValue={
@@ -100,10 +99,10 @@ export function WineForm({ wine }: WineFormProps) {
               formState.payload?.get("type")?.toString() ?? wine?.type ?? ""
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="bg-white">
               <SelectValue placeholder="Selecione o tipo do vinho" />
             </SelectTrigger>
-            <SelectContent className="w-full">
+            <SelectContent className="w-full bg-white">
               {wineTypes.map((wine) => (
                 <SelectItem key={wine.id} value={wine.id}>
                   {wine.name}
@@ -121,7 +120,7 @@ export function WineForm({ wine }: WineFormProps) {
         <div>
           <label className="block">Safra</label>
           <Input
-            className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
+            className="border w-full bg-white px-3 py-1.5 border-zinc-300 rounded-sm"
             type="number"
             name="harvest"
             defaultValue={
@@ -139,7 +138,7 @@ export function WineForm({ wine }: WineFormProps) {
         <div>
           <label className="block">Produtor</label>
           <Input
-            className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
+            className="border w-full bg-white px-3 py-1.5 border-zinc-300 rounded-sm"
             type="text"
             name="producer"
             defaultValue={
@@ -160,7 +159,7 @@ export function WineForm({ wine }: WineFormProps) {
 
           <Input
             type="text"
-            className="border w-full px-3 py-1.5 border-zinc-300 rounded-sm"
+            className="border bg-white w-full px-3 py-1.5 border-zinc-300 rounded-sm"
             name="price"
             inputMode="numeric"
             onChange={(e) => setPrice(formatCurrencyInput(e.target.value))}
@@ -188,10 +187,10 @@ export function WineForm({ wine }: WineFormProps) {
               ""
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="bg-white">
               <SelectValue placeholder="Selecione o país do vinho" />
             </SelectTrigger>
-            <SelectContent className="w-full">
+            <SelectContent className="w-full bg-white">
               {wineCountry.map((wine) => (
                 <SelectItem key={wine.id} value={wine.id}>
                   {wine.name}
@@ -214,10 +213,10 @@ export function WineForm({ wine }: WineFormProps) {
               formState.payload?.get("size")?.toString() ?? wine?.size ?? ""
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="bg-white">
               <SelectValue placeholder="Selecione o tamanho do vinho" />
             </SelectTrigger>
-            <SelectContent className="w-full">
+            <SelectContent className="w-full bg-white">
               {wineSize.map((wine) => (
                 <SelectItem key={wine.id} value={wine.id}>
                   {wine.name}
@@ -234,18 +233,10 @@ export function WineForm({ wine }: WineFormProps) {
         </div>
       </div>
       <div className="mt-6 flex items-center gap-2">
-        <button
-          disabled={isPending}
-          className="bg-[#188754] disabled:bg-[#386651] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#03a679] text-white rounded-sm leading-none"
-        >
-          Salvar
-        </button>
-        <Link
-          className="border text-center border-[#188754] w-full sm:w-[initial] py-3 px-4 text-sm text-[#188754] rounded-sm leading-none"
-          href={"/vinhos"}
-        >
-          Cancelar
-        </Link>
+        <Button disabled={isPending}>Salvar</Button>
+        <Button variant="outline" type="button" asChild>
+          <Link href={"/vinhos"}>Cancelar</Link>
+        </Button>
       </div>
     </form>
   );

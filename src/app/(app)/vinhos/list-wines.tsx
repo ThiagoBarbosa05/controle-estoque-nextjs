@@ -22,6 +22,7 @@ import { getToken } from "@/app/auth/get-token";
 
 async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
   const accessToken = await getToken();
+
   const res = await fetch(
     searchTerm
       ? `${process.env.API_BASE_URL}/wines?search=${searchTerm}`

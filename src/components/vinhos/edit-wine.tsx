@@ -5,7 +5,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { WineForm } from "./form";
+import { WineForm } from "../../app/(app)/vinhos/criar/wine-form";
 
 export default function EditWineSheet() {
   return (

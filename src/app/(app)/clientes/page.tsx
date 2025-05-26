@@ -1,9 +1,17 @@
-import { CustomerList } from "@/components/clientes/customer-list";
-import { SearchCustomer } from "@/components/clientes/search-customer";
+import { CustomerList } from "@/app/(app)/clientes/customer-list";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { TableSkeleton } from "@/components/ui/table-skeleton";
 import Link from "next/link";
+import { Suspense } from "react";
+import { SearchCustomer } from "./search-customer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Clientes",
+  description: "Lista de clientes",
+};
 
 export default async function ClientesPage(props: {
   searchParams?: Promise<{
@@ -21,27 +29,14 @@ export default async function ClientesPage(props: {
 
       <div className="flex items-center gap-4 justify-between mt-6">
         <SearchCustomer />
-        <Link
-          href="/clientes/criar"
-          className="bg-[#0d6efd] whitespace-nowrap sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none"
-        >
-          Criar Novo
-        </Link>
+        <Button type="button" asChild>
+          <Link href="/clientes/criar">Criar Novo</Link>
+        </Button>
       </div>
-
       <section className="mt-4">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="font-bold text-sm">Nome</TableHead>
-              <TableHead className="font-bold text-sm">Contato</TableHead>
-              <TableHead className="font-bold text-sm">Email</TableHead>
-              <TableHead className="font-bold text-sm">Telefone</TableHead>
-              <TableHead className="font-bold text-sm">Ações</TableHead>
-            </TableRow>
-          </TableHeader>
+        <Suspense key={searchTerm} fallback={<TableSkeleton />}>
           <CustomerList searchTerm={searchTerm} />
-        </Table>
+        </Suspense>
       </section>
     </section>
   );

@@ -6,11 +6,17 @@ import { CustomersSummary } from "./customers-summary";
 import { MetricsSkeleton } from "./skeletons/metrics-skeleton";
 import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Dashboard de vinhos",
+};
 
 export default async function DashboardPage() {
   return (
     <section>
-      <h2 className="text-lg sm:text-2xl font-medium">Dashboard</h2>
+      <h2 className="text-lg sm:text-2xl font-medium pb-3">Dashboard</h2>
 
       <Separator />
       <Suspense fallback={<MetricsSkeleton />}>

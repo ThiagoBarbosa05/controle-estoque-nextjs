@@ -1,6 +1,8 @@
 import { getToken } from "@/app/auth/get-token";
-import { CustomerForm } from "@/components/clientes/form/customer-form";
 import { GetCustomerDetailsResponse } from "@/interfaces/get-customer-details-response";
+import { CustomerForm } from "../../customer-form";
+import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next";
 
 type Params = Promise<{ customerId: string }>;
 
@@ -26,9 +28,20 @@ async function getCustomerDetails(
   return response.json();
 }
 
+export const metadata: Metadata = {
+  title: "Editar cliente",
+  description: "Editar informações de um cliente",
+};
+
 export default async function EditCustomerPage({ params }: { params: Params }) {
   const { customerId } = await params;
   const { customer } = await getCustomerDetails(customerId);
 
-  return <CustomerForm customerToEdit={customer} />;
+  return (
+    <section>
+      <h2 className="text-lg sm:text-2xl font-medium pb-3">Editar cliente</h2>
+      <Separator />
+      <CustomerForm customerToEdit={customer} />
+    </section>
+  );
 }

@@ -60,9 +60,14 @@ export async function ListHistory({ customerId }: ListHistoryProps) {
         </div>
       ) : (
         <>
+          <section className="mt-6">
+            <h4 className="text-lg sm:text-xl font-medium">
+              Histórico de vendas do consignado
+            </h4>
+          </section>
           {result.consignedByCustomerId.map((consigned) => (
             <Accordion
-              className="border border-border rounded-md"
+              className="border border-border bg-white rounded-md"
               key={consigned.id}
               type="single"
               collapsible
@@ -100,7 +105,7 @@ export async function ListHistory({ customerId }: ListHistoryProps) {
                   </span>
                 </AccordionTrigger>
                 <AccordionContent className="px-5 flex flex-col items-center gap-6">
-                  <Table>
+                  <Table className="bg-accent">
                     <TableHeader>
                       <TableRow className="text-sm">
                         <TableHead>Vinho</TableHead>

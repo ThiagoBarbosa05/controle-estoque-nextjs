@@ -1,11 +1,6 @@
-import { getToken } from "@/app/auth/get-token";
 import { Separator } from "@/components/ui/separator";
 
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
 import { SearchWine } from "@/components/vinhos/search-wine";
-
-import { ListWinesResponse } from "@/interfaces/list-wines-response";
 
 import Link from "next/link";
 import { ListWines } from "./list-wines";
@@ -34,10 +29,11 @@ export default async function CadastroVinhosPage(props: {
           <Link href={"/vinhos/criar"}>Novo Vinho</Link>
         </Button>
       </div>
-
-      <Suspense key={searchTerm} fallback={<TableSkeleton />}>
-        <ListWines searchTerm={searchTerm} />
-      </Suspense>
+      <section className="mt-4">
+        <Suspense key={searchTerm} fallback={<TableSkeleton />}>
+          <ListWines searchTerm={searchTerm} />
+        </Suspense>
+      </section>
     </section>
   );
 }

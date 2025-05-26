@@ -3,6 +3,7 @@
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
 import { updateUser } from "@/app/actions/update-user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -12,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { User } from "@/interfaces/get-user-response";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
 import { LoaderCircle, TriangleAlert } from "lucide-react";
@@ -71,7 +73,8 @@ export function EditUserForm({
 
   return (
     <form action={action}>
-      <h3 className="text-lg sm:text-2xl mb-5">Adicionar Novo Usuário</h3>
+      <h2 className="text-lg sm:text-2xl font-medium pb-3">Editar usuário</h2>
+      <Separator />
       {formState.status === "ERROR" && (
         <Alert variant="destructive">
           <TriangleAlert />
@@ -215,18 +218,10 @@ export function EditUserForm({
       )}
 
       <div className="flex flex-col mt-6 sm:flex-row gap-4">
-        <button
-          disabled={isPending}
-          className="bg-[#0d6efd] disabled:bg-[#0d6dfdad] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer transition hover:bg-[#0b5ed7] text-white rounded-sm leading-none"
-        >
-          Salvar
-        </button>
-        <Link
-          href="/usuarios"
-          className="border border-[#0d6efd] text-center text-[#0d6efd] w-full sm:w-[initial] py-3 px-4 text-sm cursor-pointer rounded-sm leading-none"
-        >
-          Cancelar
-        </Link>
+        <Button disabled={isPending}>Salvar</Button>
+        <Button variant="outline" asChild>
+          <Link href="/usuarios">Cancelar</Link>
+        </Button>
       </div>
     </form>
   );

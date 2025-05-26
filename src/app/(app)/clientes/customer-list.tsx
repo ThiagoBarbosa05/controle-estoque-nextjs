@@ -1,5 +1,12 @@
 import { getToken } from "@/app/auth/get-token";
-import { TableBody, TableCell, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
 import Link from "next/link";
 
@@ -26,11 +33,18 @@ export async function CustomerList({ searchTerm }: { searchTerm?: string }) {
   const { customers } = await listCustomers(searchTerm);
 
   return (
-    <>
-      {!customers ||
-        (customers.length === 0 ? (
-          <h3>Nenhum cliente encontrado.</h3>
-        ) : (
+    <section className="mt-4">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="font-bold text-sm">Nome</TableHead>
+            <TableHead className="font-bold text-sm">Contato</TableHead>
+            <TableHead className="font-bold text-sm">Email</TableHead>
+            <TableHead className="font-bold text-sm">Telefone</TableHead>
+            <TableHead className="font-bold text-sm">Ações</TableHead>
+          </TableRow>
+        </TableHeader>
+        {customers && (
           <TableBody>
             {customers.map((customer) => (
               <TableRow
@@ -45,8 +59,8 @@ export async function CustomerList({ searchTerm }: { searchTerm?: string }) {
                 </TableCell>
                 <TableCell>
                   <Link
-                    className="border border-[#0d6efd] text-[#0d6efd] hover:bg-[#0d6efd] hover:text-white transition px-3 py-2 text-sm rounded-sm"
                     href={`/clientes/${customer.id}`}
+                    className="text-[#93173c]  underline underline-offset-2 transition text-sm rounded-sm"
                   >
                     Ver Detalhes
                   </Link>
@@ -54,7 +68,8 @@ export async function CustomerList({ searchTerm }: { searchTerm?: string }) {
               </TableRow>
             ))}
           </TableBody>
-        ))}
-    </>
+        )}
+      </Table>
+    </section>
   );
 }

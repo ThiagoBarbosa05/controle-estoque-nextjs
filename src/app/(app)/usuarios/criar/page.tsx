@@ -46,5 +46,9 @@ export default async function CreateUser(props: {
 
   const customers = await listCustomers(searchTerm);
 
-  return <UserForm roles={result.roles} customers={customers} />;
+  return (
+    <section>
+      <UserForm roles={result.roles} customers={customers} />
+    </section>
+  );
 }
