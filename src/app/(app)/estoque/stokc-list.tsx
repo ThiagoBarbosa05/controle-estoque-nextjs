@@ -99,10 +99,10 @@ export async function StockList({ page, search }: StockListProps) {
                   </TableCell>
                   <TableCell>
                     <Link
-                      className="border border-[#0d6efd] text-[#0d6efd] hover:bg-[#0d6efd] hover:text-white transition px-3 py-2 text-sm rounded-sm"
-                      href=""
+                      className="text-[#93173c]  underline underline-offset-2 transition text-sm rounded-sm"
+                      href={`/vinhos/${item.wineId}`}
                     >
-                      Histórico
+                      Detalhes
                     </Link>
                   </TableCell>
                 </TableRow>
@@ -138,24 +138,6 @@ export async function StockList({ page, search }: StockListProps) {
               />
             ) : null}
           </PaginationItem>
-          {/* <PaginationItem>
-            <PaginationPrevious
-              href={`/estoque?page=${
-                Number(page) && Number(page) > 1 ? Number(page) - 1 : 1
-              }${search ? `&search=${search}` : ""}`}
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              href={`/estoque?page=${
-                Number(page) && Number(page) < totalPages
-                  ? Number(page) + 1
-                  : !page
-                  ? 2
-                  : totalPages
-              }${search ? `&search=${search}` : ""}`}
-            />
-          </PaginationItem> */}
         </PaginationContent>
       </Pagination>
     </section>

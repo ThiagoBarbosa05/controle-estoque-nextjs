@@ -1,5 +1,4 @@
-import { StockList } from "@/components/estoque/stock-list";
-import { Loading } from "@/components/ui/loading";
+import { StockList } from "@/app/(app)/estoque/stokc-list";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
 
