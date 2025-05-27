@@ -1,11 +1,9 @@
-import { getToken } from "@/app/auth/get-token";
-import { CreateNewConsignedForm } from "@/app/(app)/consignados/criar/create-new-consigned-form";
 import { Separator } from "@/components/ui/separator";
-import { ListCustomerResponse } from "@/interfaces/list-customer-response";
-import { ListWinesResponse } from "@/interfaces/list-wines-response";
+
 import { NewConsignedWrapper } from "./new-consigned-wrapper";
 import { Suspense } from "react";
 import { NewConsignedSkeleton } from "./new-consigned-skeleton";
+import { Metadata, ResolvingMetadata } from "next";
 
 export default async function CreateConsignedPage(props: {
   searchParams?: Promise<{

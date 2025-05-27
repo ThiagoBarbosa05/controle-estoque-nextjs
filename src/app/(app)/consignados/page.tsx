@@ -4,10 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
 import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
 import { SearchConsigned } from "./search-consigned";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Consignados",
+  description: "Lista de todos os consignados",
+};
 
 export default async function ConsignadosPage(props: {
   searchParams?: Promise<{

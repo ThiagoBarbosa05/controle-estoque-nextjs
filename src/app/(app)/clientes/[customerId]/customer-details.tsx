@@ -1,8 +1,6 @@
 import { getToken } from "@/app/auth/get-token";
-import { Separator } from "@/components/ui/separator";
 import { GetCustomerDetailsResponse } from "@/interfaces/get-customer-details-response";
-import { ListHistory } from "../../consignados/[consignedId]/[customerId]/historico/list-history";
-import { DeleteCustomer } from "@/components/clientes/delete-customer";
+import { DeleteCustomer } from "@/app/(app)/clientes/delete-customer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 

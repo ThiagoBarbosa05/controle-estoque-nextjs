@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { AddNewWine } from "./add-new-wine";
 
-async function getConsignedDetails(
+export async function getConsignedDetails(
   consignedId: string
 ): Promise<GetConsignedDetailsResponse | null> {
   const accessToken = await getToken();

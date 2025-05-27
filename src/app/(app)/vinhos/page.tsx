@@ -1,12 +1,11 @@
 import { Separator } from "@/components/ui/separator";
 
-import { SearchWine } from "@/components/vinhos/search-wine";
-
 import Link from "next/link";
 import { ListWines } from "./list-wines";
 import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
 import { Button } from "@/components/ui/button";
+import { SearchWine } from "./search-wine";
 
 export default async function CadastroVinhosPage(props: {
   searchParams?: Promise<{

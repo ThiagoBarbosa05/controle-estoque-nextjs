@@ -1,9 +1,15 @@
 import { StockList } from "@/components/estoque/stock-list";
 import { Loading } from "@/components/ui/loading";
 import { Separator } from "@/components/ui/separator";
-import { SearchWine } from "@/components/vinhos/search-wine";
+import { Metadata } from "next";
 
 import { Suspense } from "react";
+import { SearchWine } from "../vinhos/search-wine";
+
+export const metadata: Metadata = {
+  title: "Controle de Estoque",
+  description: "Estoque de vinhos dos consignados",
+};
 
 export default async function EstoquePage(props: {
   searchParams?: Promise<{

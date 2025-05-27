@@ -17,7 +17,7 @@ import { ListWinesResponse, Wine } from "@/interfaces/list-wines-response";
 import { formatCurrencyInput } from "@/lib/format-currency";
 import { EllipsisVertical, Pen } from "lucide-react";
 import Link from "next/link";
-import { DeleteWineButton } from "../../../components/vinhos/delete-wine-button";
+import { DeleteWineButton } from "./delete-wine-button";
 import { getToken } from "@/app/auth/get-token";
 
 async function listWines(searchTerm?: string): Promise<ListWinesResponse> {
