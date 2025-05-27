@@ -5,6 +5,7 @@ import { Metadata } from "next";
 
 import { Suspense } from "react";
 import { SearchWine } from "../vinhos/search-wine";
+import { TableSkeleton } from "@/components/ui/table-skeleton";
 
 export const metadata: Metadata = {
   title: "Controle de Estoque",
@@ -29,17 +30,11 @@ export default async function EstoquePage(props: {
       <div className="mt-6">
         <SearchWine placeholder="Pesquise por um vinho ou cliente" />
       </div>
-
-      <Suspense
-        key={searchParams?.page}
-        fallback={
-          <div className="flex-1 flex justify-center items-center">
-            <Loading />
-          </div>
-        }
-      >
-        <StockList search={searchParams?.search} page={searchParams?.page} />
-      </Suspense>
+      <section className="mt-4">
+        <Suspense key={searchParams?.search} fallback={<TableSkeleton />}>
+          <StockList search={searchParams?.search} page={searchParams?.page} />
+        </Suspense>
+      </section>
     </section>
   );
 }

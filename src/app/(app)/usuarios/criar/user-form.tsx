@@ -85,6 +85,7 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
             <Input
               type="text"
               name="name"
+              className="bg-white"
               placeholder="nome do usuário"
               defaultValue={formState.payload?.get("name")?.toString() ?? ""}
             />
@@ -99,6 +100,7 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
             <Input
               type="text"
               name="email"
+              className="bg-white"
               placeholder="exemplo@email.com"
               defaultValue={formState.payload?.get("email")?.toString() ?? ""}
             />
@@ -113,6 +115,7 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
             <Input
               type="password"
               name="password"
+              className="bg-white"
               defaultValue={
                 formState.payload?.get("password")?.toString() ?? ""
               }
@@ -130,10 +133,10 @@ export function UserForm({ roles, customers: customerList }: UserFormProps) {
               name="role"
               onValueChange={(value) => handleSelectRole(value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className="bg-white">
                 <SelectValue placeholder="Selecione o cargo do usuário" />
               </SelectTrigger>
-              <SelectContent className="w-full">
+              <SelectContent className="w-full bg-white">
                 {roles.map((role) => (
                   <SelectItem key={role.id} value={role.id}>
                     {role.name}

@@ -1,5 +1,5 @@
 import { getToken } from "@/app/auth/get-token";
-import { EditUserForm } from "@/components/usuarios/form/edit-user-form";
+import { EditUserForm } from "@/app/(app)/usuarios/editar/[userId]/edit-user-form";
 import { GetUserResponse } from "@/interfaces/get-user-response";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
 

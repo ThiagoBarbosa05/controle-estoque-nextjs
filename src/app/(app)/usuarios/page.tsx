@@ -1,12 +1,11 @@
 import { Separator } from "@/components/ui/separator";
 
-import { SearchUser } from "@/components/usuarios/search-user";
-
 import Link from "next/link";
 import { ListUsers } from "./list-users";
 import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
 import { Button } from "@/components/ui/button";
+import { SearchUser } from "./search-user";
 
 export default async function UsersPage(props: {
   searchParams?: Promise<{

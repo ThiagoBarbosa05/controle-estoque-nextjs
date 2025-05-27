@@ -1,5 +1,5 @@
 import { getToken } from "@/app/auth/get-token";
-import { UserForm } from "@/components/usuarios/form/user-form";
+import { UserForm } from "@/app/(app)/usuarios/criar/user-form";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
 
 async function listRoles(): Promise<{ roles: { id: string; name: string }[] }> {

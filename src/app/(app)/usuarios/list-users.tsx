@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DeleteUserButton } from "@/components/usuarios/delete-user-button";
+import { DeleteUserButton } from "@/app/(app)/usuarios/delete-user-button";
 import { ListUsersResponse } from "@/interfaces/list-users-response";
 import { format } from "date-fns";
 import { EllipsisVertical, Pen } from "lucide-react";

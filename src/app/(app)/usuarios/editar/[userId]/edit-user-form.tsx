@@ -92,6 +92,7 @@ export function EditUserForm({
             <Input
               type="text"
               name="name"
+              className="bg-white"
               placeholder="nome do usuário"
               defaultValue={
                 formState.payload?.get("name")?.toString() ?? user?.name ?? ""
@@ -108,6 +109,7 @@ export function EditUserForm({
             <Input
               type="text"
               name="email"
+              className="bg-white"
               placeholder="exemplo@email.com"
               defaultValue={
                 formState.payload?.get("email")?.toString() ?? user?.email ?? ""
@@ -124,6 +126,7 @@ export function EditUserForm({
             <Input
               type="password"
               name="password"
+              className="bg-white"
               defaultValue={
                 formState.payload?.get("password")?.toString() ?? ""
               }
@@ -142,10 +145,10 @@ export function EditUserForm({
               onValueChange={(value) => handleSelectRole(value)}
               defaultValue={user?.roles[0].id}
             >
-              <SelectTrigger>
+              <SelectTrigger className="bg-white">
                 <SelectValue placeholder="Selecione o cargo do usuário" />
               </SelectTrigger>
-              <SelectContent className="w-full">
+              <SelectContent className="w-full bg-white">
                 {roles.map((role) => (
                   <SelectItem key={role.id} value={role.id}>
                     {role.name}

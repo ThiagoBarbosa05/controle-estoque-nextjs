@@ -38,8 +38,6 @@ async function listWineMetrics(
         search ? `?search=${search}` : ""
       }`;
 
-  console.log(url);
-
   const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
