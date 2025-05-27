@@ -2,6 +2,25 @@ import { getToken } from "@/app/auth/get-token";
 import { EditUserForm } from "@/app/(app)/usuarios/editar/[userId]/edit-user-form";
 import { GetUserResponse } from "@/interfaces/get-user-response";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: Promise<{ userId: string }>;
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { userId } = await params;
+
+  const user = await userToEdit(userId);
+
+  return {
+    title: `Editar usuário | ${user?.user.name}`,
+    description: `Editar informações do usuário ${user?.user.name}`,
+  };
+}
 
 async function listRoles(): Promise<{ roles: { id: string; name: string }[] }> {
   const accessToken = await getToken();

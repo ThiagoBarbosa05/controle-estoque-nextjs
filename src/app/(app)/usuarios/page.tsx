@@ -6,6 +6,12 @@ import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
 import { Button } from "@/components/ui/button";
 import { SearchUser } from "./search-user";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Usuários",
+  description: "Lista de usuários do sistema",
+};
 
 export default async function UsersPage(props: {
   searchParams?: Promise<{

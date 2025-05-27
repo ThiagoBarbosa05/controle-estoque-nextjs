@@ -3,7 +3,12 @@ import { Separator } from "@/components/ui/separator";
 import { NewConsignedWrapper } from "./new-consigned-wrapper";
 import { Suspense } from "react";
 import { NewConsignedSkeleton } from "./new-consigned-skeleton";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Criar consignado",
+  description: "Criar um novo consignado para um cliente",
+};
 
 export default async function CreateConsignedPage(props: {
   searchParams?: Promise<{

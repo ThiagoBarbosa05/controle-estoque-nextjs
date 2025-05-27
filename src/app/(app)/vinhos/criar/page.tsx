@@ -1,5 +1,11 @@
 import { WineForm } from "@/app/(app)/vinhos/criar/wine-form";
 import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cadastro de Vinhos",
+  description: "Cadastro de novos vinhos no sistema",
+};
 
 export default function CreateWinePage() {
   return (

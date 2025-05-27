@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
 import { SearchConsigned } from "./search-consigned";
 import { Metadata } from "next";
+import { Plus } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Consignados",
@@ -30,10 +31,17 @@ export default async function ConsignadosPage(props: {
     <section>
       <h2 className="text-lg sm:text-2xl font-medium pb-3">Consignados</h2>
       <Separator />
-      <div className="flex w-full mt-6 flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="flex w-full mt-6 flex-row items-start md:items-center justify-between gap-4">
         <SearchConsigned />
         <Button asChild>
-          {isAdmin && <Link href={"/consignados/criar"}>Novo Consignado</Link>}
+          {isAdmin && (
+            <Link href={"/consignados/criar"} title="Criar novo consignado">
+              <span className="hidden sm:block">Novo Consignado</span>
+              <span className="block sm:hidden">
+                <Plus className="sizer-5 text-white" strokeWidth={3} />
+              </span>
+            </Link>
+          )}
         </Button>
       </div>
 

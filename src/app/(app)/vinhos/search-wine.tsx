@@ -25,7 +25,7 @@ export function SearchWine({ placeholder }: { placeholder?: string }) {
     <div className="flex-1 relative max-w-[480px]">
       <Input
         type="text"
-        className="text-sm bg-white"
+        className="text-sm bg-white pr-10"
         onChange={(e) => handleSearchWine(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {

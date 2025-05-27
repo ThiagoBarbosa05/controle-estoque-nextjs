@@ -6,6 +6,13 @@ import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
 import { Button } from "@/components/ui/button";
 import { SearchWine } from "./search-wine";
+import { Metadata } from "next";
+import { Plus } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Vinhos",
+  description: "Listagem de vinhos cadastrados",
+};
 
 export default async function CadastroVinhosPage(props: {
   searchParams?: Promise<{
@@ -25,7 +32,12 @@ export default async function CadastroVinhosPage(props: {
       <div className="flex mt-6 w-full items-center justify-between gap-4">
         <SearchWine />
         <Button asChild>
-          <Link href={"/vinhos/criar"}>Novo Vinho</Link>
+          <Link href={"/vinhos/criar"} title="Criar novo vinho">
+            <span className="hidden sm:block">Novo vinho</span>
+            <span className="block sm:hidden">
+              <Plus className="size-5 text-white" strokeWidth={3} />
+            </span>
+          </Link>
         </Button>
       </div>
       <section className="mt-4">

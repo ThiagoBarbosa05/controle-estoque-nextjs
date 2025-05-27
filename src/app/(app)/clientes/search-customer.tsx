@@ -25,7 +25,7 @@ export function SearchCustomer() {
     <div className="relative flex-1 max-w-[480px]">
       <Input
         type="text"
-        className="text-sm bg-white"
+        className="text-sm bg-white pr-10"
         onChange={(e) => handleSearchCustomer(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {

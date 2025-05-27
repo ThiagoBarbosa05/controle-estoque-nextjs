@@ -25,7 +25,7 @@ export function SearchConsigned() {
     <div className="relative flex-1 w-full max-w-[480px]">
       <Input
         type="text"
-        className="text-sm bg-white"
+        className="text-sm bg-white pr-10"
         onChange={(e) => handleSearchConsigned(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {

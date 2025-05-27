@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { SearchCustomer } from "./search-customer";
 import { Metadata } from "next";
+import { Plus } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Clientes",
@@ -30,7 +31,12 @@ export default async function ClientesPage(props: {
       <div className="flex items-center gap-4 justify-between mt-6">
         <SearchCustomer />
         <Button type="button" asChild>
-          <Link href="/clientes/criar">Criar Novo</Link>
+          <Link href="/clientes/criar" title="Criar novo cliente">
+            <span className="hidden sm:block">Novo cliente</span>
+            <span className="block sm:hidden">
+              <Plus className="sizer-5 text-white" strokeWidth={3} />
+            </span>
+          </Link>
         </Button>
       </div>
       <section className="mt-4">

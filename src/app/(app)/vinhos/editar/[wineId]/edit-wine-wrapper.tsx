@@ -2,7 +2,7 @@ import { Wine } from "@/interfaces/list-wines-response";
 import { WineForm } from "../../criar/wine-form";
 import { getToken } from "@/app/auth/get-token";
 
-async function getWine(wineId: string): Promise<{ wine: Wine }> {
+export async function getWine(wineId: string): Promise<{ wine: Wine }> {
   const token = await getToken();
 
   const response = await fetch(`${process.env.API_BASE_URL}/wines/${wineId}`, {

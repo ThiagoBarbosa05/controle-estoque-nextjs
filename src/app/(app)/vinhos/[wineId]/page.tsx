@@ -22,6 +22,25 @@ import {
   MapPinned,
   Wine,
 } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: Promise<{ wineId: string }>;
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { wineId } = await params;
+
+  const wine = await getWineDetails(wineId);
+
+  return {
+    title: `vinhos | ${wine.wine.name}`,
+    description: `Detalhes do vinho ${wine.wine.name}`,
+  };
+}
 
 async function getWineDetails(wineId: string): Promise<GetWineDetailsResponse> {
   const accessToken = await getToken();

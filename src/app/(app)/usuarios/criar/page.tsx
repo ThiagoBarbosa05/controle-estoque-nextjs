@@ -1,6 +1,12 @@
 import { getToken } from "@/app/auth/get-token";
 import { UserForm } from "@/app/(app)/usuarios/criar/user-form";
 import { ListCustomerResponse } from "@/interfaces/list-customer-response";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Criar Usuário",
+  description: "Criar um novo usuário no sistema",
+};
 
 async function listRoles(): Promise<{ roles: { id: string; name: string }[] }> {
   const accessToken = await getToken();

@@ -1,7 +1,26 @@
 import { Separator } from "@/components/ui/separator";
 import { Suspense } from "react";
 import { EditWineSkeleton } from "./edit-wine-skeleton";
-import { EditWineWrapper } from "./edit-wine-wrapper";
+import { EditWineWrapper, getWine } from "./edit-wine-wrapper";
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: Promise<{ wineId: string }>;
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { wineId } = await params;
+
+  const wine = await getWine(wineId);
+
+  return {
+    title: `Editar vinho | ${wine.wine.name}`,
+    description: `Editar informações do vinho ${wine.wine.name}`,
+  };
+}
 
 export default async function EditWinePage(props: {
   params: Promise<{ wineId: string }>;

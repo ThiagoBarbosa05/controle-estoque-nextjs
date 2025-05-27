@@ -3,6 +3,7 @@
 import { EMPTY_FORM_STATE } from "@/app/actions/error-handler";
 import { login } from "@/app/actions/login";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TriangleAlert } from "lucide-react";
 import { useActionState } from "react";
@@ -52,12 +53,9 @@ export function LoginForm() {
           </span>
         )}
       </div>
-      <button
-        disabled={isPending}
-        className="bg-[#93173c] disabled:opacity-55 w-full py-4 px-5 text-sm cursor-pointer transition hover:bg-[#c03642] text-white rounded-sm leading-none"
-      >
+      <Button className="w-full" size="lg" disabled={isPending}>
         Entrar
-      </button>
+      </Button>
     </form>
   );
 }

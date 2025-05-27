@@ -3,6 +3,7 @@ import { GetCustomerDetailsResponse } from "@/interfaces/get-customer-details-re
 import { DeleteCustomer } from "@/app/(app)/clientes/delete-customer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Pen } from "lucide-react";
 
 export async function getCustomerDetails(
   customerId: string
@@ -57,7 +58,15 @@ export async function CustomerDetails({ customerId }: CustomerDetailsProps) {
 
               <div className="flex gap-3">
                 <Button asChild>
-                  <Link href={`/clientes/editar/${customerId}`}>Editar</Link>
+                  <Link
+                    title="Editar cliente"
+                    href={`/clientes/editar/${customerId}`}
+                  >
+                    <span className="hidden sm:block">Editar</span>
+                    <span className="block sm:hidden">
+                      <Pen className="size-5 text-white" />
+                    </span>
+                  </Link>
                 </Button>
 
                 <DeleteCustomer customerId={customerId} />
