@@ -7,6 +7,7 @@ import { TableSkeleton } from "@/components/ui/table-skeleton";
 import { Button } from "@/components/ui/button";
 import { SearchUser } from "./search-user";
 import { Metadata } from "next";
+import { Plus } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Usuários",
@@ -29,7 +30,12 @@ export default async function UsersPage(props: {
       <div className="flex mt-6 w-full items-center justify-between gap-4">
         <SearchUser />
         <Button asChild>
-          <Link href="/usuarios/criar">Criar Novo</Link>
+          <Link title="Criar Novo usuário" href="/usuarios/criar">
+            <span className="hidden sm:block">Novo Usuário</span>
+            <span className="block sm:hidden">
+              <Plus className="sizer-5 text-white" strokeWidth={3} />
+            </span>
+          </Link>
         </Button>
       </div>
 

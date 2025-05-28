@@ -11,9 +11,9 @@ export function DeleteCustomer({ customerId }: { customerId: string }) {
       title="Deletar cliente"
       className="border border-destructive text-center text-destructive w-full sm:w-[initial] h-9 px-4 py-2 flex items-center justify-center text-sm cursor-pointer rounded-sm leading-none"
     >
-      <span className="hidden sm:block">Deletar</span>
-      <span className="block sm:hidden">
-        <Trash className="size-5 text-destructive" />
+      <span className="flex items-center gap-2">
+        <Trash className="size-4 text-destructive" />
+        Deletar
       </span>
     </button>
   );

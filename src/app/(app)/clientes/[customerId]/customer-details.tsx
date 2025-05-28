@@ -41,7 +41,7 @@ export async function CustomerDetails({ customerId }: CustomerDetailsProps) {
       ) : (
         <section>
           <div className="pb-6">
-            <div className="flex items-start justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row items-start justify-between">
               <div>
                 <h3 className="text-xl sm:text-2xl mb-2 font-bold">
                   {customer.name}
@@ -62,9 +62,9 @@ export async function CustomerDetails({ customerId }: CustomerDetailsProps) {
                     title="Editar cliente"
                     href={`/clientes/editar/${customerId}`}
                   >
-                    <span className="hidden sm:block">Editar</span>
-                    <span className="block sm:hidden">
-                      <Pen className="size-5 text-white" />
+                    <span className="flex items-center gap-2">
+                      <Pen className="size-4 text-white" />
+                      Editar
                     </span>
                   </Link>
                 </Button>
