@@ -3,5 +3,6 @@ export type TokenPayload = {
   roles: ["administrador", "vendedor", "cliente"];
   permissions: string[];
   consigned: string | null;
+  customerId: string | null;
   iat: number;
 };

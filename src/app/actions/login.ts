@@ -61,7 +61,7 @@ export async function login(formState: FormState, formData: FormData) {
   const isAdmin = decodedToken.roles.includes("administrador");
   const sellerRedirectUrl = isSeller ? "/consignados" : "/dashboard";
   const customerRedirectUrl = decodedToken.consigned
-    ? `/consignados/${decodedToken.consigned}/${decodedToken.consigned}/inicio`
+    ? `/consignados/${decodedToken.consigned}/${decodedToken.customerId}/inicio`
     : "/";
 
   redirect(

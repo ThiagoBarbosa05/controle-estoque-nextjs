@@ -25,7 +25,7 @@ export default async function middleware(request: NextRequest) {
 
     const isSeller = decodedToken.roles.includes("vendedor");
     const isCustomer = decodedToken.roles.includes("cliente");
-    const customerRedirectUrl = `/consignados/${decodedToken.consigned}/${decodedToken.consigned}/inicio`;
+    const customerRedirectUrl = `/consignados/${decodedToken.consigned}/${decodedToken.customerId}/inicio`;
 
     // Se for rota pública e estiver autenticado, redireciona conforme a role
     if (isPublicRoute) {

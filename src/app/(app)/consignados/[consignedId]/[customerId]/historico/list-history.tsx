@@ -51,6 +51,7 @@ interface ListHistoryProps {
 
 export async function ListHistory({ customerId }: ListHistoryProps) {
   const result = await getConsignedHistory(customerId);
+  console.log(customerId);
 
   return (
     <section className="w-full space-y-3 mt-6 h-full">
