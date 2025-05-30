@@ -8,7 +8,7 @@ import { TokenPayload } from "@/interfaces/token-payload";
 import { jwtDecode } from "jwt-decode";
 
 const authenticateUserSchema = z.object({
-  email: z.string().email({ message: "Esse campo é obrigatório" }),
+  email: z.string().email({ message: "Insira um email válido" }),
   password: z.string({ message: "Esse campo é obrigatório" }),
 });
 

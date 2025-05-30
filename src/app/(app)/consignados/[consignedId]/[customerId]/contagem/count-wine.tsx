@@ -36,7 +36,7 @@ export function WineCountForm({ consigned }: WineCountProps) {
     <form action={action} className="w-full space-y-4 mt-6 h-full">
       {consigned.winesOnConsigned.map((wine) => (
         <div
-          className="border space-y-2 p-4 shadow shadow-zinc-300 rounded-md"
+          className="border space-y-2 p-4 bg-white shadow-sm rounded-md"
           key={wine.consignedId + wine.wineId}
         >
           <p className="text-sm font-medium">{wine.wines.name}</p>

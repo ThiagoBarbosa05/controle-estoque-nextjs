@@ -22,12 +22,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="sm:min-w-[400px] min-w-[320px]">
-          <div className="w-full flex justify-center">
-            {/* <UserCircle
-              className="size-28 text-zinc-400 opacity-50"
-              strokeWidth={1}
-            /> */}
-          </div>
+          <div className="w-full flex justify-center"></div>
           <LoginForm />
         </CardContent>
       </Card>

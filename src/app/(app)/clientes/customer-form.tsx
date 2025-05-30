@@ -46,10 +46,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
         <input type="hidden" name="customerId" value={customerToEdit?.id} />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-3">
           <div>
-            <label className="block">Nome do Cliente*</label>
+            <label htmlFor="name" className="block">
+              Nome do Cliente*
+            </label>
             <Input
               type="text"
               name="name"
+              id="name"
+              placeholder="Insira o nome do cliente"
               className="bg-white"
               defaultValue={
                 formState.payload?.get("name")?.toString() ??
@@ -64,10 +68,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             )}
           </div>
           <div>
-            <label className="block">Pessoa de Contato</label>
+            <label htmlFor="contactPerson" className="block">
+              Pessoa de Contato
+            </label>
             <Input
               type="text"
               className="bg-white"
+              id="contactPerson"
+              placeholder="Insira o nome da pessoa de contato"
               name="contactPerson"
               defaultValue={
                 formState.payload?.get("contactPerson")?.toString() ??
@@ -80,11 +88,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-3">
           <div>
-            <label className="block">CNPJ*</label>
+            <label htmlFor="document" className="block">
+              CNPJ*
+            </label>
 
             <Input
               type="text"
               value={cnpj || ""}
+              id="document"
               name="document"
               inputMode="numeric"
               className="bg-white"
@@ -102,10 +113,13 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             )}
           </div>
           <div>
-            <label className="block">Inscrição Estadual*</label>
+            <label htmlFor="stateRegistration" className="block">
+              Inscrição Estadual*
+            </label>
             <Input
               type="text"
               name="stateRegistration"
+              id="stateRegistration"
               className="bg-white"
               defaultValue={
                 formState.payload?.get("stateRegistration")?.toString() ??
@@ -123,9 +137,12 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-4 gap-x-3">
           <div>
-            <label className="block">Email</label>
+            <label htmlFor="email" className="block">
+              Email
+            </label>
             <Input
               type="email"
+              id="email"
               placeholder="exemplo@email.com"
               name="email"
               className="bg-white"
@@ -143,11 +160,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
           </div>
 
           <div>
-            <label className="block">Celular</label>
+            <label htmlFor="cellphone" className="block">
+              Celular
+            </label>
 
             <Input
               type="text"
               value={cellphone || ""}
+              id="cellphone"
               inputMode="numeric"
               className="bg-white"
               onChange={(e) => setCellphone(formatPhone(e.target.value))}
@@ -166,12 +186,15 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
           </div>
 
           <div>
-            <label className="block">Telefone comercial</label>
+            <label htmlFor="businessPhone" className="block">
+              Telefone comercial
+            </label>
 
             <Input
               value={businessPhone || ""}
               inputMode="numeric"
               className="bg-white"
+              id="businessPhone"
               onChange={(e) => setBusinessPhone(formatLandline(e.target.value))}
               placeholder="(00) 0000-0000"
               defaultValue={
@@ -197,10 +220,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
         <div className="grid grid-cols-1 mt-5 gap-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-4">
             <div>
-              <label className="block">Endereço</label>
+              <label htmlFor="streetAddress" className="block">
+                Endereço
+              </label>
               <Input
                 type="text"
                 name="streetAddress"
+                id="streetAddress"
+                placeholder="Rua, Avenida, etc."
                 className="bg-white"
                 defaultValue={
                   formState.payload?.get("streetAddress")?.toString() ??
@@ -211,10 +238,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             </div>
 
             <div>
-              <label className="block">Número</label>
+              <label htmlFor="number" className="block">
+                Número
+              </label>
               <Input
                 type="text"
                 name="number"
+                id="number"
+                placeholder="Número do endereço"
                 className="bg-white"
                 defaultValue={
                   formState.payload?.get("number")?.toString() ??
@@ -226,11 +257,16 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-3 gap-y-4">
             <div>
-              <label className="block">CEP</label>
+              <label htmlFor="zipCode" className="block">
+                CEP
+              </label>
               <Input
                 type="text"
                 name="zipCode"
                 className="bg-white"
+                id="zipCode"
+                placeholder="00000-000"
+                inputMode="numeric"
                 defaultValue={
                   formState.payload?.get("zipCode")?.toString() ??
                   customerToEdit?.address.zipCode ??
@@ -245,10 +281,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             </div>
 
             <div>
-              <label className="block">Cidade</label>
+              <label htmlFor="city" className="block">
+                Cidade
+              </label>
               <Input
                 type="text"
                 name="city"
+                id="city"
+                placeholder="Insira a cidade"
                 className="bg-white"
                 defaultValue={
                   formState.payload?.get("city")?.toString() ??
@@ -259,10 +299,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             </div>
 
             <div>
-              <label className="block">Estado</label>
+              <label htmlFor="state" className="block">
+                Estado
+              </label>
               <Input
                 type="text"
                 name="state"
+                id="state"
+                placeholder="Insira o estado"
                 className="bg-white"
                 defaultValue={
                   formState.payload?.get("state")?.toString() ??
@@ -273,10 +317,14 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
             </div>
           </div>
           <div>
-            <label className="block">Bairro</label>
+            <label htmlFor="neighborhood" className="block">
+              Bairro
+            </label>
             <Input
               type="text"
               name="neighborhood"
+              id="neighborhood"
+              placeholder="Insira o bairro"
               className="bg-white"
               defaultValue={
                 formState.payload?.get("neighborhood")?.toString() ??
@@ -289,7 +337,9 @@ export function CustomerForm({ customerToEdit }: CustomerFormProps) {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4">
-        <Button disabled={isPending}>Salvar</Button>
+        <Button type="submit" disabled={isPending}>
+          Salvar
+        </Button>
         <Button asChild variant={"outline"}>
           <Link href={`/clientes/${customerToEdit?.id ?? ""}`}>Cancelar</Link>
         </Button>

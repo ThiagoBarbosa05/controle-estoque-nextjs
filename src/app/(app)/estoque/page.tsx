@@ -18,6 +18,7 @@ export default async function EstoquePage(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
+  console.log(searchParams?.page);
 
   return (
     <section>

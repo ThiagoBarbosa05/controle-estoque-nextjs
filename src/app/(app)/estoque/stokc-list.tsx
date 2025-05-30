@@ -64,6 +64,7 @@ export async function StockList({ page, search }: StockListProps) {
 
   const isFirstPage = Number(page) <= 1;
   const isLastPage = Number(page) >= totalPages;
+  const currentPage = Number(page) || 1;
 
   return (
     <section className="mt-4">
@@ -118,9 +119,9 @@ export async function StockList({ page, search }: StockListProps) {
             aria-disabled={isFirstPage}
             className={isFirstPage ? "pointer-events-none opacity-50" : ""}
           >
-            {isFirstPage ? (
+            {!isFirstPage ? (
               <PaginationPrevious
-                href={`/estoque?page=${Number(page) - 1}${
+                href={`/estoque?page=${Number(currentPage) - 1}${
                   search ? `&search=${search}` : ""
                 }`}
               />
@@ -130,9 +131,9 @@ export async function StockList({ page, search }: StockListProps) {
             aria-disabled={isLastPage}
             className={isLastPage ? "pointer-events-none opacity-50" : ""}
           >
-            {isLastPage ? (
+            {!isLastPage ? (
               <PaginationNext
-                href={`/estoque?page=${Number(page) + 1}${
+                href={`/estoque?page=${Number(currentPage) + 1}${
                   search ? `&search=${search}` : ""
                 }`}
               />

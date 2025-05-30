@@ -32,9 +32,9 @@ export function LoginForm() {
           name="email"
           defaultValue={formState.payload?.get("email") as string}
         />
-        {formState.fieldErrors.password && (
+        {formState.fieldErrors.email && (
           <span className="text-destructive pl-1 text-xs block mt-1">
-            {formState.fieldErrors.password}
+            {formState.fieldErrors.email}
           </span>
         )}
       </div>
@@ -47,13 +47,13 @@ export function LoginForm() {
           name="password"
           defaultValue={formState.payload?.get("password") as string}
         />
-        {formState.fieldErrors.email && (
+        {formState.fieldErrors.password && (
           <span className="text-destructive pl-1 text-xs block mt-1">
-            {formState.fieldErrors.email}
+            {formState.fieldErrors.password}
           </span>
         )}
       </div>
-      <Button className="w-full" size="lg" disabled={isPending}>
+      <Button type="submit" className="w-full" size="lg" disabled={isPending}>
         Entrar
       </Button>
     </form>
