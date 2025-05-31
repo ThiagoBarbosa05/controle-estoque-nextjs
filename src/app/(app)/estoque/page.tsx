@@ -1,4 +1,4 @@
-import { StockList } from "@/app/(app)/estoque/stokc-list";
+import { StockList } from "@/app/(app)/estoque/stock-list";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
 
@@ -18,7 +18,6 @@ export default async function EstoquePage(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
-  console.log(searchParams?.page);
 
   return (
     <section>

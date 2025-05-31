@@ -3,7 +3,6 @@ import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
@@ -62,9 +61,9 @@ export async function StockList({ page, search }: StockListProps) {
     wineMetricsList.total / wineMetricsList.pageSize
   );
 
-  const isFirstPage = Number(page) <= 1;
-  const isLastPage = Number(page) >= totalPages;
   const currentPage = Number(page) || 1;
+  const isFirstPage = Number(currentPage) <= 1;
+  const isLastPage = Number(currentPage) >= totalPages;
 
   return (
     <section className="mt-4">
